@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heraclaus Secure Download</title>
+    <style>
+        body { font-family: monospace; background: #0f0f0f; color: #00ff00; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .box { background: #1a1a1a; padding: 30px; border: 1px solid #333; border-radius: 8px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); }
+        h2 { margin-top: 0; text-transform: uppercase; letter-spacing: 2px; }
+        input { width: 100%; padding: 10px; margin: 15px 0; background: #000; border: 1px solid #333; color: #fff; text-align: center; font-family: monospace; }
+        button { width: 100%; padding: 10px; background: #008000; color: #fff; border: none; cursor: pointer; font-weight: bold; font-family: monospace; }
+        button:hover { background: #00aa00; }
+        button:disabled { background: #333; cursor: not-allowed; }
+        #status { margin-top: 15px; font-size: 12px; min-height: 20px; }
+        .loading { color: yellow; }
+        .error { color: red; }
+        .success { color: #00ff00; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>System Download</h2>
+        <p>Masukkan One-Time Token Anda</p>
+        
+        <input type="text" id="tokenIn" placeholder="X-X-X-X">
+        <button id="btnD" onclick="downloadFile()">DOWNLOAD FILE</button>
+        
+        <p id="status"></p>
+    </div>
+
+    <script>
+        // PASTE URL DARI GOOGLE APPS SCRIPT DI SINI
+        const API_URL = "https://script.google.com/macros/s/AKfycbx...../exec"; 
+
+        async function downloadFile() {
+            const token = document.getElementById('tokenIn').value;
+            const btn = document.getElementById('btnD');
+            const status = document.getElementById('status');
+
+            if(!token) return status.innerHTML = "<span class='error'>Token kosong!</span>";
+
+            // UI Loading
+            btn.disabled = true;
+            btn.innerText = "MEMPROSES DATA...";
+            status.innerHTML = "<span class='loading'>Menghubungi server & memverifikasi token...</span>";
+
+            try {
+                // Fetch ke Google Script
+                const response = await fetch(`${API_URL}?token=${token}`);
+                const result = await response.json();
+
+                if (result.status === "success") {
+                    status.innerHTML = "<span class='loading'>Token Valid! Mengunduh data (Direct Stream)...</span>";
+                    
+                    // PROSES KONVERSI BASE64 KE FILE (Tanpa Link Asli)
+                    const byteCharacters = atob(result.data);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) {
+                        byteNumbers[i] = byteCharacters.charCodeAt(i);
+                    }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], {type: result.mimeType});
+
+                    // Trigger Download Otomatis
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = result.fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    status.innerHTML = "<span class='success'>Berhasil! Token telah hangus.</span>";
+                    btn.innerText = "SELESAI";
+                } else {
+                    throw new Error(result.message);
+                }
+
+            } catch (error) {
+                status.innerHTML = `<span class='error'>Gagal: ${error.message}</span>`;
+                btn.disabled = false;
+                btn.innerText = "COBA LAGI";
+            }
+        }
+    </script>
+</body>
+</html>
