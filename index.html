@@ -3,184 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heraclaus Member Area</title>
-    <style>
-        body { font-family: 'Consolas', monospace; background-color: #000; color: #0f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .container { width: 350px; padding: 30px; border: 1px solid #333; background: #111; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); text-align: center; }
-        
-        .hidden { display: none; }
-        .input-box { width: 100%; padding: 10px; margin: 5px 0; background: #000; border: 1px solid #444; color: white; text-align: center; box-sizing: border-box; }
-        .btn { width: 100%; padding: 10px; background: #008000; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
-        .btn:hover { background: #00aa00; }
-        .btn-secondary { background: #333; color: #aaa; margin-top: 5px; }
-        .btn-secondary:hover { background: #444; color: white; }
-        
-        .logout { color: #555; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 20px; display: block; }
-        h2 { border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
-        #msg { margin-top: 15px; font-size: 12px; min-height: 15px; }
-        .error { color: red; } .success { color: #0f0; } .loading { color: yellow; }
-        
-        /* Style khusus form ganti password */
-        .pass-form { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #333; text-align: left; }
-        .pass-form label { font-size: 11px; color: #888; }
-    </style>
+    <title>Heraclaus Studio | Minecraft Bedrock Addons</title>
+    
+    <meta name="description" content="Download Addon Minecraft Bedrock berkualitas tinggi buatan Heraclaus Studio. Script API, Custom UI, dan fitur canggih lainnya.">
+    <meta property="og:title" content="Heraclaus Studio - Next Gen Bedrock Addons">
+    <meta property="og:description" content="Pusat download addon Minecraft Bedrock dengan fitur Script API dan UI Kustom.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#6d5dfc">
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
     <div class="container">
-        <div id="loginPage">
-            <h2>SYSTEM LOGIN</h2>
-            <input type="text" id="uName" class="input-box" placeholder="Username">
-            <input type="password" id="uPass" class="input-box" placeholder="Password">
-            <button class="btn" onclick="doLogin()">MASUK</button>
-        </div>
-
-        <div id="dashboardPage" class="hidden">
-            <h2>MEMBER AREA</h2>
-            <p>User: <span id="displayUser" style="color:white; font-weight:bold;"></span></p>
-            
-            <div style="margin-bottom: 20px;">
-                <p style="font-size:12px; color:#aaa;">Redeem Token:</p>
-                <input type="text" id="tokenIn" class="input-box" placeholder="XXXX-XXXX">
-                <button class="btn" onclick="doRedeem()">DOWNLOAD FILE</button>
+        <nav>
+            <div class="logo">HERACLAUS</div>
+            <div class="nav-right">
+                <a href="https://discord.gg/contoh" class="btn secondary">
+                    <i class="fab fa-discord"></i> Discord
+                </a>
+                <button class="icon-btn" id="theme-btn" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
             </div>
-
-            <button class="btn btn-secondary" onclick="togglePassForm()">🔐 Ubah Password</button>
-
-            <div id="passFormArea" class="pass-form hidden">
-                <label>Password Lama:</label>
-                <input type="password" id="oldPass" class="input-box">
-                
-                <label>Password Baru:</label>
-                <input type="password" id="newPass" class="input-box">
-                
-                <button class="btn" onclick="doChangePass()" style="font-size:12px;">SIMPAN PASSWORD BARU</button>
-                <button class="btn btn-secondary" onclick="togglePassForm()" style="font-size:12px;">BATAL</button>
-            </div>
-            
-            <span class="logout" onclick="doLogout()">Keluar / Logout</span>
-        </div>
-
-        <div id="msg"></div>
+        </nav>
     </div>
 
-    <script>
-        // === GANTI DENGAN URL API BARU ===
-        const API_URL = "https://script.google.com/macros/s/AKfycbz8TJUeFuCw1mgZZunpZtyckKuHMiSP1sEs1-vsbOhGSCRbbjKySSmNgArYaL_PiP_V/exec"; 
+    <section class="hero">
+        <div class="container">
+            <h1>Next-Gen Bedrock Addons</h1>
+            <p>Meningkatkan pengalaman bermain Minecraft Bedrock dengan Script API canggih, UI kustom, dan fitur inovatif.</p>
+            <div style="display: flex; justify-content: center; gap: 15px;">
+                <a href="#featured" class="btn primary">Project Unggulan</a>
+                <a href="#gallery" class="btn secondary">Lihat Semua</a>
+            </div>
+        </div>
+    </section>
 
-        let currentUser = "";
-
-        // === FUNGSI LOGIN ===
-        async function doLogin() {
-            const u = document.getElementById('uName').value;
-            const p = document.getElementById('uPass').value;
-            const msg = document.getElementById('msg');
-            
-            if(!u || !p) return msg.innerHTML = "<span class='error'>Data tidak lengkap!</span>";
-            
-            msg.innerHTML = "<span class='loading'>Login...</span>";
-            
-            try {
-                const res = await fetch(`${API_URL}?action=login&u=${u}&p=${p}`);
-                const data = await res.json();
+    <section id="featured">
+        <div class="container">
+            <div class="card featured-wrapper">
+                <div class="featured-img img-placeholder">
+                    <img src="https://via.placeholder.com/500x500/1e1e1e/7d7d7d?text=Admin+Suite+Preview" alt="Admin Suite">
+                </div>
                 
-                if(data.status === "success") {
-                    currentUser = u;
-                    document.getElementById('displayUser').innerText = u;
-                    document.getElementById('loginPage').classList.add('hidden');
-                    document.getElementById('dashboardPage').classList.remove('hidden');
-                    msg.innerHTML = "";
-                } else {
-                    msg.innerHTML = `<span class='error'>${data.message}</span>`;
-                }
-            } catch (e) { msg.innerHTML = "<span class='error'>Gagal koneksi server.</span>"; }
-        }
+                <div class="featured-content">
+                    <span class="badge stable"><i class="fas fa-check-circle"></i> V1.2 Stable</span>
+                    <span class="badge script"><i class="fas fa-code"></i> Script API</span>
+                    
+                    <h2 style="font-size: 2rem; margin: 15px 0 10px 0;">Admin Suite Pro</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        Kelola server atau realm kamu layaknya profesional. Dilengkapi dengan <b>Custom JSON UI</b> untuk sistem Ban, Teleportasi Warp, dan Gamemode Manager.
+                    </p>
+                    
+                    <ul style="color: var(--text-muted); padding-left: 20px; margin-bottom: 30px;">
+                        <li>Ban & Kick UI dengan alasan kustom</li>
+                        <li>Sistem Warp Point (Set & Teleport)</li>
+                        <li>Anti-Cheat Tools & Player Inspect</li>
+                    </ul>
 
-        // === FUNGSI DOWNLOAD ===
-        async function doRedeem() {
-            const token = document.getElementById('tokenIn').value;
-            const msg = document.getElementById('msg');
-            const btn = document.querySelector('#dashboardPage .btn'); // Tombol download
+                    <div class="card-actions">
+                        <a href="#" class="btn primary"><i class="fas fa-download"></i> Download</a>
+                        <a href="changelog.html#admin-suite" class="btn secondary"><i class="fas fa-history"></i> Update Log</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            if(!token) return msg.innerHTML = "<span class='error'>Isi token dulu.</span>";
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Karya Lainnya</h2>
             
-            btn.disabled = true;
-            btn.innerText = "PROSES...";
-            msg.innerHTML = "<span class='loading'>Verifikasi...</span>";
+            <div class="addon-grid">
+                
+                <div class="card">
+                    <div class="img-placeholder">
+                        <img src="https://via.placeholder.com/400x250/1e1e1e/7d7d7d?text=Discord+Bot" alt="Bot">
+                    </div>
+                    <div class="card-meta">
+                        <span><i class="fas fa-robot"></i> Script</span>
+                        <span style="color: var(--warning); font-weight:bold;">Beta v0.5</span>
+                    </div>
+                    <h3>Discord Connect AI</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Hubungkan chat in-game Minecraft langsung ke Discord server secara realtime.
+                    </p>
+                    <div class="card-actions">
+                        <a href="#" class="btn secondary"><i class="fas fa-download"></i> Get</a>
+                        <a href="changelog.html#discord-bot" class="btn secondary"><i class="fas fa-history"></i> Log</a>
+                    </div>
+                </div>
 
-            try {
-                const res = await fetch(`${API_URL}?action=download&token=${token}&user=${currentUser}`);
-                const data = await res.json();
+                <div class="card">
+                    <div class="img-placeholder">
+                        <img src="https://via.placeholder.com/400x250/1e1e1e/7d7d7d?text=Cosmetic" alt="Cosmetic">
+                    </div>
+                    <div class="card-meta">
+                        <span><i class="fas fa-tshirt"></i> Visuals</span>
+                        <span style="color: var(--success); font-weight:bold;">v1.0 Ready</span>
+                    </div>
+                    <h3>Cosmetic Wardrobe</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Koleksi sayap, trails, dan topi unik dengan sistem entity terbaru.
+                    </p>
+                    <div class="card-actions">
+                        <a href="#" class="btn secondary"><i class="fas fa-download"></i> Get</a>
+                        <a href="changelog.html#cosmetic" class="btn secondary"><i class="fas fa-history"></i> Log</a>
+                    </div>
+                </div>
 
-                if(data.status === "success") {
-                    msg.innerHTML = "<span class='loading'>Sedang mengunduh...</span>";
-                    
-                    const byteCharacters = atob(data.data);
-                    const byteNumbers = new Array(byteCharacters.length);
-                    for (let i = 0; i < byteCharacters.length; i++) { byteNumbers[i] = byteCharacters.charCodeAt(i); }
-                    const byteArray = new Uint8Array(byteNumbers);
-                    const blob = new Blob([byteArray], {type: data.mimeType});
-                    
-                    const link = document.createElement('a');
-                    link.href = window.URL.createObjectURL(blob);
-                    link.download = data.fileName;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                 <div class="card">
+                    <div class="img-placeholder">
+                        <img src="https://via.placeholder.com/400x250/1e1e1e/7d7d7d?text=SMP+Kit" alt="Kit">
+                    </div>
+                    <div class="card-meta">
+                        <span><i class="fas fa-cubes"></i> Survival</span>
+                        <span style="color: var(--success); font-weight:bold;">v2.1</span>
+                    </div>
+                    <h3>Hiperion SMP Kit</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted);">
+                        Starter pack server survival. One-player-sleep, mob head drops.
+                    </p>
+                    <div class="card-actions">
+                        <a href="#" class="btn secondary"><i class="fas fa-download"></i> Get</a>
+                        <a href="changelog.html#smp-kit" class="btn secondary"><i class="fas fa-history"></i> Log</a>
+                    </div>
+                </div>
 
-                    msg.innerHTML = "<span class='success'>Selesai.</span>";
-                    btn.innerText = "SELESAI";
-                } else {
-                    msg.innerHTML = `<span class='error'>${data.message}</span>`;
-                    btn.disabled = false;
-                    btn.innerText = "DOWNLOAD FILE";
-                }
-            } catch (e) {
-                msg.innerHTML = "<span class='error'>Error.</span>";
-                btn.disabled = false;
-            }
+            </div>
+        </div>
+    </section>
+
+    <a href="#" class="icon-btn back-to-top" id="btnBackToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+            </div>
+            <p style="margin-top:20px">&copy; 2026 Heraclaus Studio.</p>
+        </div>
+    </footer>
+
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = themeBtn.querySelector('i');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
         }
 
-        // === FITUR GANTI PASSWORD ===
-        function togglePassForm() {
-            const form = document.getElementById('passFormArea');
-            if (form.classList.contains('hidden')) {
-                form.classList.remove('hidden');
+        function toggleTheme() {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
             } else {
-                form.classList.add('hidden');
-                document.getElementById('msg').innerHTML = ""; // Bersihkan pesan
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
             }
         }
-
-        async function doChangePass() {
-            const oldP = document.getElementById('oldPass').value;
-            const newP = document.getElementById('newPass').value;
-            const msg = document.getElementById('msg');
-
-            if(!oldP || !newP) return msg.innerHTML = "<span class='error'>Isi semua kolom password!</span>";
-
-            msg.innerHTML = "<span class='loading'>Mengupdate password...</span>";
-
-            try {
-                // Kirim request ke Google Sheet
-                const res = await fetch(`${API_URL}?action=change_password&u=${currentUser}&oldp=${oldP}&newp=${newP}`);
-                const data = await res.json();
-
-                if(data.status === "success") {
-                    msg.innerHTML = "<span class='success'>Password Berhasil Diubah!</span>";
-                    // Kosongkan form dan tutup
-                    document.getElementById('oldPass').value = "";
-                    document.getElementById('newPass').value = "";
-                    setTimeout(() => togglePassForm(), 2000);
-                } else {
-                    msg.innerHTML = `<span class='error'>${data.message}</span>`;
-                }
-            } catch (e) {
-                msg.innerHTML = "<span class='error'>Gagal mengubah password.</span>";
-            }
-        }
-
-        function doLogout() { location.reload(); }
     </script>
+    <script src="admin.js"></script>
 </body>
 </html>

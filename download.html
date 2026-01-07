@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Area - Heraclaus Studio</title>
+    
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css"> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* CSS TAMBAHAN KHUSUS MEMBER AREA (Agar serasi dengan style.css) */
+        body {
+            display: flex; flex-direction: column; min-height: 100vh;
+        }
+
+        .auth-wrapper {
+            flex: 1;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-card {
+            width: 100%; max-width: 400px;
+            text-align: center;
+            border: 1px solid rgba(109, 93, 252, 0.1); /* Aksen tipis ungu */
+        }
+
+        .input-group { position: relative; margin-bottom: 15px; text-align: left; }
+        
+        /* Input Style menyesuaikan tema rounded website */
+        .custom-input {
+            width: 100%;
+            padding: 14px 20px;
+            padding-left: 45px; /* Space untuk icon */
+            border-radius: 50px;
+            border: 2px solid var(--bg-surface-2);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: 0.3s;
+        }
+        
+        .custom-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(109, 93, 252, 0.1);
+        }
+
+        .input-icon {
+            position: absolute; left: 18px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        .hidden { display: none !important; }
+
+        /* Status Messages */
+        #msg { margin-top: 15px; font-size: 0.85rem; font-weight: 500; min-height: 20px; }
+        .text-error { color: var(--danger); }
+        .text-success { color: var(--success); }
+        .text-loading { color: var(--warning); }
+
+        /* Divider */
+        .divider {
+            height: 1px; background: var(--bg-surface-2);
+            margin: 20px 0;
+        }
+
+        /* Change Password Form Animation */
+        .pass-form {
+            background: var(--bg-surface-2);
+            padding: 20px;
+            border-radius: 20px;
+            margin-top: 15px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <a href="index.html" class="logo">HERACLAUS</a>
+            <div class="nav-right">
+                <button class="icon-btn" id="theme-btn" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <section class="auth-wrapper">
+        
+        <div id="loginPage" class="card auth-card">
+            <div class="img-placeholder" style="height: 100px; background: var(--bg-surface-2); border-radius: 15px; margin-bottom: 20px;">
+                <i class="fas fa-user-lock" style="font-size: 3rem; color: var(--primary);"></i>
+            </div>
+            
+            <h2 style="color: var(--primary);">Member Login</h2>
+            <p style="color: var(--text-muted); margin-bottom: 25px; font-size: 0.9rem;">Masuk untuk mengakses file premium.</p>
+
+            <div class="input-group">
+                <i class="fas fa-user input-icon"></i>
+                <input type="text" id="uName" class="custom-input" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input type="password" id="uPass" class="custom-input" placeholder="Password">
+            </div>
+
+            <button class="btn primary" onclick="doLogin()" style="width: 100%;">
+                MASUK <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <div id="dashboardPage" class="card auth-card hidden">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3 style="margin:0;">Dashboard</h3>
+                <span class="badge script" id="displayUser"><i class="fas fa-user"></i> User</span>
+            </div>
+
+            <div style="text-align: left; margin-bottom: 10px;">
+                <label style="font-size: 0.85rem; font-weight: bold; color: var(--text-muted);">Redeem Token</label>
+            </div>
+            
+            <div class="input-group">
+                <i class="fas fa-ticket-alt input-icon"></i>
+                <input type="text" id="tokenIn" class="custom-input" placeholder="Masukkan Token (XXXX-XXXX)">
+            </div>
+
+            <button class="btn primary" id="btnDownload" onclick="doRedeem()" style="width: 100%;">
+                <i class="fas fa-cloud-download-alt"></i> DOWNLOAD FILE
+            </button>
+
+            <div id="msg"></div>
+
+            <div class="divider"></div>
+
+            <button class="btn secondary" onclick="togglePassForm()" style="width: 100%; font-size: 0.8rem;">
+                <i class="fas fa-key"></i> Ganti Password
+            </button>
+
+            <div id="passFormArea" class="pass-form hidden">
+                <h4 style="margin-top:0; font-size: 0.9rem;">Ubah Password</h4>
+                <input type="password" id="oldPass" class="custom-input" placeholder="Password Lama" style="margin-bottom: 10px; padding: 10px 20px;">
+                <input type="password" id="newPass" class="custom-input" placeholder="Password Baru" style="margin-bottom: 10px; padding: 10px 20px;">
+                
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn primary" onclick="doChangePass()" style="flex:1; font-size: 0.8rem;">Simpan</button>
+                    <button class="btn secondary" onclick="togglePassForm()" style="flex:1; font-size: 0.8rem;">Batal</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <a href="#" onclick="doLogout()" style="color: var(--danger); font-size: 0.85rem; font-weight: 600;">
+                    <i class="fas fa-sign-out-alt"></i> Keluar / Logout
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Heraclaus Studio.</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. THEME TOGGLE (Sesuai script kamu sebelumnya) ---
+        const themeBtn = document.getElementById('theme-btn');
+        const themeIcon = themeBtn.querySelector('i');
+        const body = document.body;
+        const currentTheme = localStorage.getItem('theme');
+
+        if (currentTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+
+        function toggleTheme() {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // --- 2. SYSTEM LOGIC (API Google Sheets) ---
+        // GANTI DENGAN URL API SCRIPT KAMU YANG BARU (AKHIRAN /exec)
+        const API_URL = "https://script.google.com/macros/s/AKfycbx...../exec"; 
+
+        let currentUser = "";
+
+        // Fungsi Helper Pesan
+        function showMsg(html, type = "") {
+            const msg = document.getElementById('msg');
+            msg.innerHTML = html;
+            msg.className = ""; // Reset class
+            if(type) msg.classList.add(type);
+        }
+
+        // === FUNGSI LOGIN ===
+        async function doLogin() {
+            const u = document.getElementById('uName').value;
+            const p = document.getElementById('uPass').value;
+            
+            if(!u || !p) return showMsg("Mohon isi Username & Password!", "text-error");
+            
+            // Ubah tombol jadi loading
+            const btn = document.querySelector('#loginPage .btn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Checking...';
+            btn.disabled = true;
+
+            try {
+                const res = await fetch(`${API_URL}?action=login&u=${u}&p=${p}`);
+                const data = await res.json();
+                
+                if(data.status === "success") {
+                    currentUser = u;
+                    document.getElementById('displayUser').innerHTML = `<i class="fas fa-user"></i> ${u}`;
+                    
+                    // Transisi UI
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('dashboardPage').classList.remove('hidden');
+                    showMsg(""); // Bersihkan pesan
+                } else {
+                    showMsg(`<i class="fas fa-times-circle"></i> ${data.message}`, "text-error");
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                }
+            } catch (e) { 
+                showMsg("<i class='fas fa-wifi'></i> Gagal terhubung ke server.", "text-error");
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        // === FUNGSI DOWNLOAD ===
+        async function doRedeem() {
+            const token = document.getElementById('tokenIn').value;
+            const btn = document.getElementById('btnDownload');
+
+            if(!token) return showMsg("Masukkan token terlebih dahulu.", "text-error");
+            
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> MEMPROSES...';
+            showMsg("Memverifikasi token & akun...", "text-loading");
+
+            try {
+                const res = await fetch(`${API_URL}?action=download&token=${token}&user=${currentUser}`);
+                const data = await res.json();
+
+                if(data.status === "success") {
+                    showMsg("Token Valid! Mengunduh...", "text-success");
+                    
+                    // Proses Decode & Download
+                    const byteCharacters = atob(data.data);
+                    const byteNumbers = new Array(byteCharacters.length);
+                    for (let i = 0; i < byteCharacters.length; i++) { byteNumbers[i] = byteCharacters.charCodeAt(i); }
+                    const byteArray = new Uint8Array(byteNumbers);
+                    const blob = new Blob([byteArray], {type: data.mimeType});
+                    
+                    const link = document.createElement('a');
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = data.fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    showMsg(`<i class="fas fa-check-circle"></i> Berhasil! File ${data.fileName} diunduh.`, "text-success");
+                    btn.innerHTML = '<i class="fas fa-check"></i> SELESAI';
+                } else {
+                    showMsg(`<i class="fas fa-exclamation-triangle"></i> ${data.message}`, "text-error");
+                    btn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> DOWNLOAD FILE';
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                showMsg("<i class='fas fa-bug'></i> Terjadi kesalahan sistem.", "text-error");
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> COBA LAGI';
+            }
+        }
+
+        // === FITUR GANTI PASSWORD ===
+        function togglePassForm() {
+            const form = document.getElementById('passFormArea');
+            if (form.classList.contains('hidden')) {
+                form.classList.remove('hidden');
+            } else {
+                form.classList.add('hidden');
+            }
+        }
+
+        async function doChangePass() {
+            const oldP = document.getElementById('oldPass').value;
+            const newP = document.getElementById('newPass').value;
+            
+            if(!oldP || !newP) return alert("Isi password lama dan baru!");
+
+            showMsg("Mengupdate password...", "text-loading");
+
+            try {
+                const res = await fetch(`${API_URL}?action=change_password&u=${currentUser}&oldp=${oldP}&newp=${newP}`);
+                const data = await res.json();
+
+                if(data.status === "success") {
+                    showMsg("Password Berhasil Diubah!", "text-success");
+                    document.getElementById('oldPass').value = "";
+                    document.getElementById('newPass').value = "";
+                    setTimeout(() => togglePassForm(), 1500);
+                } else {
+                    showMsg(data.message, "text-error");
+                }
+            } catch (e) {
+                showMsg("Gagal mengubah password.", "text-error");
+            }
+        }
+
+        function doLogout() { location.reload(); }
+    </script>
+</body>
+</html>
