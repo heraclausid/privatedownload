@@ -5,36 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heraclaus Member Area</title>
     <style>
-        body {
-            font-family: 'Consolas', monospace;
-            background-color: #000;
-            color: #0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            width: 350px;
-            padding: 30px;
-            border: 1px solid #333;
-            background: #111;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
-            text-align: center;
-        }
+        body { font-family: 'Consolas', monospace; background-color: #000; color: #0f0; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { width: 350px; padding: 30px; border: 1px solid #333; background: #111; box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); text-align: center; }
         
-        /* Utility Classes */
         .hidden { display: none; }
-        .input-box { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; text-align: center; box-sizing: border-box; }
+        .input-box { width: 100%; padding: 10px; margin: 5px 0; background: #000; border: 1px solid #444; color: white; text-align: center; box-sizing: border-box; }
         .btn { width: 100%; padding: 10px; background: #008000; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
         .btn:hover { background: #00aa00; }
-        .btn:disabled { background: #333; cursor: not-allowed; }
-        .logout { color: #555; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 15px; display: block; }
+        .btn-secondary { background: #333; color: #aaa; margin-top: 5px; }
+        .btn-secondary:hover { background: #444; color: white; }
         
+        .logout { color: #555; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 20px; display: block; }
         h2 { border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
         #msg { margin-top: 15px; font-size: 12px; min-height: 15px; }
         .error { color: red; } .success { color: #0f0; } .loading { color: yellow; }
+        
+        /* Style khusus form ganti password */
+        .pass-form { margin-top: 20px; padding-top: 15px; border-top: 1px dashed #333; text-align: left; }
+        .pass-form label { font-size: 11px; color: #888; }
     </style>
 </head>
 <body>
@@ -48,84 +36,88 @@
         </div>
 
         <div id="dashboardPage" class="hidden">
-            <h2>MEMBER ACCESS</h2>
-            <p>Welcome, <span id="displayUser" style="color:white; font-weight:bold;"></span></p>
+            <h2>MEMBER AREA</h2>
+            <p>User: <span id="displayUser" style="color:white; font-weight:bold;"></span></p>
             
-            <hr style="border-color:#333">
-            <p style="font-size:12px; color:#aaa;">Masukkan Token Spesial Anda:</p>
+            <div style="margin-bottom: 20px;">
+                <p style="font-size:12px; color:#aaa;">Redeem Token:</p>
+                <input type="text" id="tokenIn" class="input-box" placeholder="XXXX-XXXX">
+                <button class="btn" onclick="doRedeem()">DOWNLOAD FILE</button>
+            </div>
+
+            <button class="btn btn-secondary" onclick="togglePassForm()">🔐 Ubah Password</button>
+
+            <div id="passFormArea" class="pass-form hidden">
+                <label>Password Lama:</label>
+                <input type="password" id="oldPass" class="input-box">
+                
+                <label>Password Baru:</label>
+                <input type="password" id="newPass" class="input-box">
+                
+                <button class="btn" onclick="doChangePass()" style="font-size:12px;">SIMPAN PASSWORD BARU</button>
+                <button class="btn btn-secondary" onclick="togglePassForm()" style="font-size:12px;">BATAL</button>
+            </div>
             
-            <input type="text" id="tokenIn" class="input-box" placeholder="XXXX-XXXX">
-            <button class="btn" onclick="doRedeem()">DOWNLOAD FILE</button>
-            
-            <span class="logout" onclick="doLogout()">Log Out / Keluar</span>
+            <span class="logout" onclick="doLogout()">Keluar / Logout</span>
         </div>
 
         <div id="msg"></div>
     </div>
 
     <script>
-        // === GANTI URL INI ===
-        const API_URL = "https://script.google.com/macros/s/AKfycbwuli_9pm_7E_796Rp-y8M6_-AFvt1FMCL_BiCM4EXA1CX2m6JCyseiXn20g8IGNczu/exec"; 
+        // === GANTI DENGAN URL API BARU ===
+        const API_URL = "https://script.google.com/macros/s/AKfycbz8TJUeFuCw1mgZZunpZtyckKuHMiSP1sEs1-vsbOhGSCRbbjKySSmNgArYaL_PiP_V/exec"; 
 
-        // Variable untuk menyimpan siapa yang sedang login
         let currentUser = "";
 
+        // === FUNGSI LOGIN ===
         async function doLogin() {
             const u = document.getElementById('uName').value;
             const p = document.getElementById('uPass').value;
             const msg = document.getElementById('msg');
             
-            if(!u || !p) return msg.innerHTML = "<span class='error'>Isi Username & Password!</span>";
+            if(!u || !p) return msg.innerHTML = "<span class='error'>Data tidak lengkap!</span>";
             
-            msg.innerHTML = "<span class='loading'>Sedang mengecek akun...</span>";
+            msg.innerHTML = "<span class='loading'>Login...</span>";
             
             try {
-                // Request Login ke Google Script
                 const res = await fetch(`${API_URL}?action=login&u=${u}&p=${p}`);
                 const data = await res.json();
                 
                 if(data.status === "success") {
-                    // Login Berhasil
                     currentUser = u;
                     document.getElementById('displayUser').innerText = u;
-                    
-                    // Pindah Halaman
                     document.getElementById('loginPage').classList.add('hidden');
                     document.getElementById('dashboardPage').classList.remove('hidden');
                     msg.innerHTML = "";
                 } else {
                     msg.innerHTML = `<span class='error'>${data.message}</span>`;
                 }
-            } catch (e) {
-                msg.innerHTML = "<span class='error'>Gagal terhubung ke server.</span>";
-            }
+            } catch (e) { msg.innerHTML = "<span class='error'>Gagal koneksi server.</span>"; }
         }
 
+        // === FUNGSI DOWNLOAD ===
         async function doRedeem() {
             const token = document.getElementById('tokenIn').value;
             const msg = document.getElementById('msg');
-            const btn = document.querySelector('#dashboardPage .btn');
+            const btn = document.querySelector('#dashboardPage .btn'); // Tombol download
 
-            if(!token) return msg.innerHTML = "<span class='error'>Masukkan Token dulu.</span>";
+            if(!token) return msg.innerHTML = "<span class='error'>Isi token dulu.</span>";
             
             btn.disabled = true;
-            btn.innerText = "MEMPROSES...";
-            msg.innerHTML = "<span class='loading'>Verifikasi Token & Akun...</span>";
+            btn.innerText = "PROSES...";
+            msg.innerHTML = "<span class='loading'>Verifikasi...</span>";
 
             try {
-                // Request Download dengan menyertakan USERNAME yang sedang login
                 const res = await fetch(`${API_URL}?action=download&token=${token}&user=${currentUser}`);
                 const data = await res.json();
 
                 if(data.status === "success") {
-                    msg.innerHTML = "<span class='loading'>Token Valid! Mengunduh...</span>";
+                    msg.innerHTML = "<span class='loading'>Sedang mengunduh...</span>";
                     
-                    // Download Process
                     const byteCharacters = atob(data.data);
                     const byteNumbers = new Array(byteCharacters.length);
-                    for (let i = 0; i < byteCharacters.length; i++) {
-                        byteNumbers[i] = byteCharacters.charCodeAt(i);
-                    }
+                    for (let i = 0; i < byteCharacters.length; i++) { byteNumbers[i] = byteCharacters.charCodeAt(i); }
                     const byteArray = new Uint8Array(byteNumbers);
                     const blob = new Blob([byteArray], {type: data.mimeType});
                     
@@ -136,22 +128,59 @@
                     link.click();
                     document.body.removeChild(link);
 
-                    msg.innerHTML = "<span class='success'>Download Berhasil.</span>";
+                    msg.innerHTML = "<span class='success'>Selesai.</span>";
                     btn.innerText = "SELESAI";
                 } else {
                     msg.innerHTML = `<span class='error'>${data.message}</span>`;
-                    btn.innerText = "DOWNLOAD FILE";
                     btn.disabled = false;
+                    btn.innerText = "DOWNLOAD FILE";
                 }
             } catch (e) {
-                msg.innerHTML = "<span class='error'>Error Server.</span>";
+                msg.innerHTML = "<span class='error'>Error.</span>";
                 btn.disabled = false;
             }
         }
 
-        function doLogout() {
-            location.reload(); // Refresh halaman untuk logout
+        // === FITUR GANTI PASSWORD ===
+        function togglePassForm() {
+            const form = document.getElementById('passFormArea');
+            if (form.classList.contains('hidden')) {
+                form.classList.remove('hidden');
+            } else {
+                form.classList.add('hidden');
+                document.getElementById('msg').innerHTML = ""; // Bersihkan pesan
+            }
         }
+
+        async function doChangePass() {
+            const oldP = document.getElementById('oldPass').value;
+            const newP = document.getElementById('newPass').value;
+            const msg = document.getElementById('msg');
+
+            if(!oldP || !newP) return msg.innerHTML = "<span class='error'>Isi semua kolom password!</span>";
+
+            msg.innerHTML = "<span class='loading'>Mengupdate password...</span>";
+
+            try {
+                // Kirim request ke Google Sheet
+                const res = await fetch(`${API_URL}?action=change_password&u=${currentUser}&oldp=${oldP}&newp=${newP}`);
+                const data = await res.json();
+
+                if(data.status === "success") {
+                    msg.innerHTML = "<span class='success'>Password Berhasil Diubah!</span>";
+                    // Kosongkan form dan tutup
+                    document.getElementById('oldPass').value = "";
+                    document.getElementById('newPass').value = "";
+                    setTimeout(() => togglePassForm(), 2000);
+                } else {
+                    msg.innerHTML = `<span class='error'>${data.message}</span>`;
+                }
+            } catch (e) {
+                msg.innerHTML = "<span class='error'>Gagal mengubah password.</span>";
+            }
+        }
+
+        function doLogout() { location.reload(); }
     </script>
 </body>
 </html>
