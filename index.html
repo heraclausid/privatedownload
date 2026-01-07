@@ -3,85 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heraclaus Secure Download</title>
+    <title>Heraclaus Member Area</title>
     <style>
-        body { font-family: monospace; background: #0f0f0f; color: #00ff00; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .box { background: #1a1a1a; padding: 30px; border: 1px solid #333; border-radius: 8px; text-align: center; width: 90%; max-width: 400px; box-shadow: 0 0 20px rgba(0, 255, 0, 0.1); }
-        h2 { margin-top: 0; text-transform: uppercase; letter-spacing: 2px; }
-        input { width: 100%; padding: 10px; margin: 15px 0; background: #000; border: 1px solid #333; color: #fff; text-align: center; font-family: monospace; }
-        button { width: 100%; padding: 10px; background: #008000; color: #fff; border: none; cursor: pointer; font-weight: bold; font-family: monospace; }
-        button:hover { background: #00aa00; }
-        button:disabled { background: #333; cursor: not-allowed; }
-        #status { margin-top: 15px; font-size: 12px; min-height: 20px; }
-        .loading { color: yellow; }
-        .error { color: red; }
-        .success { color: #00ff00; }
+        body {
+            font-family: 'Consolas', monospace;
+            background-color: #000;
+            color: #0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            width: 350px;
+            padding: 30px;
+            border: 1px solid #333;
+            background: #111;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            text-align: center;
+        }
+        
+        /* Utility Classes */
+        .hidden { display: none; }
+        .input-box { width: 100%; padding: 10px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; text-align: center; box-sizing: border-box; }
+        .btn { width: 100%; padding: 10px; background: #008000; color: white; border: none; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        .btn:hover { background: #00aa00; }
+        .btn:disabled { background: #333; cursor: not-allowed; }
+        .logout { color: #555; text-decoration: underline; cursor: pointer; font-size: 12px; margin-top: 15px; display: block; }
+        
+        h2 { border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 0; }
+        #msg { margin-top: 15px; font-size: 12px; min-height: 15px; }
+        .error { color: red; } .success { color: #0f0; } .loading { color: yellow; }
     </style>
 </head>
 <body>
 
-    <div class="box">
-        <h2>System Download</h2>
-        <p>Masukkan One-Time Token Anda</p>
-        
-        <input type="text" id="tokenIn" placeholder="X-X-X-X">
-        <button id="btnD" onclick="downloadFile()">DOWNLOAD FILE</button>
-        
-        <p id="status"></p>
+    <div class="container">
+        <div id="loginPage">
+            <h2>SYSTEM LOGIN</h2>
+            <input type="text" id="uName" class="input-box" placeholder="Username">
+            <input type="password" id="uPass" class="input-box" placeholder="Password">
+            <button class="btn" onclick="doLogin()">MASUK</button>
+        </div>
+
+        <div id="dashboardPage" class="hidden">
+            <h2>MEMBER ACCESS</h2>
+            <p>Welcome, <span id="displayUser" style="color:white; font-weight:bold;"></span></p>
+            
+            <hr style="border-color:#333">
+            <p style="font-size:12px; color:#aaa;">Masukkan Token Spesial Anda:</p>
+            
+            <input type="text" id="tokenIn" class="input-box" placeholder="XXXX-XXXX">
+            <button class="btn" onclick="doRedeem()">DOWNLOAD FILE</button>
+            
+            <span class="logout" onclick="doLogout()">Log Out / Keluar</span>
+        </div>
+
+        <div id="msg"></div>
     </div>
 
     <script>
-        // PASTE URL DARI GOOGLE APPS SCRIPT DI SINI
-        const API_URL = "https://script.google.com/macros/s/AKfycbwXH3L5Q0fV9B5S3FYqEklSYmUkO8vAOisUetqiWPVFxNvvvC0u6O0ZEYCBEiqBCHVa/exec"; 
+        // === GANTI URL INI ===
+        const API_URL = "https://script.google.com/macros/s/AKfycbx...../exec"; 
 
-        async function downloadFile() {
+        // Variable untuk menyimpan siapa yang sedang login
+        let currentUser = "";
+
+        async function doLogin() {
+            const u = document.getElementById('uName').value;
+            const p = document.getElementById('uPass').value;
+            const msg = document.getElementById('msg');
+            
+            if(!u || !p) return msg.innerHTML = "<span class='error'>Isi Username & Password!</span>";
+            
+            msg.innerHTML = "<span class='loading'>Sedang mengecek akun...</span>";
+            
+            try {
+                // Request Login ke Google Script
+                const res = await fetch(`${API_URL}?action=login&u=${u}&p=${p}`);
+                const data = await res.json();
+                
+                if(data.status === "success") {
+                    // Login Berhasil
+                    currentUser = u;
+                    document.getElementById('displayUser').innerText = u;
+                    
+                    // Pindah Halaman
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('dashboardPage').classList.remove('hidden');
+                    msg.innerHTML = "";
+                } else {
+                    msg.innerHTML = `<span class='error'>${data.message}</span>`;
+                }
+            } catch (e) {
+                msg.innerHTML = "<span class='error'>Gagal terhubung ke server.</span>";
+            }
+        }
+
+        async function doRedeem() {
             const token = document.getElementById('tokenIn').value;
-            const btn = document.getElementById('btnD');
-            const status = document.getElementById('status');
+            const msg = document.getElementById('msg');
+            const btn = document.querySelector('#dashboardPage .btn');
 
-            if(!token) return status.innerHTML = "<span class='error'>Token kosong!</span>";
-
-            // UI Loading
+            if(!token) return msg.innerHTML = "<span class='error'>Masukkan Token dulu.</span>";
+            
             btn.disabled = true;
-            btn.innerText = "MEMPROSES DATA...";
-            status.innerHTML = "<span class='loading'>Menghubungi server & memverifikasi token...</span>";
+            btn.innerText = "MEMPROSES...";
+            msg.innerHTML = "<span class='loading'>Verifikasi Token & Akun...</span>";
 
             try {
-                // Fetch ke Google Script
-                const response = await fetch(`${API_URL}?token=${token}`);
-                const result = await response.json();
+                // Request Download dengan menyertakan USERNAME yang sedang login
+                const res = await fetch(`${API_URL}?action=download&token=${token}&user=${currentUser}`);
+                const data = await res.json();
 
-                if (result.status === "success") {
-                    status.innerHTML = "<span class='loading'>Token Valid! Mengunduh data (Direct Stream)...</span>";
+                if(data.status === "success") {
+                    msg.innerHTML = "<span class='loading'>Token Valid! Mengunduh...</span>";
                     
-                    // PROSES KONVERSI BASE64 KE FILE (Tanpa Link Asli)
-                    const byteCharacters = atob(result.data);
+                    // Download Process
+                    const byteCharacters = atob(data.data);
                     const byteNumbers = new Array(byteCharacters.length);
                     for (let i = 0; i < byteCharacters.length; i++) {
                         byteNumbers[i] = byteCharacters.charCodeAt(i);
                     }
                     const byteArray = new Uint8Array(byteNumbers);
-                    const blob = new Blob([byteArray], {type: result.mimeType});
-
-                    // Trigger Download Otomatis
+                    const blob = new Blob([byteArray], {type: data.mimeType});
+                    
                     const link = document.createElement('a');
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = result.fileName;
+                    link.download = data.fileName;
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
 
-                    status.innerHTML = "<span class='success'>Berhasil! Token telah hangus.</span>";
+                    msg.innerHTML = "<span class='success'>Download Berhasil.</span>";
                     btn.innerText = "SELESAI";
                 } else {
-                    throw new Error(result.message);
+                    msg.innerHTML = `<span class='error'>${data.message}</span>`;
+                    btn.innerText = "DOWNLOAD FILE";
+                    btn.disabled = false;
                 }
-
-            } catch (error) {
-                status.innerHTML = `<span class='error'>Gagal: ${error.message}</span>`;
+            } catch (e) {
+                msg.innerHTML = "<span class='error'>Error Server.</span>";
                 btn.disabled = false;
-                btn.innerText = "COBA LAGI";
             }
+        }
+
+        function doLogout() {
+            location.reload(); // Refresh halaman untuk logout
         }
     </script>
 </body>
