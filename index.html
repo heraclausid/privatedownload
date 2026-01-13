@@ -2,179 +2,234 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heraclaus Studio | Minecraft Bedrock Addons</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Soft Builder Ultimate</title>
     
-    <meta name="description" content="Download Addon Minecraft Bedrock berkualitas tinggi buatan Heraclaus Studio. Script API, Custom UI, dan fitur canggih lainnya.">
-    <meta property="og:title" content="Heraclaus Studio - Next Gen Bedrock Addons">
-    <meta property="og:description" content="Pusat download addon Minecraft Bedrock dengan fitur Script API dan UI Kustom.">
-    <meta property="og:type" content="website">
-    <meta name="theme-color" content="#6d5dfc">
-    
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style id="generated-css"></style>
 </head>
 <body>
+    <header class="top-bar">
+        <div class="logo-area">
+            <div class="logo-circle">
+                <span class="material-symbols-rounded">dashboard_customize</span>
+            </div>
+            <h1>Builder</h1>
+        </div>
+        <div class="header-actions">
+            <button class="icon-btn danger-soft" id="resetBtn" title="Hapus Semua">
+                <span class="material-symbols-rounded">delete_sweep</span>
+            </button>
+            <button class="icon-btn" id="previewBtn" onclick="togglePreview(true)" title="Mode Preview">
+                <span class="material-symbols-rounded">visibility</span>
+            </button>
+            <button class="icon-btn" id="layerBtn" title="Layer">
+                <span class="material-symbols-rounded">layers</span>
+            </button>
+            <div class="divider-v"></div>
+            <div class="menu-wrapper">
+                <button class="icon-btn" id="menuBtn" onclick="toggleMainMenu()" title="Menu">
+                    <span class="material-symbols-rounded">menu</span>
+                </button>
+                <div class="main-menu-dropdown" id="mainMenuDropdown">
+                    <input type="file" id="importInput" accept=".html" style="display: none;">
+                    <button class="menu-item" id="importBtn">
+                        <span class="material-symbols-rounded">upload_file</span> Import Project
+                    </button>
+                    <button class="menu-item" id="globalBtn">
+                        <span class="material-symbols-rounded">tune</span> Global Settings
+                    </button>
+                    <div class="menu-divider"></div>
+                    <button class="menu-item primary-text" id="exportBtn">
+                        <span class="material-symbols-rounded">code</span> Export Code
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <div class="container">
-        <nav>
-            <div class="logo">HERACLAUS</div>
-            <div class="nav-right">
-                <a href="https://discord.gg/contoh" class="btn secondary">
-                    <i class="fab fa-discord"></i> Discord
-                </a>
-                <button class="icon-btn" id="theme-btn" onclick="toggleTheme()">
-                    <i class="fas fa-moon"></i>
+    <main id="editorCanvas" class="canvas">
+        <div class="empty-state" id="emptyState">
+            <div class="illustration"><span class="material-symbols-rounded">layers</span></div>
+            <h3>Area Desain</h3>
+            <p>Klik tombol + di bawah untuk memulai</p>
+        </div>
+    </main>
+
+    <div id="toast" class="toast">Project Disimpan</div>
+
+    <div class="fab-stack">
+        <button class="mini-fab" id="undoBtn" onclick="undo()" title="Undo">
+            <span class="material-symbols-rounded">undo</span>
+        </button>
+        <button class="mini-fab" id="redoBtn" onclick="redo()" title="Redo">
+            <span class="material-symbols-rounded">redo</span>
+        </button>
+        <div style="height: 8px;"></div> 
+        <button class="fab" id="addFab">
+            <span class="material-symbols-rounded">add</span>
+        </button>
+    </div>
+    
+    <button class="exit-preview-btn" id="exitPreviewBtn" onclick="togglePreview(false)">
+        <span class="material-symbols-rounded">visibility_off</span> Keluar Preview
+    </button>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="bottom-sheet" id="addSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Tambah Widget</h3>
+            <button class="icon-btn close-sheet-btn" onclick="closeAllSheets()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="sheet-body">
+            <div class="grid-menu">
+                <button class="grid-item" data-type="grid-row">
+                    <div class="icon-box"><span class="material-symbols-rounded">view_column</span></div>
+                    <span>2 Columns</span>
+                </button>
+                
+                <button class="grid-item" data-type="container">
+                    <div class="icon-box"><span class="material-symbols-rounded">crop_free</span></div>
+                    <span>Container</span>
+                </button>
+                <button class="grid-item" data-type="card">
+                    <div class="icon-box"><span class="material-symbols-rounded">call_to_action</span></div>
+                    <span>Card</span>
+                </button>
+                <button class="grid-item" data-type="heading">
+                    <div class="icon-box"><span class="material-symbols-rounded">title</span></div>
+                    <span>Heading</span>
+                </button>
+                <button class="grid-item" data-type="paragraph">
+                    <div class="icon-box"><span class="material-symbols-rounded">text_fields</span></div>
+                    <span>Text</span>
+                </button>
+                <button class="grid-item" data-type="button">
+                    <div class="icon-box"><span class="material-symbols-rounded">smart_button</span></div>
+                    <span>Button</span>
+                </button>
+                <button class="grid-item" data-type="image">
+                    <div class="icon-box"><span class="material-symbols-rounded">image</span></div>
+                    <span>Image</span>
+                </button>
+                <button class="grid-item" data-type="theme-toggle">
+                    <div class="icon-box"><span class="material-symbols-rounded">contrast</span></div>
+                    <span>Dark Mode</span>
+                </button>
+                <button class="grid-item" data-type="divider">
+                    <div class="icon-box"><span class="material-symbols-rounded">horizontal_rule</span></div>
+                    <span>Divider</span>
+                </button>
+                <button class="grid-item" data-type="spacer">
+                    <div class="icon-box"><span class="material-symbols-rounded">space_bar</span></div>
+                    <span>Spacer</span>
                 </button>
             </div>
-        </nav>
+        </div>
     </div>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Next-Gen Bedrock Addons</h1>
-            <p>Meningkatkan pengalaman bermain Minecraft Bedrock dengan Script API canggih, UI kustom, dan fitur inovatif.</p>
-            <div style="display: flex; justify-content: center; gap: 15px;">
-                <a href="#featured" class="btn primary">Project Unggulan</a>
-                <a href="#gallery" class="btn secondary">Lihat Semua</a>
+    <div class="bottom-sheet" id="editSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 id="editTitle" class="sheet-title">Edit Properti</h3>
+            <button class="icon-btn close-sheet-btn" onclick="closeAllSheets()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="pill-tabs">
+            <button class="pill-btn active" data-tab="content">Konten</button>
+            <button class="pill-btn" data-tab="style">Style</button>
+        </div>
+        <div class="sheet-body">
+            <div id="tab-content" class="tab-pane active">
+                <div id="formContent" class="form-stack"></div>
+            </div>
+            <div id="tab-style" class="tab-pane">
+                <div id="formStyle" class="form-stack"></div>
             </div>
         </div>
-    </section>
+        <div class="sheet-footer">
+            <button class="btn-save" id="saveEditBtn">Terapkan Perubahan</button>
+        </div>
+    </div>
 
-    <section id="featured">
-        <div class="container">
-            <div class="card featured-wrapper">
-                <div class="featured-img img-placeholder">
-                    <img src="https://via.placeholder.com/500x500/1e1e1e/7d7d7d?text=Admin+Suite+Preview" alt="Admin Suite">
+    <div class="bottom-sheet" id="iconSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Pilih Ikon</h3>
+            <button class="icon-btn close-sheet-btn" onclick="closeAllSheets()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="sheet-body">
+            <div id="iconGrid" class="icon-grid"></div>
+        </div>
+    </div>
+
+    <div class="bottom-sheet" id="globalSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Global Settings</h3>
+            <button class="icon-btn close-sheet-btn" onclick="closeAllSheets()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="sheet-body">
+            <div class="form-stack">
+                <div class="form-group">
+                    <label style="font-size:13px; font-weight:500; display:block; margin-bottom:8px">Font Family</label>
+                    <select id="global-font" class="input-field">
+                        <option value="'Outfit', sans-serif">Outfit (Modern)</option>
+                        <option value="'Inter', sans-serif">Inter (Clean)</option>
+                        <option value="serif">Serif</option>
+                        <option value="monospace">Monospace</option>
+                    </select>
                 </div>
-                
-                <div class="featured-content">
-                    <span class="badge stable"><i class="fas fa-check-circle"></i> V1.2 Stable</span>
-                    <span class="badge script"><i class="fas fa-code"></i> Script API</span>
-                    
-                    <h2 style="font-size: 2rem; margin: 15px 0 10px 0;">Admin Suite Pro</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 20px;">
-                        Kelola server atau realm kamu layaknya profesional. Dilengkapi dengan <b>Custom JSON UI</b> untuk sistem Ban, Teleportasi Warp, dan Gamemode Manager.
-                    </p>
-                    
-                    <ul style="color: var(--text-muted); padding-left: 20px; margin-bottom: 30px;">
-                        <li>Ban & Kick UI dengan alasan kustom</li>
-                        <li>Sistem Warp Point (Set & Teleport)</li>
-                        <li>Anti-Cheat Tools & Player Inspect</li>
-                    </ul>
-
-                    <div class="card-actions">
-                        <a href="#" class="btn primary"><i class="fas fa-download"></i> Download</a>
-                        <a href="changelog.html#admin-suite" class="btn secondary"><i class="fas fa-history"></i> Update Log</a>
-                    </div>
+                <div class="form-group" style="margin-top:16px">
+                    <label style="font-size:13px; font-weight:500; display:block; margin-bottom:8px">Background Page (Light Mode)</label>
+                    <div class="color-picker-wrapper"><input type="color" id="global-bg" value="#f1f5f9" style="width:100%; height:40px; border:1px solid var(--border); border-radius:6px; cursor:pointer"></div>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="sheet-footer"><button class="btn-save" id="saveGlobalBtn">Simpan</button></div>
+    </div>
 
-    <section id="gallery">
-        <div class="container">
-            <h2 class="section-title">Karya Lainnya</h2>
-            
-            <div class="addon-grid">
-                
-                <div class="card">
-                    <div class="img-placeholder">
-                        <img src="https://via.placeholder.com/400x250/1e1e1e/7d7d7d?text=Discord+Bot" alt="Bot">
-                    </div>
-                    <div class="card-meta">
-                        <span><i class="fas fa-robot"></i> Script</span>
-                        <span style="color: var(--warning); font-weight:bold;">Beta v0.5</span>
-                    </div>
-                    <h3>Discord Connect AI</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Hubungkan chat in-game Minecraft langsung ke Discord server secara realtime.
-                    </p>
-                    <div class="card-actions">
-                        <a href="#" class="btn secondary"><i class="fas fa-download"></i> Get</a>
-                        <a href="changelog.html#discord-bot" class="btn secondary"><i class="fas fa-history"></i> Log</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="img-placeholder">
-                        <img src="https://via.placeholder.com/400x250/1e1e1e/7d7d7d?text=Cosmetic" alt="Cosmetic">
-                    </div>
-                    <div class="card-meta">
-                        <span><i class="fas fa-tshirt"></i> Visuals</span>
-                        <span style="color: var(--success); font-weight:bold;">v1.0 Ready</span>
-                    </div>
-                    <h3>Cosmetic Wardrobe</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Koleksi sayap, trails, dan topi unik dengan sistem entity terbaru.
-                    </p>
-                    <div class="card-actions">
-                        <a href="#" class="btn secondary"><i class="fas fa-download"></i> Get</a>
-                        <a href="changelog.html#cosmetic" class="btn secondary"><i class="fas fa-history"></i> Log</a>
-                    </div>
-                </div>
-
-                 <div class="card">
-                    <div class="img-placeholder">
-                        <img src="https://via.placeholder.com/400x250/1e1e1e/7d7d7d?text=SMP+Kit" alt="Kit">
-                    </div>
-                    <div class="card-meta">
-                        <span><i class="fas fa-cubes"></i> Survival</span>
-                        <span style="color: var(--success); font-weight:bold;">v2.1</span>
-                    </div>
-                    <h3>Hiperion SMP Kit</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">
-                        Starter pack server survival. One-player-sleep, mob head drops.
-                    </p>
-                    <div class="card-actions">
-                        <a href="#" class="btn secondary"><i class="fas fa-download"></i> Get</a>
-                        <a href="changelog.html#smp-kit" class="btn secondary"><i class="fas fa-history"></i> Log</a>
-                    </div>
-                </div>
-
-            </div>
+    <div class="bottom-sheet" id="layerSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Layers</h3>
+            <button class="icon-btn close-sheet-btn" onclick="closeAllSheets()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
         </div>
-    </section>
-
-    <a href="#" class="icon-btn back-to-top" id="btnBackToTop">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-
-    <footer>
-        <div class="container">
-            <div class="social-links">
-                <a href="#"><i class="fab fa-youtube"></i></a>
-                <a href="#"><i class="fab fa-discord"></i></a>
-                <a href="#"><i class="fab fa-github"></i></a>
-            </div>
-            <p style="margin-top:20px">&copy; 2026 Heraclaus Studio.</p>
+        <div class="layer-controls">
+            <button class="layer-ctrl-btn" onclick="moveLayer('up')" title="Naik"><span class="material-symbols-rounded">arrow_upward</span></button>
+            <button class="layer-ctrl-btn" onclick="moveLayer('down')" title="Turun"><span class="material-symbols-rounded">arrow_downward</span></button>
+            <div class="divider-v" style="height:20px; background:var(--border)"></div>
+            <button class="layer-ctrl-btn" onclick="moveLayer('out')" title="Keluar Parent"><span class="material-symbols-rounded">chevron_left</span></button>
+            <button class="layer-ctrl-btn" onclick="moveLayer('in')" title="Masuk Container"><span class="material-symbols-rounded">chevron_right</span></button>
         </div>
-    </footer>
+        <div class="sheet-body" style="padding: 0;">
+            <div id="layerList" class="layer-list"></div>
+        </div>
+    </div>
 
-    <script>
-        const themeBtn = document.getElementById('theme-btn');
-        const themeIcon = themeBtn.querySelector('i');
-        const body = document.body;
-        const currentTheme = localStorage.getItem('theme');
+    <script src="js/config.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/elements.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/app.js"></script>
 
-        if (currentTheme === 'dark') {
-            body.classList.add('dark-mode');
-            themeIcon.classList.replace('fa-moon', 'fa-sun');
-        }
-
-        function toggleTheme() {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                themeIcon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeIcon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'light');
-            }
-        }
-    </script>
-    <script src="admin.js"></script>
 </body>
 </html>
