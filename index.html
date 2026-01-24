@@ -11,6 +11,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
     <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
     <style id="generated-css"></style>
 </head>
 <body>
@@ -22,6 +25,11 @@
             <h1>Builder</h1>
         </div>
         <div class="header-actions">
+            <button class="icon-btn" id="pageManagerBtn" onclick="openPageSheet()" title="Kelola Halaman" style="color:var(--primary); background:var(--primary-light)">
+                <span class="material-symbols-rounded">layers</span>
+            </button>
+            <div class="divider-v"></div>
+
             <button class="icon-btn danger-soft" id="resetBtn" title="Hapus Semua">
                 <span class="material-symbols-rounded">delete_sweep</span>
             </button>
@@ -29,7 +37,7 @@
                 <span class="material-symbols-rounded">visibility</span>
             </button>
             <button class="icon-btn" id="layerBtn" title="Layer">
-                <span class="material-symbols-rounded">layers</span>
+                <span class="material-symbols-rounded">view_list</span>
             </button>
             <div class="divider-v"></div>
             <div class="menu-wrapper">
@@ -37,16 +45,19 @@
                     <span class="material-symbols-rounded">menu</span>
                 </button>
                 <div class="main-menu-dropdown" id="mainMenuDropdown">
-                    <input type="file" id="importInput" accept=".html" style="display: none;">
+                    <input type="file" id="importInput" accept=".json,.zip" style="display: none;">
                     <button class="menu-item" id="importBtn">
                         <span class="material-symbols-rounded">upload_file</span> Import Project
+                    </button>
+                    <button class="menu-item" id="downloadCssBtn">
+                        <span class="material-symbols-rounded">css</span> Download CSS
                     </button>
                     <button class="menu-item" id="globalBtn">
                         <span class="material-symbols-rounded">tune</span> Global Settings
                     </button>
                     <div class="menu-divider"></div>
                     <button class="menu-item primary-text" id="exportBtn">
-                        <span class="material-symbols-rounded">code</span> Export Code
+                        <span class="material-symbols-rounded">folder_zip</span> Export to ZIP
                     </button>
                 </div>
             </div>
@@ -55,7 +66,7 @@
 
     <main id="editorCanvas" class="canvas">
         <div class="empty-state" id="emptyState">
-            <div class="illustration"><span class="material-symbols-rounded">layers</span></div>
+            <div class="illustration"><span class="material-symbols-rounded">post_add</span></div>
             <h3>Area Desain</h3>
             <p>Klik tombol + di bawah untuk memulai</p>
         </div>
@@ -70,7 +81,7 @@
         <button class="mini-fab" id="redoBtn" onclick="redo()" title="Redo">
             <span class="material-symbols-rounded">redo</span>
         </button>
-        <div style="height: 8px;"></div> 
+        <div style="height: 0px;"></div> 
         <button class="fab" id="addFab">
             <span class="material-symbols-rounded">add</span>
         </button>
@@ -81,6 +92,23 @@
     </button>
 
     <div class="overlay" id="overlay"></div>
+
+    <div class="bottom-sheet" id="pageSheet">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Kelola Halaman</h3>
+            <button class="icon-btn close-sheet-btn" onclick="closeAllSheets()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+        </div>
+        <div class="sheet-body">
+            <div id="pageList" class="layer-list" style="margin-bottom: 16px;">
+                </div>
+            <button class="inner-add-btn" onclick="addNewPagePrompt()">
+                <span class="material-symbols-rounded">post_add</span> &nbsp; Tambah Halaman Baru
+            </button>
+        </div>
+    </div>
 
     <div class="bottom-sheet" id="addSheet">
         <div class="sheet-header">
@@ -96,7 +124,6 @@
                     <div class="icon-box"><span class="material-symbols-rounded">view_column</span></div>
                     <span>2 Columns</span>
                 </button>
-                
                 <button class="grid-item" data-type="container">
                     <div class="icon-box"><span class="material-symbols-rounded">crop_free</span></div>
                     <span>Container</span>
@@ -224,7 +251,7 @@
     </div>
 
     <script src="js/config.js"></script>
-    <script src="js/store.js"></script>
+    <script src="js/pagemanager.js"></script> <script src="js/store.js"></script>
     <script src="js/elements.js"></script>
     <script src="js/renderer.js"></script>
     <script src="js/ui.js"></script>
