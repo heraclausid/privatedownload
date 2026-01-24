@@ -1,8 +1,8 @@
-/* --- js/ui.js (FULL & UPDATED) --- */
+/* --- js/ui.js (FULL WITH HISTORY TRIGGERS) --- */
 
 function selectElement(id) { editingId = id; highlightElement(id); }
 function highlightElement(id) { document.querySelectorAll('.is-editing').forEach(e => e.classList.remove('is-editing')); const t = document.getElementById(id); if (t) t.classList.add('is-editing'); }
-function closeAllSheets() { [addSheet, editSheet, globalSheet, iconSheet, layerSheet, overlay].forEach(e => { if(e) e.classList.remove('active'); }); }
+function closeAllSheets() { [addSheet, editSheet, globalSheet, iconSheet, layerSheet, overlay, document.getElementById('pageSheet')].forEach(e => { if(e) e.classList.remove('active'); }); }
 if(overlay) overlay.onclick = closeAllSheets;
 function openAddMenu(id) { activeContainerId = id; addSheet.classList.add('active'); overlay.classList.add('active'); }
 
@@ -18,29 +18,25 @@ window.togglePreview = function(active) {
     }
 };
 
-// --- FUNGSI BARU: UPDATE COLUMNS ---
-// Fungsi ini mengubah jumlah kolom dengan memanipulasi width anak
+// [UPDATED] Update Grid dengan History
 window.updateGridColumns = function(val) {
     const count = parseInt(val); 
     if (!count || count < 1) return;
     
-    if(typeof addToHistory === 'function') addToHistory();
+    addToHistory(); // [HISTORY] Simpan sebelum ubah grid
 
     const el = findNode(editingId); 
     if (!el || el.type !== 'container') return;
 
-    // Force layout menjadi baris (row) agar kolom bekerja
     el.layout.direction = 'row'; 
     el.layout.wrap = 'wrap'; 
     
     const gap = parseInt(el.layout.gap || 0); 
-    // Kalkulasi Width: (100% - total gap) / jumlah kolom
     const cssWidth = `calc((100% - ${(count - 1) * gap}px) / ${count})`;
 
     if (!el.children) el.children = [];
     const currentCount = el.children.length;
 
-    // Tambah kolom jika kurang
     if (count > currentCount) { 
         for (let i = 0; i < (count - currentCount); i++) { 
             const newCol = { 
@@ -60,13 +56,10 @@ window.updateGridColumns = function(val) {
             }; 
             el.children.push(newCol); 
         } 
-    } 
-    // Kurangi kolom jika berlebih
-    else if (count < currentCount) { 
+    } else if (count < currentCount) { 
         el.children.length = count; 
     }
 
-    // Update width semua anak
     el.children.forEach(child => { 
         child.styles.width = cssWidth; 
         child.styles.flexGrow = 0; 
@@ -77,7 +70,6 @@ window.updateGridColumns = function(val) {
     showToast(`Layout diubah ke ${count} Kolom`);
 };
 
-// --- EDIT SHEET UTAMA (UPDATED) ---
 function openEditSheet(id) {
     editingId = id;
     highlightElement(id);
@@ -85,13 +77,10 @@ function openEditSheet(id) {
     if (!el) return;
 
     currentEditState = 'normal';
-    // Reset tab ke konten
-    if(!document.querySelector('.pill-btn.active[data-tab="content"]')) {
-        document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
-        document.querySelector('[data-tab="content"]').classList.add('active');
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        document.getElementById('tab-content').classList.add('active');
-    }
+    document.querySelectorAll('.pill-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-tab="content"]').classList.add('active');
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-content').classList.add('active');
 
     let htmlContent = '';
 
@@ -101,9 +90,38 @@ function openEditSheet(id) {
     if (el.content.text !== undefined && el.type !== 'theme-toggle') { 
         htmlContent += createInput('content-text', 'Isi Teks', el.content.text, '', 'textarea'); 
     }
-    if (el.content.src !== undefined) { 
-        htmlContent += createInput('content-src', 'URL Gambar', el.content.src, '', 'text'); 
+    
+    // IMAGE SETTINGS
+    if (el.type === 'image') {
+        htmlContent += createPropSection('Pengaturan Gambar');
+        htmlContent += createInput('content-src', 'URL Gambar', el.content.src, '', 'text');
+        
+        const ratios = [
+            ['auto', 'Auto (Asli)'],
+            ['1 / 1', '1:1 (Square)'],
+            ['16 / 9', '16:9 (Video)'],
+            ['4 / 3', '4:3 (Standard)'],
+            ['3 / 4', '3:4 (Portrait)'],
+            ['9 / 16', '9:16 (Story)']
+        ];
+        
+        let ratioOpts = '';
+        ratios.forEach(r => {
+            const sel = (el.styles.aspectRatio || 'auto') === r[0] ? 'selected' : '';
+            ratioOpts += `<option value="${r[0]}" ${sel}>${r[1]}</option>`;
+        });
+
+        htmlContent += `<div class="prop-row"><div class="prop-label">Aspect Ratio</div><div class="prop-control">
+            <div class="input-wrapper">
+                <select id="input-styles-aspectRatio" class="input-field">
+                    ${ratioOpts}
+                </select>
+            </div>
+        </div></div>`;
+
+        htmlContent += createToggle('styles-objectFit', el.styles.objectFit || 'cover', [['cover', 'crop'], ['contain', 'fit_screen'], ['fill', 'aspect_ratio']]);
     }
+    
     if (el.type === 'button') { 
         htmlContent += createIconSelector('content-icon', el.content.icon); 
     }
@@ -112,33 +130,86 @@ function openEditSheet(id) {
         htmlContent += createToggle('content-style', el.content.style || 'solid', [['solid', 'remove'], ['dashed', 'more_horiz'], ['dotted', 'grain'], ['wavy', 'waves']]);
         htmlContent += createInput('content-thickness', 'Ketebalan (px)', el.content.thickness || 2, '', 'number');
     }
+
     if (['heading', 'paragraph', 'button', 'image', 'container'].includes(el.type)) {
-        htmlContent += createPropSection('Link / Aksi');
-        htmlContent += createInput('content-url', 'Link Tujuan', el.content.url, '', 'text');
+        htmlContent += createPropSection('Navigasi / Link');
+        
+        const currentUrl = el.content.url || '';
+        let isInternal = false;
+        if (currentUrl.startsWith('#')) {
+            const potentialId = currentUrl.substring(1);
+            if (projectData.pages.some(p => p.id === potentialId)) {
+                isInternal = true;
+            }
+        }
+
+        htmlContent += `<div class="prop-row"><div class="prop-label">Tipe Link</div><div class="prop-control">
+            <div class="toggle-group">
+                <button type="button" class="toggle-btn ${!isInternal?'active':''}" onclick="toggleLinkType('external')">
+                    <span style="font-size:12px; font-weight:600">Website URL</span>
+                </button>
+                <button type="button" class="toggle-btn ${isInternal?'active':''}" onclick="toggleLinkType('internal')">
+                    <span style="font-size:12px; font-weight:600">Halaman</span>
+                </button>
+            </div>
+        </div></div>`;
+
+        htmlContent += `<div id="link-external-wrap" style="display:${!isInternal?'block':'none'}">
+            ${createInput('content-url', 'https://...', isInternal ? '' : currentUrl, '', 'text')}
+        </div>`;
+
+        let pageOpts = '<option value="">-- Pilih Halaman --</option>';
+        projectData.pages.forEach(p => {
+            const val = `#${p.id}`; 
+            const isSel = currentUrl === val ? 'selected' : '';
+            pageOpts += `<option value="${val}" ${isSel}>${p.name} (/ ${p.slug}.html)</option>`;
+        });
+        
+        htmlContent += `<div id="link-internal-wrap" style="display:${isInternal?'block':'none'}">
+            <div class="prop-row"><div class="prop-label">Ke Halaman</div><div class="prop-control">
+                <div class="input-wrapper">
+                    <select id="input-internal-selector" class="input-field" onchange="syncInternalLink(this.value)">
+                        ${pageOpts}
+                    </select>
+                </div>
+            </div></div>
+        </div>`;
+
         htmlContent += `<div class="prop-row"><div class="prop-label">Buka di</div><div class="prop-control"><select id="input-content-target" class="input-field"><option value="_self" ${el.content.target=='_self'?'selected':''}>Tab Sama</option><option value="_blank" ${el.content.target=='_blank'?'selected':''}>Tab Baru</option></select></div></div>`;
     }
 
-    // --- GRID & LAYOUT SECTION (BARU) ---
+    // CONTAINER SETTINGS
     if (el.type === 'container') {
-        htmlContent += createPropSection('Grid & Layout');
+        htmlContent += createPropSection('Layout & Rasio');
         
-        // Input Columns (Dengan tombol Set)
+        const ratios = [
+            ['auto', 'Auto (Default)'],
+            ['1 / 1', '1:1 (Square)'],
+            ['16 / 9', '16:9 (Landscape)'],
+            ['4 / 3', '4:3 (Rect)'],
+            ['3 / 4', '3:4 (Portrait)'],
+            ['9 / 16', '9:16 (Story)']
+        ];
+        
+        let ratioOpts = '';
+        ratios.forEach(r => {
+            const sel = (el.styles.aspectRatio || 'auto') === r[0] ? 'selected' : '';
+            ratioOpts += `<option value="${r[0]}" ${sel}>${r[1]}</option>`;
+        });
+
+        htmlContent += `<div class="prop-row"><div class="prop-label">Aspect Ratio</div><div class="prop-control">
+            <div class="input-wrapper">
+                <select id="input-styles-aspectRatio" class="input-field">
+                    ${ratioOpts}
+                </select>
+            </div>
+        </div></div>`;
+        
         htmlContent += `<div class="prop-row"><div class="prop-label">Columns</div><div class="prop-control"><div class="input-wrapper"><input type="number" id="input-grid-count" value="${el.children?el.children.length:1}" class="input-field"><span class="input-suffix">cols</span></div><button class="btn-action-light" type="button" style="margin-left:8px" onclick="updateGridColumns(document.getElementById('input-grid-count').value)">Set</button></div></div>`;
-        htmlContent += `<div class="prop-info">Tombol 'Set' akan mengatur ulang anak menjadi kolom rata.</div>`;
-
-        // Direction Toggle
         htmlContent += createToggle('layout-direction', el.layout.direction, [['column', 'align_vertical_bottom'], ['row', 'align_horizontal_left']]);
-        
-        // Justify Content
         htmlContent += createToggle('layout-justify', el.layout.justify, [['flex-start', 'align_justify_flex_start'], ['center', 'align_justify_center'], ['space-between', 'align_justify_space_between'], ['flex-end', 'align_justify_flex_end']]);
-        
-        // Align Items
         htmlContent += createToggle('layout-alignItems', el.layout.alignItems || 'stretch', [['flex-start', 'vertical_align_top'], ['center', 'vertical_align_center'], ['flex-end', 'vertical_align_bottom'], ['stretch', 'height']]);
-        
-        // Gap
         htmlContent += createInput('layout-gap', 'Jarak (Gap)', el.layout.gap || 0, 'px', 'number');
-
-        // Wrap Toggle
         htmlContent += createToggle('layout-wrap', el.layout.wrap, [['nowrap', 'hdr_off'], ['wrap', 'hdr_on']]);
     }
 
@@ -146,6 +217,32 @@ function openEditSheet(id) {
     renderStyleTab(el);
     editSheet.classList.add('active');
     overlay.classList.add('active');
+}
+
+window.toggleLinkType = function(type) {
+    const ext = document.getElementById('link-external-wrap');
+    const int = document.getElementById('link-internal-wrap');
+    const realInput = document.getElementById('input-content-url');
+    const intSelector = document.getElementById('input-internal-selector');
+    const btns = document.querySelectorAll('#formContent .toggle-btn');
+    if(btns.length >= 2) {
+        if(type === 'internal') { btns[0].classList.remove('active'); btns[1].classList.add('active'); }
+        else { btns[1].classList.remove('active'); btns[0].classList.add('active'); }
+    }
+    if (type === 'internal') {
+        ext.style.display = 'none';
+        int.style.display = 'block';
+        realInput.value = intSelector.value;
+    } else {
+        ext.style.display = 'block';
+        int.style.display = 'none';
+        realInput.value = '';
+    }
+};
+
+window.syncInternalLink = function(val) {
+    const realInput = document.getElementById('input-content-url');
+    if(realInput) realInput.value = val;
 }
 
 function renderStyleTab(el) {
@@ -161,15 +258,12 @@ function renderStyleTab(el) {
     if (currentEditState === 'normal') {
         const flexVal = parseInt(el.styles.flexGrow) || 0;
         html += createToggle('styles-flexGrow', flexVal, [['0', 'crop_portrait'], ['1', 'open_in_full']]);
-        html += `<div class="prop-info">Set 1 untuk mengisi sisa ruang kosong.</div>`;
-
         html += createPropSection('Posisi (Align Self)');
         html += createToggle('styles-alignSelf', targetObj.alignSelf || 'auto', [['auto', 'hdr_auto'], ['flex-start', 'vertical_align_top'], ['center', 'vertical_align_center'], ['flex-end', 'vertical_align_bottom']]);
         
         if (el.type !== 'divider') {
             html += `<div class="prop-row"><div class="input-wrapper"><input type="text" id="input-styles-width" value="${targetObj.width||''}" class="input-field"><span class="input-suffix">W</span></div><div style="width:10px"></div><div class="input-wrapper"><input type="number" id="input-styles-height" value="${targetObj.height||targetObj.minHeight||''}" class="input-field"><span class="input-suffix">H</span></div></div>`;
         }
-        
         html += createBoxModel('padding', 'Padding', targetObj);
         html += createBoxModel('margin', 'Margin', targetObj);
     } else {
@@ -195,7 +289,6 @@ function renderStyleTab(el) {
     html += createPropSection('Tampilan');
     html += createColor('styles-bgColor', 'Background', targetObj.bgColor);
     
-    // PENGATURAN SHADOW (DARI VERSI SEBELUMNYA TETAP DIJAAGA)
     if (currentEditState === 'normal') {
         html += createPropSection('Bayangan (Box Shadow)');
         html += `<div class="box-grid">
@@ -205,7 +298,6 @@ function renderStyleTab(el) {
         </div>`;
         html += `<div style="height:8px"></div>`; 
         html += createColor('styles-shadowColor', 'Warna Bayangan', targetObj.shadowColor);
-
         html += createSlider('styles-opacity', 'Opacity', (targetObj.opacity || 1) * 100, 0, 100);
         html += createSlider('styles-radius', 'Radius', targetObj.radius, 0, 100);
         if (el.type !== 'divider') { html += createPropSection('Border'); html += createInput('styles-borderWidth', 'Tebal', targetObj.borderWidth, 'px', 'number'); html += createToggle('styles-borderStyle', targetObj.borderStyle, [['solid', 'check_box_outline_blank'], ['dashed', 'more_horiz']]); html += createColor('styles-borderColor', 'Warna', targetObj.borderColor); }
@@ -215,9 +307,110 @@ function renderStyleTab(el) {
 
 window.changeEditState = (newState) => { const el = findNode(editingId); if (el) { saveCurrentInputsToNode(el); currentEditState = newState; renderStyleTab(el); } }
 function saveCurrentInputsToNode(el) { const inputs = document.getElementById('formStyle').querySelectorAll('input, select, textarea'); let targetObj; if (currentEditState === 'hover') { if (!el.hoverStyles) el.hoverStyles = {}; targetObj = el.hoverStyles; } else if (currentEditState === 'dark') { if (!el.darkStyles) el.darkStyles = {}; targetObj = el.darkStyles; } else targetObj = el.styles; inputs.forEach(inp => { if (inp.id.startsWith('picker-') || inp.id.startsWith('input-layout')) return; const parts = inp.id.split('-'); if (parts.length < 3) return; const key = parts[2]; let val = inp.value; if (key === 'opacity') val = parseFloat(val) / 100; if (val === '') val = undefined; targetObj[key] = val; }); }
-document.getElementById('saveEditBtn').onclick = () => { const el = findNode(editingId); if (!el) return; const contentInputs = document.getElementById('formContent').querySelectorAll('input, select, textarea'); contentInputs.forEach(inp => { if (inp.id.startsWith('picker-') || inp.id === 'input-grid-count') return; const parts = inp.id.split('-'); if (parts.length < 3) return; const cat = parts[1]; const key = parts[2]; let val = inp.value; if(['gap', 'thickness'].includes(key)) val = parseFloat(val); if (val === '') val = undefined; if (cat === 'content') el.content[key] = val; else if(cat === 'layout') el.layout[key] = val; }); saveCurrentInputsToNode(el); renderCanvas(); closeAllSheets(); updateGlobalStyles(); saveData(); showToast("Perubahan Disimpan"); };
 
-// HELPER COMPONENTS
+// [UPDATED] TOMBOL SAVE EDIT DENGAN HISTORY & FIX STYLES
+document.getElementById('saveEditBtn').onclick = () => { 
+    addToHistory(); // [HISTORY] Catat
+    
+    const el = findNode(editingId); 
+    if (!el) return; 
+    
+    const contentInputs = document.getElementById('formContent').querySelectorAll('input, select, textarea'); 
+    
+    contentInputs.forEach(inp => { 
+        if (inp.id.startsWith('picker-') || inp.id === 'input-grid-count' || inp.id === 'input-internal-selector') return; 
+        
+        const parts = inp.id.split('-'); 
+        if (parts.length < 3) return; 
+        
+        const cat = parts[1]; 
+        const key = parts[2]; 
+        let val = inp.value; 
+        
+        if(['gap', 'thickness'].includes(key)) val = parseFloat(val); 
+        if (val === '') val = undefined; 
+        
+        if (cat === 'content') el.content[key] = val; 
+        else if(cat === 'layout') el.layout[key] = val; 
+        else if (cat === 'styles') el.styles[key] = val; // [FIX] Styles di tab konten disimpan
+    }); 
+    
+    saveCurrentInputsToNode(el); 
+    renderCanvas(); 
+    closeAllSheets(); 
+    updateGlobalStyles(); 
+    saveData(); 
+    showToast("Perubahan Disimpan"); 
+};
+
+// [UPDATED] TOMBOL SAVE GLOBAL DENGAN HISTORY
+const saveGlobalBtn = document.getElementById('saveGlobalBtn');
+if(saveGlobalBtn) {
+    saveGlobalBtn.onclick = () => {
+        addToHistory(); // [HISTORY] Catat
+        globalConfig.fontFamily = document.getElementById('global-font').value;
+        globalConfig.pageBg = document.getElementById('global-bg').value;
+        applyGlobalConfig();
+        closeAllSheets();
+        saveData();
+        showToast("Global Settings Disimpan");
+    };
+}
+
+// [UPDATED] MOVE LAYER DENGAN HISTORY
+function moveLayer(action) { 
+    if (!editingId) return alert("Pilih elemen dulu!"); 
+    
+    addToHistory(); // [HISTORY] Catat di awal
+    
+    let parentArray = pageData, index = -1, parentNode = null; 
+    function findInArray(arr, parent) { 
+        for (let i = 0; i < arr.length; i++) { 
+            if (arr[i].id === editingId) { parentArray = arr; index = i; parentNode = parent; return true; } 
+            if (arr[i].children && findInArray(arr[i].children, arr[i])) return true; 
+        } 
+        return false; 
+    } 
+    findInArray(pageData, null); 
+    if (index === -1) {
+        historyStack.pop(); // Batal history jika gagal
+        updateUndoRedoButtons();
+        return;
+    } 
+    
+    const el = parentArray[index]; 
+    let changed = false;
+
+    if (action === 'up') { 
+        if (index > 0) { [parentArray[index], parentArray[index - 1]] = [parentArray[index - 1], parentArray[index]]; changed = true; } 
+    } else if (action === 'down') { 
+        if (index < parentArray.length - 1) { [parentArray[index], parentArray[index + 1]] = [parentArray[index + 1], parentArray[index]]; changed = true; } 
+    } else if (action === 'in') { 
+        if (index > 0 && parentArray[index - 1].children) { parentArray.splice(index, 1); parentArray[index - 1].children.push(el); changed = true; } 
+        else { alert("Tidak bisa masuk"); } 
+    } else if (action === 'out') { 
+        if (parentNode) { 
+            let grandParentArray = pageData, parentIndex = -1; 
+            function findParentArr(arr) { for (let i = 0; i < arr.length; i++) { if (arr[i].id === parentNode.id) { grandParentArray = arr; parentIndex = i; return true; } if (arr[i].children && findParentArr(arr[i].children)) return true; } return false; } 
+            if (pageData.includes(parentNode)) { grandParentArray = pageData; parentIndex = pageData.indexOf(parentNode); } else { findParentArr(pageData); } 
+            parentArray.splice(index, 1); 
+            grandParentArray.splice(parentIndex + 1, 0, el); 
+            changed = true;
+        } else { alert("Sudah di level teratas"); } 
+    } 
+    
+    if (changed) {
+        saveData(); 
+        renderCanvas(); 
+        renderLayerSheet(); 
+        setTimeout(() => highlightElement(editingId), 50); 
+        showToast("Posisi Diubah"); 
+    } else {
+        historyStack.pop(); // Batal history jika tidak berubah
+        updateUndoRedoButtons();
+    }
+}
+
 function createPropSection(t) { return `<div class="prop-section"><div class="prop-header"><div class="prop-title">${t}</div></div></div>`; }
 function createInput(k, l, v, s = '', t = 'text', changeFn = '', info = '') { const onChangeAttr = changeFn ? `onchange="${changeFn}"` : ''; let html = ''; if (t === 'textarea') { html = `<div class="prop-row" style="display:block"><div class="prop-label" style="margin-bottom:6px">${l}</div><div class="input-wrapper"><textarea id="input-${k}" rows="3" class="input-field" style="text-align:left" ${onChangeAttr}>${v||''}</textarea></div></div>`; } else { html = `<div class="prop-row"><div class="prop-label">${l}</div><div class="prop-control"><div class="input-wrapper"><input type="${t}" id="input-${k}" value="${v!==undefined?v:''}" class="input-field" ${onChangeAttr}>${s?`<span class="input-suffix">${s}</span>`:''}</div></div></div>`; } if (info) html += `<div class="prop-info">${info}</div>`; return html; }
 function createToggle(k, v, opts) { const btns = opts.map(o => `<button type="button" class="toggle-btn ${o[0]==v?'active':''}" onclick="selectToggle('${k}','${o[0]}')"><span class="material-symbols-rounded">${o[1]}</span></button>`).join(''); let l = 'Style'; if (k === 'styles-flexGrow') l = 'Expand'; else if(k.startsWith('layout')) l = k.replace('layout-',''); return `<div class="prop-row"><div class="prop-label" style="text-transform:capitalize">${l}</div><div class="prop-control"><div class="toggle-group" id="group-${k}">${btns}</div><input type="hidden" id="input-${k}" value="${v}"></div></div>`; }
@@ -236,4 +429,3 @@ function toggleMainMenu() { const menu = document.getElementById('mainMenuDropdo
 document.addEventListener('click', function(event) { const menu = document.getElementById('mainMenuDropdown'); const btn = document.getElementById('menuBtn'); if (menu && btn) { if (menu.classList.contains('active') && !menu.contains(event.target) && !btn.contains(event.target)) { menu.classList.remove('active'); } } });
 document.querySelectorAll('.menu-item').forEach(item => { item.addEventListener('click', () => { const menu = document.getElementById('mainMenuDropdown'); if (menu) menu.classList.remove('active'); }); });
 function renderLayerSheet() { const list = document.getElementById('layerList'); list.innerHTML = ''; function buildTree(nodes, indent) { nodes.forEach(el => { const item = document.createElement('div'); item.className = `layer-item ${editingId === el.id ? 'active' : ''}`; let iconName = 'check_box_outline_blank'; if (el.type === 'container') iconName = 'crop_free'; else if (el.type === 'heading') iconName = 'title'; else if (el.type === 'paragraph') iconName = 'text_fields'; else if (el.type === 'button') iconName = 'smart_button'; else if (el.type === 'image') iconName = 'image'; else if (el.type === 'theme-toggle') iconName = 'contrast'; else if (el.type === 'spacer') iconName = 'space_bar'; else if (el.type === 'divider') iconName = 'horizontal_rule'; let indentDivs = ''; for (let i = 0; i < indent; i++) indentDivs += '<div class="layer-indent"></div>'; const text = el.content.text ? el.content.text : el.type.charAt(0).toUpperCase() + el.type.slice(1); item.innerHTML = `${indentDivs}<span class="material-symbols-rounded layer-icon">${iconName}</span> <span class="layer-text">${text}</span>`; item.onclick = () => { selectElement(el.id); renderLayerSheet(); }; list.appendChild(item); if (el.children && el.children.length > 0) buildTree(el.children, indent + 1); }); } if (pageData.length === 0) list.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-gray)">Belum ada layer</div>'; else buildTree(pageData, 0); }
-function moveLayer(action) { if (!editingId) return alert("Pilih elemen dulu!"); let parentArray = pageData, index = -1, parentNode = null; function findInArray(arr, parent) { for (let i = 0; i < arr.length; i++) { if (arr[i].id === editingId) { parentArray = arr; index = i; parentNode = parent; return true; } if (arr[i].children && findInArray(arr[i].children, arr[i])) return true; } return false; } findInArray(pageData, null); if (index === -1) return; const el = parentArray[index]; if (action === 'up') { if (index > 0) { [parentArray[index], parentArray[index - 1]] = [parentArray[index - 1], parentArray[index]]; } } else if (action === 'down') { if (index < parentArray.length - 1) { [parentArray[index], parentArray[index + 1]] = [parentArray[index + 1], parentArray[index]]; } } else if (action === 'in') { if (index > 0 && parentArray[index - 1].children) { parentArray.splice(index, 1); parentArray[index - 1].children.push(el); } else { alert("Tidak bisa masuk"); } } else if (action === 'out') { if (parentNode) { let grandParentArray = pageData, parentIndex = -1; function findParentArr(arr) { for (let i = 0; i < arr.length; i++) { if (arr[i].id === parentNode.id) { grandParentArray = arr; parentIndex = i; return true; } if (arr[i].children && findParentArr(arr[i].children)) return true; } return false; } if (pageData.includes(parentNode)) { grandParentArray = pageData; parentIndex = pageData.indexOf(parentNode); } else { findParentArr(pageData); } parentArray.splice(index, 1); grandParentArray.splice(parentIndex + 1, 0, el); } else { alert("Sudah di level teratas"); } } saveData(); renderCanvas(); renderLayerSheet(); setTimeout(() => highlightElement(editingId), 50); showToast("Posisi Diubah"); }

@@ -1,5 +1,3 @@
-/* --- js/renderer.js (FIXED: SAFETY WIDTH) --- */
-
 function renderCanvas() {
     canvas.innerHTML = '';
     if (pageData.length === 0) {
@@ -23,8 +21,8 @@ function renderRecursive(elements, parentDom) {
         const basis = grow === 1 ? '0%' : 'auto';
         
         wrapper.style.flex = `${grow} ${shrink} ${basis}`;
-        wrapper.style.minWidth = '0'; // Penting untuk nested flex
-        wrapper.style.maxWidth = '100%'; // [FIX] Mencegah anak melebihi lebar induk
+        wrapper.style.minWidth = '0';
+        wrapper.style.maxWidth = '100%'; 
         
         if (el.styles.alignSelf && el.styles.alignSelf !== 'auto') {
             wrapper.style.alignSelf = el.styles.alignSelf;
@@ -133,8 +131,27 @@ function renderRecursive(elements, parentDom) {
             domNode = document.createElement('button'); domNode.className = 'el-theme-toggle builder-element icon-btn';
             domNode.style.cssText = innerStyles + `display:inline-flex; align-items:center; justify-content:center; cursor:pointer; vertical-align:middle; line-height:1; width:40px; height:40px; padding:0; border-radius:50%;`;
             const isDark = globalConfig.darkMode; const currentIcon = isDark ? 'light_mode' : 'dark_mode';
+            
             domNode.innerHTML = `<span class="material-symbols-rounded theme-icon">${currentIcon}</span>`;
-            domNode.onclick = (e) => { if (document.body.classList.contains('preview-mode')) { e.stopPropagation(); const iconSpan = domNode.querySelector('.theme-icon'); iconSpan.style.transform = 'rotate(360deg)'; setTimeout(() => { toggleThemeMode(); const newIsDark = globalConfig.darkMode; iconSpan.innerText = newIsDark ? 'light_mode' : 'dark_mode'; iconSpan.style.transform = 'rotate(0deg)'; }, 250); } else { e.stopPropagation(); selectElement(el.id); } };
+            
+            domNode.onclick = (e) => { 
+                if (document.body.classList.contains('preview-mode')) { 
+                    e.stopPropagation(); 
+                    
+                    const iconSpan = domNode.querySelector('.theme-icon'); 
+                    iconSpan.classList.add('animating');
+                    
+                    setTimeout(() => { 
+                        toggleThemeMode(); 
+                        const newIsDark = globalConfig.darkMode; 
+                        iconSpan.innerText = newIsDark ? 'light_mode' : 'dark_mode'; 
+                        iconSpan.classList.remove('animating');
+                    }, 500); 
+                } else { 
+                    e.stopPropagation(); 
+                    selectElement(el.id); 
+                } 
+            };
             btnWrap.appendChild(domNode); domNode = btnWrap;
         }
 

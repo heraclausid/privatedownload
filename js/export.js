@@ -1,30 +1,34 @@
-/* --- js/export.js (LENGKAP) --- */
-
 document.getElementById('exportBtn').onclick = () => {
-    // 1. Ambil CSS Global
     const editorStyles = document.getElementById('generated-css').innerHTML;
-    
-    // 2. Clone Canvas untuk dibersihkan
     const clone = document.getElementById('editorCanvas').cloneNode(true);
     
-    // 3. Bersihkan elemen editor (toolbar, empty state, highlight)
     clone.querySelectorAll('.element-toolbar').forEach(el => el.remove());
     clone.querySelectorAll('.empty-label').forEach(el => el.remove());
     clone.querySelectorAll('.is-editing').forEach(el => el.classList.remove('is-editing'));
+    clone.querySelectorAll('.empty-state').forEach(el => el.remove());
     
-    // 4. Pastikan Theme Toggle bekerja di file export
+    clone.querySelectorAll('.el-container').forEach(el => {
+        el.style.borderStyle = 'solid'; 
+        if (!el.style.borderWidth || el.style.borderWidth === '0px') {
+            el.style.border = 'none';
+        }
+    });
+    clone.querySelectorAll('.el-spacer').forEach(el => {
+        el.style.background = 'transparent'; 
+        el.style.border = 'none';
+    });
+    
     clone.querySelectorAll('.el-theme-toggle').forEach(btn => {
-        btn.setAttribute('onclick', 'toggleTheme()');
+        btn.setAttribute('onclick', 'handleThemeClick(this)');
     });
 
     const bodyContent = clone.innerHTML;
-    
-    // 5. Simpan data JSON di dalam file agar bisa di-Import kembali
     const savedData = JSON.stringify({ page: pageData, config: globalConfig, colors: savedColors });
+    const isDarkNow = globalConfig.darkMode;
+    const htmlTag = isDarkNow ? '<html lang="id" data-theme="dark">' : '<html lang="id">';
 
-    // 6. Template HTML Export
     const htmlContent = `<!DOCTYPE html>
-<html lang="id">
+${htmlTag}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,51 +36,55 @@ document.getElementById('exportBtn').onclick = () => {
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&family=Lato:wght@400;700&family=Merriweather:wght@400;700&family=Montserrat:wght@400;700&family=Open+Sans:wght@400;700&family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@400;600&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
     
     <style>
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; transition: background 0.3s, color 0.3s; }
-        .element-wrapper { position: relative; width: 100%; }
-        
-        /* Inject Generated CSS */
         ${editorStyles}
-        
         body { 
             font-family: ${globalConfig.fontFamily} !important; 
             background-color: ${globalConfig.pageBg};
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
         }
-        
-        /* Dark Mode Styles */
-        [data-theme="dark"] body { background-color: #121212; color: #ffffff; }
-        
+        [data-theme="dark"] body { 
+            background-color: #0f172a !important; 
+            color: #f8fafc !important;
+        }
+        @keyframes spin-once { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .theme-icon { display: inline-flex; align-items: center; justify-content: center; }
+        .theme-icon.animating { animation: spin-once 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
         .el-theme-toggle { border:none; background:transparent; cursor:pointer; }
-        .el-container { border-style: solid; }
-        /* Hilangkan border dashed container saat export */
         .el-container:not(.has-bg):not(.card) { border: none !important; }
-        
         a { text-decoration: none; color: inherit; }
     </style>
 </head>
-<body>
-    
-    <div class="container" style="min-height:100vh;">
+<body class="canvas">
+    <div class="container" style="padding-top:0px;">
         ${bodyContent}
     </div>
-
     <script id="soft-builder-data" type="application/json">${savedData}<\/script>
-
     <script>
-        const body = document.body;
         const html = document.documentElement;
-        
-        // Cek LocalStorage Theme
+        const projectData = JSON.parse(document.getElementById('soft-builder-data').textContent);
+        const config = projectData.config || {};
         const savedTheme = localStorage.getItem('theme');
+        
         if (savedTheme === 'dark') {
             enableDark(true);
+        } else if (!savedTheme && config.darkMode) {
+            enableDark(true);
+        }
+
+        function handleThemeClick(btn) {
+            const iconSpan = btn.querySelector('.theme-icon');
+            if(iconSpan) iconSpan.classList.add('animating');
+            setTimeout(() => {
+                toggleTheme();
+                if(iconSpan) iconSpan.classList.remove('animating');
+            }, 500);
         }
 
         function toggleTheme() {
@@ -103,25 +111,22 @@ document.getElementById('exportBtn').onclick = () => {
         function updateIcons(isDark, skipAnim = false) {
             document.querySelectorAll('.theme-icon').forEach(i => {
                 i.innerText = isDark ? 'light_mode' : 'dark_mode';
-                if(!skipAnim) {
-                    i.style.transition = 'transform 0.5s';
-                    i.style.transform = 'rotate(360deg)';
-                    setTimeout(() => i.style.transform = 'rotate(0deg)', 500);
-                }
             });
         }
     <\/script>
 </body>
 </html>`;
 
-    // 7. Download Logic
     const blob = new Blob([htmlContent], { type: 'text/html' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); 
     a.href = url; 
-    a.download = 'soft-builder-project.html';
+    const date = new Date().toISOString().slice(0,10);
+    a.download = `project-${date}.html`;
     document.body.appendChild(a); 
     a.click(); 
     document.body.removeChild(a); 
     URL.revokeObjectURL(url);
+    
+    showToast("HTML Berhasil Diexport");
 };

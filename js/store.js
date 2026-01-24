@@ -1,20 +1,20 @@
-/* --- js/store.js (GLOBAL UNDO/REDO) --- */
+/* --- js/store.js (FULL CONTENT - NO ABBREVIATIONS) --- */
 
 let historyStack = [];
 let redoStack = [];
-const MAX_HISTORY = 20;
+const MAX_HISTORY = 50;
 
 function showToast(msg) {
-    if(typeof toast !== 'undefined' && toast) {
-        toast.innerText = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2000);
+    const t = document.getElementById('toast');
+    if(t) {
+        t.innerText = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 2000);
     }
 }
 
-// [PENTING] EXPOSE KE WINDOW AGAR BISA DIPANGGIL HTML
 window.addToHistory = function() {
-    const snapshot = JSON.stringify({ page: pageData, config: globalConfig });
+    const snapshot = JSON.stringify(projectData);
     historyStack.push(snapshot);
     if (historyStack.length > MAX_HISTORY) historyStack.shift();
     redoStack = [];
@@ -23,56 +23,53 @@ window.addToHistory = function() {
 
 window.undo = function() {
     if (historyStack.length === 0) return;
-
-    // Simpan state sekarang ke Redo
-    const currentSnapshot = JSON.stringify({ page: pageData, config: globalConfig });
+    const currentSnapshot = JSON.stringify(projectData);
     redoStack.push(currentSnapshot);
-
-    // Ambil state sebelumnya
-    const previousSnapshot = historyStack.pop();
-    const data = JSON.parse(previousSnapshot);
-
-    // Restore
-    pageData = data.page;
-    globalConfig = data.config;
-
-    // Refresh UI
-    applyGlobalConfig();
-    saveData(true); // Skip recording history saat undo
-    renderCanvas();
-    closeAllSheets();
-    updateUndoRedoButtons();
+    const prevSnapshot = historyStack.pop();
+    const data = JSON.parse(prevSnapshot);
+    restoreProjectState(data);
     showToast("Undo");
 };
 
 window.redo = function() {
     if (redoStack.length === 0) return;
-
-    // Simpan state sekarang ke History
-    const currentSnapshot = JSON.stringify({ page: pageData, config: globalConfig });
+    const currentSnapshot = JSON.stringify(projectData);
     historyStack.push(currentSnapshot);
-
-    // Ambil state masa depan
     const nextSnapshot = redoStack.pop();
     const data = JSON.parse(nextSnapshot);
+    restoreProjectState(data);
+    showToast("Redo");
+};
 
-    // Restore
-    pageData = data.page;
-    globalConfig = data.config;
+function restoreProjectState(data) {
+    projectData = data;
+    globalConfig = projectData.config;
+    const activePage = projectData.pages.find(p => p.id === projectData.activePageId);
+    
+    if (activePage) {
+        pageData = activePage.data;
+    } else {
+        if (projectData.pages.length > 0) {
+            projectData.activePageId = projectData.pages[0].id;
+            pageData = projectData.pages[0].data;
+        } else {
+            pageData = [];
+        }
+    }
 
-    // Refresh UI
     applyGlobalConfig();
-    saveData(true);
+    saveData(true); 
     renderCanvas();
     closeAllSheets();
     updateUndoRedoButtons();
-    showToast("Redo");
-};
+    
+    const btn = document.getElementById('pageManagerBtn');
+    if(btn) btn.innerHTML = `<span class="material-symbols-rounded">layers</span>`;
+}
 
 function updateUndoRedoButtons() {
     const undoBtn = document.getElementById('undoBtn');
     const redoBtn = document.getElementById('redoBtn');
-    
     if(undoBtn) {
         undoBtn.style.opacity = historyStack.length > 0 ? '1' : '0.3';
         undoBtn.style.pointerEvents = historyStack.length > 0 ? 'auto' : 'none';
@@ -83,33 +80,31 @@ function updateUndoRedoButtons() {
     }
 }
 
-// --- SAVE & LOAD SYSTEM ---
-
 function saveData(skipHistory = false) {
-    const data = {
-        page: pageData,
-        config: globalConfig,
-        colors: savedColors
-    };
-    localStorage.setItem('softBuilderData', JSON.stringify(data));
+    localStorage.setItem('softBuilderProject', JSON.stringify(projectData));
     updateGlobalStyles();
 }
 
 function loadData() {
-    const saved = localStorage.getItem('softBuilderData');
-    if (saved) {
+    const savedProject = localStorage.getItem('softBuilderProject');
+    if (savedProject) {
         try {
-            const data = JSON.parse(saved);
-            pageData = data.page || [];
-            if (data.config) globalConfig = { ...globalConfig, ...data.config };
-            if (data.colors && Array.isArray(data.colors)) savedColors = data.colors;
-            applyGlobalConfig();
-        } catch (e) {
-            console.error("Gagal memuat data:", e);
-        }
+            const data = JSON.parse(savedProject);
+            if (data.pages && Array.isArray(data.pages)) {
+                projectData = data;
+            } else {
+                projectData.pages[0].data = data.page || []; 
+                if(data.config) projectData.config = data.config;
+            }
+        } catch (e) { console.error("Load Error:", e); }
     }
-    if(typeof renderCanvas === 'function') renderCanvas();
-    if(typeof renderIconSheet === 'function') renderIconSheet();
+    
+    globalConfig = projectData.config;
+    const activePage = projectData.pages.find(p => p.id === projectData.activePageId);
+    pageData = activePage ? activePage.data : projectData.pages[0].data;
+
+    applyGlobalConfig();
+    renderCanvas();
     updateGlobalStyles();
     updateUndoRedoButtons();
 }
@@ -136,12 +131,14 @@ function toggleThemeMode() {
     applyGlobalConfig();
     saveData();
     renderCanvas();
-    showToast(globalConfig.darkMode ? "Mode Gelap Aktif" : "Mode Terang Aktif");
+    showToast(globalConfig.darkMode ? "Mode Gelap" : "Mode Terang");
 }
 
 function updateGlobalStyles() {
     let css = '';
-    function processNode(nodes) {
+    projectData.pages.forEach(p => { processNodeCss(p.data); });
+
+    function processNodeCss(nodes) {
         nodes.forEach(el => {
             const buildCss = (styles) => {
                 let str = '';
@@ -164,10 +161,9 @@ function updateGlobalStyles() {
                 const rules = buildCss(el.darkStyles);
                 if (rules) css += `[data-theme="dark"] ${selector} { ${rules} } \n`;
             }
-            if (el.children) processNode(el.children);
+            if (el.children) processNodeCss(el.children);
         });
     }
-    processNode(pageData);
     if(typeof generatedCss !== 'undefined') generatedCss.innerHTML = css;
 }
 
@@ -225,27 +221,51 @@ function duplicateNode(id) {
 function handleFileSelect(event) {
     const file = event.target.files[0];
     if (!file) return;
-    addToHistory();
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        try {
-            const content = e.target.result;
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(content, 'text/html');
-            const dataScript = doc.getElementById('soft-builder-data');
-            if (!dataScript) { alert("File tidak valid!"); return; }
-            const data = JSON.parse(dataScript.textContent);
-            if (data.page) pageData = data.page;
-            if (data.config) globalConfig = { ...globalConfig, ...data.config };
-            if (data.colors) savedColors = data.colors;
-            saveData();
-            loadData();
-            showToast("Project Berhasil Di-import!");
-        } catch (err) {
-            console.error(err);
-            alert("Gagal membaca file project.");
+    const resetInput = () => { event.target.value = ''; };
+
+    if (file.name.endsWith('.json')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            try {
+                const content = e.target.result;
+                const data = JSON.parse(content);
+                addToHistory();
+                let finalData = data;
+                if (!data.pages && data.page) {
+                     finalData = {
+                        pages: [{ id: 'home', name: 'Home', slug: 'index', data: data.page }],
+                        activePageId: 'home',
+                        config: data.config || {}
+                     };
+                }
+                restoreProjectState(finalData);
+                showToast("Project JSON Berhasil Di-import!");
+            } catch (err) { alert("Gagal membaca file JSON: " + err.message); }
+        };
+        reader.readAsText(file);
+    } 
+    else if (file.name.endsWith('.zip')) {
+        if (typeof JSZip === 'undefined') {
+            alert("Library JSZip belum dimuat.");
+            resetInput();
+            return;
         }
-    };
-    reader.readAsText(file);
-    event.target.value = '';
+        addToHistory();
+        JSZip.loadAsync(file).then(function(zip) {
+            if (zip.file("project.json")) {
+                return zip.file("project.json").async("string");
+            } else {
+                throw new Error("File 'project.json' tidak ditemukan dalam ZIP!");
+            }
+        }).then(function(jsonContent) {
+            const data = JSON.parse(jsonContent);
+            restoreProjectState(data);
+            showToast("Project ZIP Berhasil Di-import!");
+        }).catch(function(err) {
+            alert("Gagal Import ZIP: " + err.message);
+        });
+    } else {
+        alert("Format file tidak didukung.");
+    }
+    resetInput();
 }

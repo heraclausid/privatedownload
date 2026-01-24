@@ -1,23 +1,34 @@
-/* --- js/config.js (LENGKAP) --- */
+/* --- js/config.js (LENGKAP DENGAN MULTIPAGE SUPPORT) --- */
 
 // 1. Variabel Global Utama
-let pageData = [];
+// [NEW] Struktur Data Multi-Page
+let projectData = {
+    pages: [
+        { id: 'home', name: 'Home', slug: 'index', data: [] } // Halaman default
+    ],
+    activePageId: 'home',
+    config: {
+        fontFamily: "'Outfit', sans-serif",
+        pageBg: "#f1f5f9",
+        darkMode: false
+    }
+};
+
+// [PENTING] pageData sekarang adalah referensi (pointer) ke data halaman yang sedang aktif.
+// Ini menjaga kompatibilitas dengan file elements.js dan renderer.js
+let pageData = projectData.pages[0].data; 
+let globalConfig = projectData.config;
+
 let savedColors = ["#6366f1", "#ffffff", "#1e293b", "#f1f5f9", "#ef4444"];
 let activeContainerId = null;
 let editingId = null;
 let currentEditState = 'normal'; // 'normal', 'hover', 'dark'
 let targetIconInputId = null;
 
-let globalConfig = {
-    fontFamily: "'Outfit', sans-serif",
-    pageBg: "#f1f5f9",
-    darkMode: false
-};
-
-// 2. Fungsi Generate ID (PENTING: Hanya dideklarasikan di sini)
+// 2. Fungsi Generate ID
 const generateId = () => 'el_' + Math.random().toString(36).substr(2, 6);
 
-// 3. Library Font (Sesuai Link di HTML)
+// 3. Library Font
 const fontLibrary = [
     { name: "Default (Outfit)", value: "'Outfit', sans-serif" },
     { name: "Poppins (Geometris)", value: "'Poppins', sans-serif" },
@@ -38,7 +49,7 @@ const materialIcons = [
     "ri-youtube-fill", "ri-youtube-line", "ri-discord-fill", "ri-discord-line", "ri-instagram-fill", "ri-instagram-line", "ri-tiktok-fill", "ri-tiktok-line", "ri-whatsapp-fill", "ri-whatsapp-line", "ri-telegram-fill", "ri-telegram-line", "ri-facebook-circle-fill", "ri-facebook-circle-line", "ri-twitter-x-fill", "ri-twitter-x-line", "ri-github-fill", "ri-github-line", "ri-linkedin-fill", "ri-linkedin-line", "ri-twitch-fill", "ri-twitch-line", "ri-global-line", "ri-link"
 ];
 
-// 5. Referensi DOM Elements (Cache agar cepat)
+// 5. Referensi DOM Elements
 const canvas = document.getElementById('editorCanvas');
 const emptyState = document.getElementById('emptyState');
 const addSheet = document.getElementById('addSheet');
