@@ -1,117 +1,212 @@
-document.querySelectorAll('.pill-btn').forEach(b => {
-    b.onclick = () => {
-        document.querySelectorAll('.pill-btn').forEach(x => x.classList.remove('active'));
-        b.classList.add('active');
-        document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-        document.getElementById('tab-' + b.dataset.tab).classList.add('active');
-    }
-});
+/* --- js/app.js (FIXED: BUTTON CLICK LISTENER) --- */
 
-const addFab = document.getElementById('addFab');
-if(addFab) addFab.onclick = () => openAddMenu(null);
-
-const globalBtn = document.getElementById('globalBtn');
-if(globalBtn) {
-    globalBtn.onclick = () => {
-        globalSheet.classList.add('active');
-        overlay.classList.add('active');
+window.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. INISIALISASI TOMBOL HEADER & MENU ---
+    
+    // Gunakan helper function agar kode lebih bersih & aman
+    const bindClick = (id, handler) => {
+        const el = document.getElementById(id);
+        if (el) el.onclick = handler;
     };
-}
 
-const saveGlobalBtn = document.getElementById('saveGlobalBtn');
-if(saveGlobalBtn) {
-    saveGlobalBtn.onclick = () => {
-        globalConfig.fontFamily = document.getElementById('global-font').value;
-        globalConfig.pageBg = document.getElementById('global-bg').value;
-        applyGlobalConfig();
-        closeAllSheets();
-        saveData();
-        showToast("Global Settings Disimpan");
-    };
-}
+    bindClick('addFab', () => openAddMenu(null));
+    
+    bindClick('globalBtn', () => {
+        const sheet = document.getElementById('globalSheet');
+        const overlay = document.getElementById('overlay');
+        if(sheet && overlay) {
+            sheet.classList.add('active');
+            overlay.classList.add('active');
+        }
+    });
 
-const resetBtn = document.getElementById('resetBtn');
-if(resetBtn) {
-    resetBtn.onclick = () => {
+    bindClick('saveGlobalBtn', () => {
+        if(typeof globalConfig !== 'undefined') {
+            globalConfig.fontFamily = document.getElementById('global-font').value;
+            globalConfig.pageBg = document.getElementById('global-bg').value;
+            applyGlobalConfig();
+            closeAllSheets();
+            saveData();
+            showToast("Global Settings Disimpan");
+        }
+    });
+
+    bindClick('resetBtn', () => {
         if (confirm('Yakin ingin menghapus semua elemen?')) {
             if(typeof addToHistory === 'function') addToHistory();
             pageData = [];
             saveData();
             renderCanvas();
         }
-    };
-}
+    });
 
-const layerBtn = document.getElementById('layerBtn');
-if(layerBtn) {
-    layerBtn.onclick = () => {
-        renderLayerSheet();
-        layerSheet.classList.add('active');
-        overlay.classList.add('active');
-    };
-}
+    bindClick('layerBtn', () => {
+        if(typeof renderLayerSheet === 'function') renderLayerSheet();
+        const sheet = document.getElementById('layerSheet');
+        const overlay = document.getElementById('overlay');
+        if(sheet && overlay) {
+            sheet.classList.add('active');
+            overlay.classList.add('active');
+        }
+    });
 
-document.querySelectorAll('.grid-item').forEach(b => {
-    b.onclick = () => addElement(b.dataset.type);
-});
-
-const importBtn = document.getElementById('importBtn');
-const importInput = document.getElementById('importInput');
-
-if(importBtn && importInput) {
-    importBtn.onclick = () => {
+    bindClick('importBtn', () => {
         if (pageData.length > 0) {
             if(!confirm("Import akan menimpa pekerjaan saat ini. Lanjutkan?")) return;
         }
-        importInput.click();
-    };
-    importInput.onchange = (e) => {
-        handleFileSelect(e);
-    };
-}
+        document.getElementById('importInput').click();
+    });
 
-const downloadCssBtn = document.getElementById('downloadCssBtn');
-if (downloadCssBtn) {
-    downloadCssBtn.onclick = () => {
+    // Event listener untuk input file import
+    const importInput = document.getElementById('importInput');
+    if(importInput) {
+        importInput.onchange = (e) => handleFileSelect(e);
+    }
+
+    // Event listener untuk tombol di dalam menu Add Widget
+    document.querySelectorAll('.grid-item').forEach(b => {
+        b.onclick = () => addElement(b.dataset.type);
+    });
+
+    // Logic Tab (Pill Buttons)
+    document.querySelectorAll('.pill-btn').forEach(b => {
+        b.onclick = () => {
+            document.querySelectorAll('.pill-btn').forEach(x => x.classList.remove('active'));
+            b.classList.add('active');
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById('tab-' + b.dataset.tab);
+            if(target) target.classList.add('active');
+        }
+    });
+
+    // --- 2. FITUR DOWNLOAD CSS ---
+    bindClick('downloadCssBtn', () => {
         const blob = new Blob([fullStyleCSS], { type: 'text/css' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'style.css'; 
+        a.download = 'style.css';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        document.getElementById('mainMenuDropdown').classList.remove('active');
+        
+        const menu = document.getElementById('mainMenuDropdown');
+        if(menu) menu.classList.remove('active');
         showToast("style.css Berhasil Diunduh");
-    };
-}
+    });
 
-window.addEventListener('DOMContentLoaded', () => {
-    loadData();
+    // --- 3. INIT DRAGGABLE FAB ---
     const fabStack = document.querySelector('.fab-stack');
     if (fabStack) makeDraggable(fabStack);
+
+    // --- 4. LOAD DATA ---
+    if(typeof loadData === 'function') loadData();
 });
 
+
+// --- LOGIKA DRAGGABLE DENGAN THRESHOLD (TOLERANSI) ---
 function makeDraggable(element) {
-    let xOffset = 0; let yOffset = 0; let currentX; let currentY; let initialX; let initialY; let isDragging = false;
+    let xOffset = 0;
+    let yOffset = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let initialX = 0;
+    let initialY = 0;
+    
+    // Variabel untuk mendeteksi klik vs geser
+    let startX = 0;
+    let startY = 0;
+    let isDragging = false;
+    let isMoving = false; // Flag jika benar-benar bergerak
+
+    // 1. Tangani Mouse/Touch Down
+    const dragStart = (e) => {
+        if (e.type === "touchstart") {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+            startX = e.touches[0].clientX; // Simpan posisi awal murni
+            startY = e.touches[0].clientY;
+        } else {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            startX = e.clientX;
+            startY = e.clientY;
+        }
+
+        if (element.contains(e.target)) {
+            isDragging = true;
+            isMoving = false; // Reset status bergerak
+        }
+    };
+
+    // 2. Tangani Mouse/Touch End
+    const dragEnd = (e) => {
+        initialX = currentX;
+        initialY = currentY;
+        isDragging = false;
+        
+        // Reset status moving sedikit terlambat agar event click sempat dicek
+        setTimeout(() => { isMoving = false; }, 50);
+    };
+
+    // 3. Tangani Gerakan (Move)
+    const drag = (e) => {
+        if (!isDragging) return;
+
+        let clientX, clientY;
+        if (e.type === "touchmove") {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+
+        // [PENTING] Hitung jarak geser (Pythagoras)
+        // Jika geser < 5px, anggap sebagai getaran tangan/klik biasa
+        const diffX = clientX - startX;
+        const diffY = clientY - startY;
+        const distance = Math.sqrt(diffX * diffX + diffY * diffY);
+
+        if (distance > 5) {
+            isMoving = true; // Konfirmasi bahwa ini adalah drag
+            e.preventDefault(); // Matikan scroll layar hanya jika fix drag
+
+            currentX = clientX - initialX;
+            currentY = clientY - initialY;
+
+            xOffset = currentX;
+            yOffset = currentY;
+
+            setTranslate(currentX, currentY, element);
+        }
+    };
+
+    const setTranslate = (xPos, yPos, el) => {
+        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+    };
+
+    // 4. Mencegah Klik jika sedang Dragging
+    // Menggunakan capture phase (true) untuk mencegat event click sebelum sampai ke tombol
+    element.addEventListener("click", (e) => {
+        if (isMoving) {
+            e.preventDefault();
+            e.stopPropagation(); // Stop! Jangan klik tombol jika sedang digeser
+        }
+    }, true);
+
     element.addEventListener("touchstart", dragStart, { passive: false });
     element.addEventListener("touchend", dragEnd, { passive: false });
     element.addEventListener("touchmove", drag, { passive: false });
+
     element.addEventListener("mousedown", dragStart);
     document.addEventListener("mouseup", dragEnd);
     document.addEventListener("mousemove", drag);
-    function dragStart(e) {
-        if (e.type === "touchstart") { initialX = e.touches[0].clientX - xOffset; initialY = e.touches[0].clientY - yOffset; } else { initialX = e.clientX - xOffset; initialY = e.clientY - yOffset; }
-        if (element.contains(e.target)) { isDragging = true; }
-    }
-    function dragEnd(e) { initialX = currentX; initialY = currentY; isDragging = false; }
-    function drag(e) {
-        if (isDragging) { e.preventDefault(); if (e.type === "touchmove") { currentX = e.touches[0].clientX - initialX; currentY = e.touches[0].clientY - initialY; } else { currentX = e.clientX - initialX; currentY = e.clientY - initialY; } xOffset = currentX; yOffset = currentY; setTranslate(currentX, currentY, element); }
-    }
-    function setTranslate(xPos, yPos, el) { el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`; }
 }
 
+// --- CSS CONTENT (UPDATED) ---
 const fullStyleCSS = `:root {
     --primary: #6366f1;
     --primary-light: #e0e7ff;
@@ -423,5 +518,4 @@ a.builder-element:active, button.el-theme-toggle:active { transform: scale(0.95)
 #redoBtn:hover span { transform: rotate(45deg) scale(1.1); }
 .icon-btn span { transition: transform 0.2s; }
 .icon-btn:hover span { transform: scale(1.15); }
-#resetBtn:hover span { transform: scale(1.15) rotate(15deg); color: var(--danger); }
-`;
+#resetBtn:hover span { transform: scale(1.15) rotate(15deg); color: var(--danger); }`;
