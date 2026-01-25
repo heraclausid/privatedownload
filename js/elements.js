@@ -1,4 +1,4 @@
-/* --- js/elements.js (FULL CONTENT - NO ABBREVIATIONS) --- */
+/* --- js/elements.js (FULL ORIGINAL CONTENT + ANIMATION) --- */
 
 function createBaseStyles() {
     return {
@@ -28,67 +28,101 @@ function addElement(type) {
 
     const styles = createBaseStyles();
     
+    // [NEW] Default Animation Object
+    const defaultAnim = {
+        type: 'none',       
+        duration: 1.0,      
+        delay: 0,           
+        infinite: false     
+    };
+    
+    // Base Structure
     const newEl = { 
         id: generateId(), 
         type: type === 'grid-row' ? 'container' : type, 
         content: {}, 
         styles: styles, 
+        // [NEW] Inject Animation Property
+        animation: { ...defaultAnim },
         hoverStyles: {}, 
         darkStyles: {}, 
         layout: {} 
     };
 
+    // --- WIDGET LOGIC ---
+
     if (type === 'grid-row') {
         newEl.type = 'container';
         newEl.styles.width = '100%';
-        newEl.styles.paddingLeft = 10;
-        newEl.styles.paddingRight = 10;
-        newEl.layout = { direction: 'row', justify: 'flex-start', alignItems: 'stretch', wrap: 'wrap', gap: 10 };
-        newEl.children = [];
-        const col1 = { id: generateId(), type: 'container', content: {}, styles: { ...createBaseStyles(), width: 'calc(50% - 5px)', minHeight: 0, flexGrow: 1, flexShrink: 1, bgColor: 'transparent', paddingTop: 10, paddingBottom: 10, paddingLeft: 10, paddingRight: 10 }, layout: { direction: 'column', alignItems: 'stretch', gap: 10 }, children: [], hoverStyles:{}, darkStyles:{} };
-        const col2 = JSON.parse(JSON.stringify(col1));
-        col2.id = generateId();
-        newEl.children.push(col1, col2);
-        pushToData(newEl);
-        return;
-    }
-    else if (type === 'container' || type === 'card') {
-        newEl.type = 'container'; 
-        newEl.children = [];
-        newEl.styles.width = '100%';
-        newEl.styles.minHeight = 0;
-        newEl.styles.paddingTop = 10; newEl.styles.paddingBottom = 10; newEl.styles.paddingRight = 10; newEl.styles.paddingLeft = 10;
-        newEl.layout = { direction: 'column', justify: 'flex-start', alignItems: 'stretch', wrap: 'nowrap', gap: 10 };
-        if (type === 'card') {
-            newEl.styles.bgColor = 'var(--surface)'; 
-            newEl.styles.radius = 12;
-            newEl.styles.shadowY = 4;
-            newEl.styles.shadowBlur = 15;
-            newEl.styles.shadowColor = 'rgba(0,0,0,0.05)';
-        }
+        newEl.layout = { direction: 'row', justify: 'space-between', alignItems: 'stretch', gap: 10, wrap: 'wrap' };
+        
+        // Col 1
+        const col1 = { 
+            id: generateId(), 
+            type: 'container', 
+            content: {}, 
+            styles: { ...createBaseStyles(), width: '48%', flexGrow: 1, padding:10 }, 
+            animation: { ...defaultAnim }, // Animasi untuk child
+            hoverStyles: {}, 
+            darkStyles: {},
+            layout: { direction: 'column', gap: 10 }, 
+            children: [] 
+        };
+        
+        // Col 2
+        const col2 = { 
+            id: generateId(), 
+            type: 'container', 
+            content: {}, 
+            styles: { ...createBaseStyles(), width: '48%', flexGrow: 1, padding:10 }, 
+            animation: { ...defaultAnim }, // Animasi untuk child
+            hoverStyles: {}, 
+            darkStyles: {},
+            layout: { direction: 'column', gap: 10 }, 
+            children: [] 
+        };
+        
+        newEl.children = [col1, col2];
     } 
+    else if (type === 'container') {
+        newEl.styles.width = '100%';
+        newEl.styles.minHeight = 100;
+        newEl.styles.paddingTop = 20; newEl.styles.paddingBottom = 20; newEl.styles.paddingLeft = 20; newEl.styles.paddingRight = 20;
+        newEl.layout = { direction: 'column', justify: 'flex-start', alignItems: 'stretch', gap: 10, wrap: 'nowrap' };
+        newEl.children = [];
+    }
+    else if (type === 'card') {
+        newEl.type = 'container';
+        newEl.styles.width = '100%';
+        newEl.styles.bgColor = 'var(--surface)';
+        newEl.styles.paddingTop = 20; newEl.styles.paddingBottom = 20; newEl.styles.paddingLeft = 20; newEl.styles.paddingRight = 20;
+        newEl.styles.radius = 12;
+        newEl.styles.shadowY = 4; newEl.styles.shadowBlur = 20; newEl.styles.shadowColor = 'rgba(0,0,0,0.05)';
+        newEl.layout = { direction: 'column', justify: 'flex-start', alignItems: 'stretch', gap: 10 };
+        newEl.children = [];
+    }
     else if (type === 'heading') { 
         newEl.content.text = "Heading Baru"; 
         newEl.content.tag = "h2"; 
         newEl.styles.fontSize = 28; 
         newEl.styles.fontWeight = 700; 
-        newEl.styles.textColor = "var(--text-main)"; 
+        newEl.styles.textColor = "var(--text-dark)";
     } 
     else if (type === 'paragraph') { 
-        newEl.content.text = "Tulis teks di sini..."; 
-        newEl.styles.textColor = "var(--text-muted)"; 
+        newEl.content.text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."; 
+        newEl.styles.fontSize = 16; 
+        newEl.styles.textColor = "var(--text-gray)";
+        newEl.styles.lineHeight = 1.6;
     } 
     else if (type === 'button') { 
-        newEl.content.text = "Button"; 
+        newEl.content.text = "Klik Saya"; 
+        newEl.content.url = "#"; 
         newEl.styles.bgColor = "var(--primary)"; 
         newEl.styles.textColor = "#ffffff"; 
-        newEl.styles.paddingTop=12; 
-        newEl.styles.paddingBottom=12; 
-        newEl.styles.paddingLeft=24; 
-        newEl.styles.paddingRight=24; 
+        newEl.styles.paddingTop = 10; newEl.styles.paddingBottom = 10; newEl.styles.paddingLeft = 24; newEl.styles.paddingRight = 24;
         newEl.styles.radius = 50; 
         newEl.styles.textAlign = "center"; 
-        newEl.styles.fontWeight=600; 
+        newEl.styles.fontWeight = 600; 
     } 
     else if (type === 'image') { 
         newEl.content.src = "https://via.placeholder.com/400x200"; 
@@ -97,6 +131,14 @@ function addElement(type) {
         newEl.styles.objectFit = "cover";
         newEl.styles.aspectRatio = "auto";
     } 
+    else if (type === 'icon') {
+        newEl.content.icon = "star";
+        newEl.styles.fontSize = 48;
+        newEl.styles.textColor = "var(--primary)";
+        newEl.styles.textAlign = "center";
+        newEl.styles.paddingTop = 0;
+        newEl.styles.paddingBottom = 0;
+    }
     else if (type === 'spacer') { 
         newEl.styles.height = 40; 
         newEl.styles.width = "100%"; 
@@ -108,27 +150,33 @@ function addElement(type) {
         newEl.styles.bgColor = "var(--border)"; 
     } 
     else if (type === 'theme-toggle') { 
-        newEl.styles.textAlign="center"; 
-        newEl.styles.bgColor="var(--bg-surface-2)"; 
-        newEl.styles.textColor="var(--primary)"; 
-        newEl.styles.borderWidth=1; 
-        newEl.styles.borderColor="var(--border)"; 
-        newEl.styles.radius=50; 
+        newEl.styles.textAlign = "center"; 
+        newEl.styles.bgColor = "var(--bg-surface-2)"; 
+        newEl.styles.textColor = "var(--primary)"; 
+        newEl.styles.borderWidth = 1; 
+        newEl.styles.borderColor = "var(--border)"; 
+        newEl.styles.radius = 50; 
     }
 
     pushToData(newEl);
 }
 
 function pushToData(el) {
-    if (activeContainerId === null) { pageData.push(el); } 
-    else {
+    if (activeContainerId === null) {
+        pageData.push(el);
+    } else {
         const parent = findNode(activeContainerId);
-        if (parent) { if (!parent.children) parent.children = []; parent.children.push(el); } 
-        else { pageData.push(el); }
+        if (parent && parent.children) {
+            parent.children.push(el);
+        } else {
+            pageData.push(el);
+        }
     }
     renderCanvas();
-    closeAllSheets();
-    setTimeout(() => { if(typeof selectElement === 'function') selectElement(el.id); }, 50);
-    showToast("Elemen Ditambahkan");
+    renderLayerSheet();
     saveData();
+    closeAllSheets();
+    
+    // Auto select new element to edit
+    setTimeout(() => openEditSheet(el.id), 100);
 }

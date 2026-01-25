@@ -1,3 +1,5 @@
+/* --- js/renderer.js (COMPLETE WITH EDITOR SCROLL ANIMATION) --- */
+
 function renderCanvas() {
     canvas.innerHTML = '';
     if (pageData.length === 0) {
@@ -6,8 +8,40 @@ function renderCanvas() {
     } else {
         emptyState.style.display = 'none';
         renderRecursive(pageData, canvas);
+        
+        // [NEW] Trigger Animation Observer setelah render selesai
+        // Timeout 50ms memastikan elemen sudah ada di DOM
+        setTimeout(initEditorObserver, 50);
     }
     if (editingId) highlightElement(editingId);
+}
+
+// [NEW] Fungsi Observer untuk Editor (Menjalankan animasi saat scroll)
+let editorObserver = null;
+
+function initEditorObserver() {
+    if (editorObserver) editorObserver.disconnect();
+
+    const options = {
+        root: null, // viewport window
+        rootMargin: '0px',
+        threshold: 0.1 // 10% elemen masuk layar baru animasi jalan
+    };
+
+    editorObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                // Unobserve agar animasi hanya jalan sekali (Entrance Animation)
+                // Jika ingin animasi berulang saat scroll naik-turun, hapus baris di bawah ini
+                obs.unobserve(entry.target); 
+            }
+        });
+    }, options);
+
+    // Observe semua elemen yang punya class 'has-animation' di dalam canvas
+    const targets = document.querySelectorAll('#editorCanvas .has-animation');
+    targets.forEach(el => editorObserver.observe(el));
 }
 
 function renderRecursive(elements, parentDom) {
@@ -39,6 +73,7 @@ function renderRecursive(elements, parentDom) {
 
         let domNode = null;
         
+        // Base Inner Styles
         const innerStyles = `
             background-color: ${el.styles.bgColor}; 
             color: ${el.styles.textColor || 'inherit'}; 
@@ -57,6 +92,8 @@ function renderRecursive(elements, parentDom) {
             width: 100%; 
             transition: 0.2s;
         `;
+
+        // --- RENDER PER TIPE ELEMEN ---
 
         if (el.type === 'container') {
             const isLink = el.content.url && el.content.url.length > 0;
@@ -110,16 +147,67 @@ function renderRecursive(elements, parentDom) {
         } 
         else if (el.type === 'button') {
             const btnWrap = document.createElement('div'); btnWrap.style.width = '100%'; btnWrap.style.textAlign = el.styles.textAlign;
-            domNode = document.createElement('a'); domNode.className = 'builder-element el-btn btn'; domNode.href = el.content.url || '#'; domNode.target = el.content.target || '_self';
+            domNode = document.createElement('a'); domNode.className = 'builder-element el-btn btn'; 
+            domNode.href = el.content.url || '#'; domNode.target = el.content.target || '_self';
             let iconHtml = ''; if (el.content.icon) { if (el.content.icon.startsWith('ri-')) { iconHtml = `<i class="${el.content.icon}" style="font-size:1.1em;line-height:1;display:block;"></i>`; } else { iconHtml = `<span class="material-symbols-rounded" style="font-size:1.1em;line-height:1;display:block;">${el.content.icon}</span>`; } }
             domNode.innerHTML = `${iconHtml} ${el.content.text}`;
             domNode.style.cssText = innerStyles + `display:inline-flex; align-items:center; justify-content:center; gap:8px; width:auto; text-decoration:none; cursor:pointer; vertical-align:middle; line-height:1;`;
+            
+            // Prevent link click in editor
+            domNode.onclick = (e) => { e.preventDefault(); };
+            
             btnWrap.appendChild(domNode); domNode = btnWrap;
         } 
         else if (el.type === 'image') {
-            const img = document.createElement('img'); img.src = el.content.src; img.style.cssText = innerStyles + `display:block; width:${el.styles.width || '100%'}; height:${el.styles.height || 'auto'}; object-fit:${el.styles.objectFit || 'cover'};`;
+            const img = document.createElement('img'); 
+            img.src = el.content.src; 
+            img.style.cssText = innerStyles + `display:block; width:${el.styles.width || '100%'}; height:${el.styles.height || 'auto'}; object-fit:${el.styles.objectFit || 'cover'};`;
+            
             if (el.content.url) { domNode = document.createElement('a'); domNode.className = 'builder-element el-link-wrapper'; domNode.href = el.content.url; domNode.target = el.content.target || '_self'; domNode.style.display = "block"; domNode.appendChild(img); } else { domNode = img; domNode.className = 'builder-element'; }
         } 
+        else if (el.type === 'icon') {
+            const wrapAlign = document.createElement('div');
+            wrapAlign.style.width = '100%';
+            wrapAlign.style.textAlign = el.styles.textAlign || 'center';
+            
+            let iconHtml = '';
+            if (el.content.icon) {
+                if (el.content.icon.startsWith('ri-')) {
+                    iconHtml = `<i class="${el.content.icon}"></i>`;
+                } else {
+                    iconHtml = `<span class="material-symbols-rounded">${el.content.icon}</span>`;
+                }
+            } else {
+                iconHtml = `<span class="material-symbols-rounded">sentiment_satisfied</span>`;
+            }
+
+            const iconStyle = innerStyles + `
+                display: inline-flex; 
+                align-items: center; 
+                justify-content: center; 
+                width: auto; 
+                line-height: 1; 
+                text-decoration: none;
+                cursor: pointer;
+            `;
+
+            if (el.content.url) {
+                domNode = document.createElement('a');
+                domNode.href = el.content.url;
+                domNode.target = el.content.target || '_self';
+                domNode.className = 'builder-element el-link-wrapper';
+                domNode.innerHTML = iconHtml;
+                domNode.style.cssText = iconStyle;
+            } else {
+                domNode = document.createElement('div');
+                domNode.className = 'builder-element';
+                domNode.innerHTML = iconHtml;
+                domNode.style.cssText = iconStyle;
+            }
+
+            wrapAlign.appendChild(domNode);
+            domNode = wrapAlign; 
+        }
         else if (el.type === 'spacer') { domNode = document.createElement('div'); domNode.className = 'el-spacer'; domNode.style.height = (el.styles.height || 40) + 'px'; } 
         else if (el.type === 'divider') {
             domNode = document.createElement('div'); domNode.className = 'builder-element el-divider';
@@ -135,22 +223,10 @@ function renderRecursive(elements, parentDom) {
             domNode.innerHTML = `<span class="material-symbols-rounded theme-icon">${currentIcon}</span>`;
             
             domNode.onclick = (e) => { 
-                if (document.body.classList.contains('preview-mode')) { 
-                    e.stopPropagation(); 
-                    
-                    const iconSpan = domNode.querySelector('.theme-icon'); 
-                    iconSpan.classList.add('animating');
-                    
-                    setTimeout(() => { 
-                        toggleThemeMode(); 
-                        const newIsDark = globalConfig.darkMode; 
-                        iconSpan.innerText = newIsDark ? 'light_mode' : 'dark_mode'; 
-                        iconSpan.classList.remove('animating');
-                    }, 500); 
-                } else { 
-                    e.stopPropagation(); 
-                    selectElement(el.id); 
-                } 
+                e.stopPropagation(); 
+                const iconSpan = domNode.querySelector('.theme-icon'); 
+                iconSpan.classList.add('animating');
+                setTimeout(() => { toggleThemeMode(); }, 300); 
             };
             btnWrap.appendChild(domNode); domNode = btnWrap;
         }
@@ -158,7 +234,31 @@ function renderRecursive(elements, parentDom) {
         if (domNode && el.content.elementId) { domNode.id = el.content.elementId; }
 
         if (domNode) {
-            wrapper.onclick = (e) => { e.stopPropagation(); if (e.target.closest('.tool-btn') || e.target.closest('.inner-add-btn')) return; if (!document.body.classList.contains('preview-mode')) { e.preventDefault(); selectElement(el.id); } };
+            // [ANIMATION LOGIC] Inject Animation Classes & Styles
+            // Catatan: domNode bisa berupa wrapper (misal untuk button/icon), jadi kita apply ke situ.
+            
+            if (el.animation && el.animation.type && el.animation.type !== 'none') {
+                domNode.classList.add('has-animation');
+                domNode.classList.add(el.animation.type);
+                
+                // Tambahkan inline styles untuk duration, delay, dan iteration count
+                const animStyle = `animation-duration: ${el.animation.duration}s; animation-delay: ${el.animation.delay}s; ${el.animation.infinite ? 'animation-iteration-count: infinite;' : ''}`;
+                
+                // Append ke style yang sudah ada
+                domNode.style.cssText += animStyle;
+            }
+
+            // Click Handler
+            wrapper.onclick = (e) => { 
+                if (e.target.closest('.tool-btn') || e.target.closest('.inner-add-btn')) return; 
+                e.stopPropagation(); 
+                if (!document.body.classList.contains('preview-mode')) { 
+                    if(el.type !== 'theme-toggle') {
+                        e.preventDefault(); 
+                        selectElement(el.id); 
+                    }
+                } 
+            };
             wrapper.appendChild(domNode);
         }
         parentDom.appendChild(wrapper);
