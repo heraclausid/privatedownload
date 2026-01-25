@@ -49,9 +49,6 @@
                     <button class="menu-item" id="importBtn">
                         <span class="material-symbols-rounded">upload_file</span> Import Project
                     </button>
-                    <button class="menu-item" id="downloadCssBtn">
-                        <span class="material-symbols-rounded">css</span> Download CSS
-                    </button>
                     <button class="menu-item" id="globalBtn">
                         <span class="material-symbols-rounded">tune</span> Global Settings
                     </button>
@@ -128,6 +125,10 @@
                     <div class="icon-box"><span class="material-symbols-rounded">crop_free</span></div>
                     <span>Container</span>
                 </button>
+<button class="grid-item" data-type="icon">
+    <div class="icon-box"><span class="material-symbols-rounded">sentiment_satisfied</span></div>
+    <span>Icon</span>
+</button>
                 <button class="grid-item" data-type="card">
                     <div class="icon-box"><span class="material-symbols-rounded">call_to_action</span></div>
                     <span>Card</span>
@@ -225,6 +226,29 @@
                     <label style="font-size:13px; font-weight:500; display:block; margin-bottom:8px">Background Page (Light Mode)</label>
                     <div class="color-picker-wrapper"><input type="color" id="global-bg" value="#f1f5f9" style="width:100%; height:40px; border:1px solid var(--border); border-radius:6px; cursor:pointer"></div>
                 </div>
+                
+                <div class="prop-section" style="margin-top:20px; padding-top:20px; border-top:1px dashed var(--border)">
+                    <div class="prop-title" style="margin-bottom:12px">Page Spacing (px)</div>
+                    
+                    <label style="font-size:12px; font-weight:500; display:block; margin-bottom:8px">Page Padding</label>
+                    <div class="box-grid">
+                        <div class="box-cell"><input type="number" id="global-pTop" placeholder="0" class="input-field"><span>Top</span></div>
+                        <div class="box-cell"><input type="number" id="global-pRight" placeholder="0" class="input-field"><span>Right</span></div>
+                        <div class="box-cell"><input type="number" id="global-pBottom" placeholder="0" class="input-field"><span>Btm</span></div>
+                        <div class="box-cell"><input type="number" id="global-pLeft" placeholder="0" class="input-field"><span>Left</span></div>
+                    </div>
+
+                    <div style="height:16px"></div>
+
+                    <label style="font-size:12px; font-weight:500; display:block; margin-bottom:8px">Page Margin</label>
+                    <div class="box-grid">
+                        <div class="box-cell"><input type="number" id="global-mTop" placeholder="0" class="input-field"><span>Top</span></div>
+                        <div class="box-cell"><input type="number" id="global-mRight" placeholder="0" class="input-field"><span>Right</span></div>
+                        <div class="box-cell"><input type="number" id="global-mBottom" placeholder="0" class="input-field"><span>Btm</span></div>
+                        <div class="box-cell"><input type="number" id="global-mLeft" placeholder="0" class="input-field"><span>Left</span></div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="sheet-footer"><button class="btn-save" id="saveGlobalBtn">Simpan</button></div>
