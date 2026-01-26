@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="style.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
 
     <style id="generated-css"></style>
 </head>
@@ -117,6 +118,10 @@
         </div>
         <div class="sheet-body">
             <div class="grid-menu">
+                <button class="grid-item" data-type="nav-menu">
+                    <div class="icon-box"><span class="material-symbols-rounded">menu</span></div>
+                    <span>Nav Menu</span>
+                </button>
                 <button class="grid-item" data-type="grid-row">
                     <div class="icon-box"><span class="material-symbols-rounded">view_column</span></div>
                     <span>2 Columns</span>
@@ -125,10 +130,10 @@
                     <div class="icon-box"><span class="material-symbols-rounded">crop_free</span></div>
                     <span>Container</span>
                 </button>
-<button class="grid-item" data-type="icon">
-    <div class="icon-box"><span class="material-symbols-rounded">sentiment_satisfied</span></div>
-    <span>Icon</span>
-</button>
+                <button class="grid-item" data-type="icon">
+                    <div class="icon-box"><span class="material-symbols-rounded">sentiment_satisfied</span></div>
+                    <span>Icon</span>
+                </button>
                 <button class="grid-item" data-type="card">
                     <div class="icon-box"><span class="material-symbols-rounded">call_to_action</span></div>
                     <span>Card</span>
@@ -222,9 +227,16 @@
                         <option value="monospace">Monospace</option>
                     </select>
                 </div>
+                
                 <div class="form-group" style="margin-top:16px">
                     <label style="font-size:13px; font-weight:500; display:block; margin-bottom:8px">Background Page (Light Mode)</label>
-                    <div class="color-picker-wrapper"><input type="color" id="global-bg" value="#f1f5f9" style="width:100%; height:40px; border:1px solid var(--border); border-radius:6px; cursor:pointer"></div>
+                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                        <div id="trigger-global-bg" onclick="openColorPicker('global-bg')" style="width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background-color: #f1f5f9; cursor: pointer; flex-shrink: 0;"></div>
+                        <div class="input-wrapper" style="flex: 1;">
+                            <input type="text" id="global-bg" onchange="updateGlobalBg(this.value)" value="#f1f5f9" placeholder="#HEXCODE" class="input-field" maxlength="7" style="text-transform: uppercase;">
+                        </div>
+                    </div>
+                    <div id="global-palette-row" class="palette-row" style="width:100%; display:flex; gap:5px; flex-wrap:wrap; padding-top:4px;"></div>
                 </div>
                 
                 <div class="prop-section" style="margin-top:20px; padding-top:20px; border-top:1px dashed var(--border)">
@@ -252,6 +264,29 @@
             </div>
         </div>
         <div class="sheet-footer"><button class="btn-save" id="saveGlobalBtn">Simpan</button></div>
+    </div>
+
+    <div class="bottom-sheet" id="colorPickerSheet" style="z-index: 9999;">
+        <div class="sheet-header">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title">Pilih Warna</h3>
+            <button class="icon-btn close-sheet-btn">
+                <span class="material-symbols-rounded">check</span>
+            </button>
+        </div>
+        <div class="sheet-body" style="display:flex; flex-direction:column; align-items:center; padding-bottom:40px;">
+            
+            <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:20px; width:100%">
+                <div style="font-size:11px; font-weight:600; color:var(--text-gray); margin-bottom:6px; text-transform:uppercase; letter-spacing:0.5px;">Preview</div>
+                <div id="color-sheet-preview" style="width: 60px; height: 60px; border-radius: 16px; background-color: #ffffff; border: 4px solid var(--surface); box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: background 0.1s;"></div>
+                <div id="color-sheet-hex" style="margin-top:8px; font-family:monospace; font-size:14px; font-weight:600; color:var(--text-dark);">#FFFFFF</div>
+            </div>
+
+            <div id="iro-picker-container"></div>
+            <div style="margin-top:20px; width:100%; text-align:center; color:var(--text-gray); font-size:12px;">
+                Geser roda untuk memilih
+            </div>
+        </div>
     </div>
 
     <div class="bottom-sheet" id="layerSheet">
