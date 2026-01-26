@@ -1,5 +1,3 @@
-/* --- js/store.js (FULL CONTENT - NO ABBREVIATIONS) --- */
-
 let historyStack = [];
 let redoStack = [];
 const MAX_HISTORY = 50;
@@ -112,19 +110,23 @@ function loadData() {
 function applyGlobalConfig() {
     document.body.style.fontFamily = globalConfig.fontFamily;
     
-    // 1. Populate Basic Input Fields
     const fontInput = document.getElementById('global-font');
-    const bgInput = document.getElementById('global-bg');
     if(fontInput) fontInput.value = globalConfig.fontFamily;
-    if(bgInput) bgInput.value = globalConfig.pageBg;
 
-    // 2. Populate 4-Side Inputs
+    const currentBg = globalConfig.pageBg || '#f1f5f9';
+    const bgPicker = document.getElementById('global-bg');
+    const bgText = document.getElementById('global-bg-text');
+
+    if (bgPicker) bgPicker.value = currentBg;
+    if (bgText) bgText.value = currentBg.toUpperCase();
+    
+    if (typeof renderGlobalPalette === 'function') renderGlobalPalette();
+
     const setVal = (id, val) => { 
         const el = document.getElementById(id); 
         if(el) el.value = val !== undefined ? val : 0; 
     };
     
-    // Default fallback to 24 for Padding if undefined
     setVal('global-pTop', globalConfig.pTop !== undefined ? globalConfig.pTop : 24);
     setVal('global-pRight', globalConfig.pRight !== undefined ? globalConfig.pRight : 24);
     setVal('global-pBottom', globalConfig.pBottom !== undefined ? globalConfig.pBottom : 24);
@@ -135,7 +137,6 @@ function applyGlobalConfig() {
     setVal('global-mBottom', globalConfig.mBottom);
     setVal('global-mLeft', globalConfig.mLeft);
 
-    // 3. Apply Theme & Colors
     if (globalConfig.darkMode) {
         document.documentElement.setAttribute('data-theme', 'dark');
         document.body.style.backgroundColor = '#0f172a';
@@ -144,7 +145,6 @@ function applyGlobalConfig() {
         document.body.style.backgroundColor = globalConfig.pageBg;
     }
 
-    // 4. [NEW] Apply Page Spacing to Editor Canvas
     const canvasEl = document.getElementById('editorCanvas');
     if (canvasEl) {
         const pT = globalConfig.pTop !== undefined ? globalConfig.pTop : 24;
@@ -154,7 +154,6 @@ function applyGlobalConfig() {
         
         canvasEl.style.padding = `${pT}px ${pR}px ${pB}px ${pL}px`;
         
-        // Margin applied to canvas for visual preview
         const mT = globalConfig.mTop || 0;
         const mR = globalConfig.mRight || 0;
         const mB = globalConfig.mBottom || 0;

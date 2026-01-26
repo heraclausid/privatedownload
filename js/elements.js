@@ -1,5 +1,3 @@
-/* --- js/elements.js (FULL ORIGINAL CONTENT + ANIMATION) --- */
-
 function createBaseStyles() {
     return {
         bgColor: 'transparent',
@@ -28,7 +26,6 @@ function addElement(type) {
 
     const styles = createBaseStyles();
     
-    // [NEW] Default Animation Object
     const defaultAnim = {
         type: 'none',       
         duration: 1.0,      
@@ -36,46 +33,40 @@ function addElement(type) {
         infinite: false     
     };
     
-    // Base Structure
     const newEl = { 
         id: generateId(), 
         type: type === 'grid-row' ? 'container' : type, 
         content: {}, 
         styles: styles, 
-        // [NEW] Inject Animation Property
         animation: { ...defaultAnim },
         hoverStyles: {}, 
         darkStyles: {}, 
         layout: {} 
     };
 
-    // --- WIDGET LOGIC ---
-
     if (type === 'grid-row') {
         newEl.type = 'container';
         newEl.styles.width = '100%';
         newEl.layout = { direction: 'row', justify: 'space-between', alignItems: 'stretch', gap: 10, wrap: 'wrap' };
         
-        // Col 1
         const col1 = { 
             id: generateId(), 
             type: 'container', 
             content: {}, 
             styles: { ...createBaseStyles(), width: '48%', flexGrow: 1, padding:10 }, 
-            animation: { ...defaultAnim }, // Animasi untuk child
+            animation: { ...defaultAnim },
             hoverStyles: {}, 
             darkStyles: {},
             layout: { direction: 'column', gap: 10 }, 
             children: [] 
         };
         
-        // Col 2
         const col2 = { 
             id: generateId(), 
             type: 'container', 
             content: {}, 
             styles: { ...createBaseStyles(), width: '48%', flexGrow: 1, padding:10 }, 
-            animation: { ...defaultAnim }, // Animasi untuk child
+            animation: { ...defaultAnim },
             hoverStyles: {}, 
             darkStyles: {},
             layout: { direction: 'column', gap: 10 }, 
@@ -90,6 +81,21 @@ function addElement(type) {
         newEl.styles.paddingTop = 20; newEl.styles.paddingBottom = 20; newEl.styles.paddingLeft = 20; newEl.styles.paddingRight = 20;
         newEl.layout = { direction: 'column', justify: 'flex-start', alignItems: 'stretch', gap: 10, wrap: 'nowrap' };
         newEl.children = [];
+    }
+   else if (type === 'nav-menu') {
+        newEl.content.menuItems = "Home|#\nAbout|#\nServices|#\nContact|#";
+        newEl.content.orientation = "row";
+        newEl.content.showDivider = false;
+        newEl.content.dividerColor = "var(--border)";
+        newEl.content.dividerSize = 16;
+        newEl.content.hamburger = false;
+
+        newEl.styles.fontSize = 14;
+        newEl.styles.fontWeight = 500;
+        newEl.styles.textColor = "var(--text-dark)";
+        newEl.styles.textAlign = "center";
+        newEl.styles.paddingTop = 10; newEl.styles.paddingBottom = 10;
+        newEl.layout = { gap: 24 };
     }
     else if (type === 'card') {
         newEl.type = 'container';
@@ -177,6 +183,5 @@ function pushToData(el) {
     saveData();
     closeAllSheets();
     
-    // Auto select new element to edit
     setTimeout(() => openEditSheet(el.id), 100);
 }

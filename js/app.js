@@ -1,37 +1,30 @@
-/* --- js/app.js (COMPLETE & FIXED) --- */
+let globalIroPicker = null;
+let activeColorInputId = null;
 
 window.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. HELPER FUNCTION ---
     const bindClick = (id, handler) => {
         const el = document.getElementById(id);
         if (el) el.onclick = handler;
     };
 
-    // --- 2. HEADER & MENU ACTIONS ---
-
-    // Tombol Floating Action Button (Add)
     bindClick('addFab', () => openAddMenu(null));
     
-    // Tombol Global Settings (Buka Menu)
     bindClick('globalBtn', () => {
         const sheet = document.getElementById('globalSheet');
         const overlay = document.getElementById('overlay');
         if(sheet && overlay) {
-            // Populate nilai saat ini ke input field sebelum menampilkan sheet
             if(typeof applyGlobalConfig === 'function') applyGlobalConfig(); 
             sheet.classList.add('active');
             overlay.classList.add('active');
         }
     });
 
-    // Tombol Simpan Global Settings
     bindClick('saveGlobalBtn', () => {
         if(typeof globalConfig !== 'undefined') {
             globalConfig.fontFamily = document.getElementById('global-font').value;
             globalConfig.pageBg = document.getElementById('global-bg').value;
             
-            // [NEW] Capture 4-Side Padding & Margin
             globalConfig.pTop = parseInt(document.getElementById('global-pTop').value) || 0;
             globalConfig.pRight = parseInt(document.getElementById('global-pRight').value) || 0;
             globalConfig.pBottom = parseInt(document.getElementById('global-pBottom').value) || 0;
@@ -44,23 +37,18 @@ window.addEventListener('DOMContentLoaded', () => {
             
             applyGlobalConfig();
             closeAllSheets();
-            saveData(); // Simpan ke LocalStorage
+            saveData();
             showToast("Global Settings Disimpan");
         }
     });
 
-    // [FIXED] Tombol Reset (Hapus Semua)
     bindClick('resetBtn', () => {
         if (confirm('Yakin ingin menghapus semua elemen di halaman ini?')) {
             if(typeof addToHistory === 'function') addToHistory();
             
-            // PERBAIKAN UTAMA: 
-            // Jangan gunakan 'pageData = []' karena itu memutus referensi variable.
-            // Gunakan '.length = 0' untuk mengosongkan array yang sama.
             if (Array.isArray(pageData)) {
                 pageData.length = 0; 
             } else {
-                // Fallback protection jika struktur corrupt
                 const activePage = projectData.pages.find(p => p.id === projectData.activePageId);
                 if (activePage) {
                     activePage.data = [];
@@ -68,13 +56,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            saveData(); // Simpan perubahan array kosong ke LocalStorage
+            saveData();
             renderCanvas();
             showToast("Canvas Direset");
         }
     });
 
-    // Tombol Layer
     bindClick('layerBtn', () => {
         if(typeof renderLayerSheet === 'function') renderLayerSheet();
         const sheet = document.getElementById('layerSheet');
@@ -85,7 +72,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Tombol Import Project
     bindClick('importBtn', () => {
         if (pageData.length > 0) {
             if(!confirm("Import akan menimpa pekerjaan saat ini. Lanjutkan?")) return;
@@ -93,144 +79,212 @@ window.addEventListener('DOMContentLoaded', () => {
         document.getElementById('importInput').click();
     });
 
-    // Event Listener Input File Import
     const importInput = document.getElementById('importInput');
     if(importInput) {
         importInput.onchange = (e) => handleFileSelect(e);
     }
 
-    // --- 3. WIDGET MENU ACTIONS ---
     document.querySelectorAll('.grid-item').forEach(b => {
         b.onclick = () => addElement(b.dataset.type);
     });
 
-    // --- 4. TAB LOGIC (Content / Style) ---
     document.querySelectorAll('.pill-btn').forEach(b => {
         b.onclick = () => {
-            // Reset active state
             document.querySelectorAll('.pill-btn').forEach(x => x.classList.remove('active'));
             document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
             
-            // Set new active state
             b.classList.add('active');
             const target = document.getElementById('tab-' + b.dataset.tab);
             if(target) target.classList.add('active');
         }
     });
 
-    // --- 5. INITIALIZATION ---
-    
-    // Init Draggable FAB
     const fabStack = document.querySelector('.fab-stack');
     if (fabStack) makeDraggable(fabStack);
 
-    // Init Icon Grid
     if (typeof renderIconSheet === 'function') {
         renderIconSheet();
     }
 
-    // Load Data Terakhir
     if(typeof loadData === 'function') loadData();
+
+    const colorCheckBtn = document.querySelector('#colorPickerSheet .close-sheet-btn');
+    if(colorCheckBtn) {
+        colorCheckBtn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if(globalIroPicker) {
+                saveToPalette(globalIroPicker.color.hexString);
+            }
+            closeColorPicker();
+        };
+    }
+
+    if (typeof iro !== 'undefined' && !globalIroPicker) {
+        globalIroPicker = new iro.ColorPicker("#iro-picker-container", {
+            width: 220,
+            color: "#fff",
+            borderWidth: 2,
+            borderColor: "#fff",
+            layout: [
+                { component: iro.ui.Wheel, options: {} },
+                { component: iro.ui.Slider, options: { sliderType: 'value', marginTop: 20 } }
+            ]
+        });
+
+        globalIroPicker.on('color:change', function(color) {
+            const hex = color.hexString.toUpperCase();
+
+            const sheetPreview = document.getElementById('color-sheet-preview');
+            const sheetHex = document.getElementById('color-sheet-hex');
+            if(sheetPreview) sheetPreview.style.backgroundColor = hex;
+            if(sheetHex) sheetHex.innerText = hex;
+
+            if (activeColorInputId) {
+                const input = document.getElementById(activeColorInputId);
+                
+                if (input) {
+                    input.value = hex;
+                    
+                    if (input.oninput) input.oninput({ target: input });
+                    
+                    const trigger = document.getElementById('trigger-' + activeColorInputId);
+                    if (trigger) trigger.style.backgroundColor = hex;
+                    
+                    const cleanId = activeColorInputId.replace('input-', '');
+                    const pickerSwatch = document.getElementById('preview-' + cleanId);
+                    if (pickerSwatch) pickerSwatch.style.backgroundColor = hex;
+                }
+            }
+        });
+    }
 });
 
-
-// --- LOGIKA DRAGGABLE (FAB) ---
 function makeDraggable(element) {
-    let xOffset = 0;
-    let yOffset = 0;
-    let currentX = 0;
-    let currentY = 0;
-    let initialX = 0;
-    let initialY = 0;
-    
-    // Variabel state
-    let startX = 0;
-    let startY = 0;
-    let isDragging = false;
-    let isMoving = false; // Flag untuk membedakan klik vs geser
+    let xOffset = 0, yOffset = 0, currentX = 0, currentY = 0, initialX = 0, initialY = 0;
+    let startX = 0, startY = 0, isDragging = false, isMoving = false;
 
-    // 1. Start Drag
     const dragStart = (e) => {
         if (e.type === "touchstart") {
             initialX = e.touches[0].clientX - xOffset;
             initialY = e.touches[0].clientY - yOffset;
-            startX = e.touches[0].clientX; 
-            startY = e.touches[0].clientY;
+            startX = e.touches[0].clientX; startY = e.touches[0].clientY;
         } else {
             initialX = e.clientX - xOffset;
             initialY = e.clientY - yOffset;
-            startX = e.clientX;
-            startY = e.clientY;
+            startX = e.clientX; startY = e.clientY;
         }
-
-        if (element.contains(e.target)) {
-            isDragging = true;
-            isMoving = false; // Reset status
-        }
+        if (element.contains(e.target)) { isDragging = true; isMoving = false; }
     };
 
-    // 2. End Drag
     const dragEnd = (e) => {
-        initialX = currentX;
-        initialY = currentY;
-        isDragging = false;
-        
-        // Delay reset isMoving agar event click sempat diproses jika bukan drag
+        initialX = currentX; initialY = currentY; isDragging = false;
         setTimeout(() => { isMoving = false; }, 50);
     };
 
-    // 3. Moving
     const drag = (e) => {
         if (!isDragging) return;
-
         let clientX, clientY;
-        if (e.type === "touchmove") {
-            clientX = e.touches[0].clientX;
-            clientY = e.touches[0].clientY;
-        } else {
-            clientX = e.clientX;
-            clientY = e.clientY;
-        }
+        if (e.type === "touchmove") { clientX = e.touches[0].clientX; clientY = e.touches[0].clientY; } 
+        else { clientX = e.clientX; clientY = e.clientY; }
 
-        // Hitung jarak geser (Pythagoras)
         const diffX = clientX - startX;
         const diffY = clientY - startY;
-        const distance = Math.sqrt(diffX * diffX + diffY * diffY);
-
-        // Hanya anggap drag jika geser lebih dari 5px (mengurangi accidental drag saat klik)
-        if (distance > 5) {
-            isMoving = true; 
-            e.preventDefault(); // Mencegah scroll layar saat drag tombol
-
-            currentX = clientX - initialX;
-            currentY = clientY - initialY;
-
-            xOffset = currentX;
-            yOffset = currentY;
-
-            setTranslate(currentX, currentY, element);
+        if (Math.sqrt(diffX*diffX + diffY*diffY) > 5) {
+            isMoving = true; e.preventDefault();
+            currentX = clientX - initialX; currentY = clientY - initialY;
+            xOffset = currentX; yOffset = currentY;
+            element.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
         }
     };
 
-    const setTranslate = (xPos, yPos, el) => {
-        el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-    };
-
-    // 4. Mencegah Klik jika sedang Dragging
-    // Gunakan capture phase (true)
-    element.addEventListener("click", (e) => {
-        if (isMoving) {
-            e.preventDefault();
-            e.stopPropagation(); // Stop! Jangan eksekusi klik tombol
-        }
-    }, true);
-
-    // Event Listeners
+    element.addEventListener("click", (e) => { if (isMoving) { e.preventDefault(); e.stopPropagation(); } }, true);
     element.addEventListener("touchstart", dragStart, { passive: false });
     element.addEventListener("touchend", dragEnd, { passive: false });
     element.addEventListener("touchmove", drag, { passive: false });
-
     element.addEventListener("mousedown", dragStart);
     document.addEventListener("mouseup", dragEnd);
     document.addEventListener("mousemove", drag);
 }
+
+window.openColorPicker = function(inputId) {
+    activeColorInputId = inputId;
+    const sheet = document.getElementById('colorPickerSheet');
+    const overlay = document.getElementById('overlay');
+    const input = document.getElementById(inputId);
+
+    if (sheet && overlay && globalIroPicker) {
+        let currentColor = input ? input.value : '#ffffff';
+        if (!currentColor.startsWith('#')) currentColor = '#ffffff';
+        
+        globalIroPicker.color.set(currentColor);
+        
+        const sheetPreview = document.getElementById('color-sheet-preview');
+        const sheetHex = document.getElementById('color-sheet-hex');
+        if(sheetPreview) sheetPreview.style.backgroundColor = currentColor;
+        if(sheetHex) sheetHex.innerText = currentColor.toUpperCase();
+
+        sheet.classList.add('active');
+        overlay.classList.add('active');
+        sheet.style.zIndex = "3001"; 
+    }
+};
+
+window.closeColorPicker = function() {
+    const sheet = document.getElementById('colorPickerSheet');
+    if (sheet) sheet.classList.remove('active');
+    
+    const editSheet = document.getElementById('editSheet');
+    const globalSheet = document.getElementById('globalSheet');
+    if ((!editSheet || !editSheet.classList.contains('active')) && 
+        (!globalSheet || !globalSheet.classList.contains('active'))) {
+        const overlay = document.getElementById('overlay');
+        if(overlay) overlay.classList.remove('active');
+    }
+    activeColorInputId = null;
+};
+
+window.updateGlobalBg = function(val) {
+    if (!val) return;
+    if (!val.startsWith('#')) val = '#' + val;
+    if (typeof globalConfig !== 'undefined') globalConfig.pageBg = val;
+    const text = document.getElementById('global-bg');
+    if (text && text.value.toUpperCase() !== val.toUpperCase()) text.value = val.toUpperCase();
+    const trigger = document.getElementById('trigger-global-bg');
+    if (trigger) trigger.style.backgroundColor = val;
+    if (typeof applyGlobalConfig === 'function') applyGlobalConfig();
+};
+
+window.saveToPalette = function(val) {
+    if (!val || val === 'transparent') return;
+    if (!val.startsWith('#')) val = '#' + val;
+    val = val.toUpperCase();
+    if (typeof savedColors !== 'undefined' && !savedColors.includes(val)) {
+        savedColors.push(val);
+        if (savedColors.length > 12) savedColors.shift();
+        if (typeof saveData === 'function') saveData();
+        renderAllPalettes(); 
+    }
+};
+
+window.renderAllPalettes = function() {
+    const paletteHtml = savedColors.map(sc => 
+        `<div class="color-swatch" style="background:${sc}" onclick="updateColorFromPalette('${sc}')" title="${sc}"></div>`
+    ).join('');
+    document.querySelectorAll('.palette-row').forEach(el => el.innerHTML = paletteHtml);
+};
+
+window.updateColorFromPalette = function(color) {
+    const globalSheet = document.getElementById('globalSheet');
+    if (globalSheet && globalSheet.classList.contains('active')) {
+        updateGlobalBg(color);
+        const bgInput = document.getElementById('global-bg');
+        if(bgInput) bgInput.value = color;
+    } else {
+        const activeInput = document.querySelector('#editSheet .color-compact[style*="flex"] input[type="text"]');
+        if(activeInput) {
+            const key = activeInput.id.replace('input-', '');
+            updateColor(key, color);
+        }
+    }
+};
