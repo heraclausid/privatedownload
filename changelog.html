@@ -4,69 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Changelog - Viewer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Roboto', 'sans-serif'] },
-                    colors: {
-                        m3: {
-                            surface: '#FEF7FF', surfaceContainerLowest: '#FFFFFF', surfaceContainerLow: '#F7F2FA', 
-                            surfaceContainer: '#F3EDF7', surfaceContainerHigh: '#ECE6F0', surfaceContainerHighest: '#E6E0E9',
-                            primary: '#6750A4', onPrimary: '#FFFFFF', primaryContainer: '#EADDFF', onPrimaryContainer: '#21005D',
-                            secondary: '#625B71', onSecondary: '#FFFFFF', secondaryContainer: '#E8DEF8', onSecondaryContainer: '#1D192B',
-                            tertiaryContainer: '#FFD8E4', onTertiaryContainer: '#31111D',
-                            onSurface: '#1D1B20', onSurfaceVariant: '#49454F', outline: '#79747E', outlineVariant: '#CAC4D0'
-                        }
-                    }
-                }
-            }
-        };
-    </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body { background-color: #F3EDF7; }
+    
+    <style id="main-styles">
+        
+        /* * PURE VANILLA CSS - MATERIAL DESIGN 3 
+         * Zero external CSS frameworks for instantaneous loading.
+         */
+         
+        :root {
+            /* M3 Color Tokens */
+            --m3-surface: #FEF7FF;
+            --m3-surface-lowest: #FFFFFF;
+            --m3-surface-low: #F7F2FA;
+            --m3-surface-container: #F3EDF7;
+            --m3-surface-high: #ECE6F0;
+            --m3-surface-highest: #E6E0E9;
+            --m3-primary: #6750A4;
+            --m3-on-primary: #FFFFFF;
+            --m3-primary-container: #EADDFF;
+            --m3-on-primary-container: #21005D;
+            --m3-secondary: #625B71;
+            --m3-secondary-container: #E8DEF8;
+            --m3-on-secondary-container: #1D192B;
+            --m3-tertiary-container: #FFD8E4;
+            --m3-on-tertiary-container: #31111D;
+            --m3-error: #B3261E;
+            --m3-error-container: #F9DEDC;
+            --m3-on-error-container: #410E0B;
+            --m3-on-surface: #1D1B20;
+            --m3-on-surface-variant: #49454F;
+            --m3-outline: #79747E;
+            --m3-outline-variant: #CAC4D0;
+
+            /* Category Colors */
+            --emerald-100: #d1fae5; --emerald-500: #10b981; --emerald-600: #059669; --emerald-700: #047857; --emerald-900: #064e3b;
+            --blue-100: #dbeafe; --blue-500: #3b82f6; --blue-600: #2563eb; --blue-700: #1d4ed8; --blue-900: #1e3a8a;
+            --rose-100: #ffe4e6; --rose-500: #f43f5e; --rose-600: #e11d48; --rose-700: #be123c; --rose-900: #881337;
+        }
+
+        /* Reset & Base */
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Roboto', sans-serif; background-color: var(--m3-surface-container); color: var(--m3-on-surface); line-height: 1.5; -webkit-font-smoothing: antialiased; padding-bottom: 5rem; }
+        
+        /* Layout Utilities */
+        .container { max-width: 56rem; margin: 0 auto; padding: 0 1rem; }
+        .hidden { display: none !important; }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .justify-end { justify-content: flex-end; }
+        .gap-1 { gap: 0.25rem; } .gap-2 { gap: 0.5rem; } .gap-3 { gap: 0.75rem; } .gap-4 { gap: 1rem; } .gap-6 { gap: 1.5rem; }
+        .w-full { width: 100%; }
+        .relative { position: relative; }
+        .mb-6 { margin-bottom: 1.5rem; } .mb-8 { margin-bottom: 2rem; } .mb-12 { margin-bottom: 3rem; }
+        .mt-2 { margin-top: 0.5rem; } .ml-1 { margin-left: 0.25rem; }
+        
+        /* Typography */
+        h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.025em; }
+        h2 { font-size: 1.5rem; font-weight: 500; }
+        .text-sm { font-size: 0.875rem; }
+        .text-xs { font-size: 0.75rem; }
+        .font-medium { font-weight: 500; }
+        
+        /* Specific Colors */
+        .text-m3-onSurfaceVariant { color: var(--m3-on-surface-variant); }
+        .text-m3-primary { color: var(--m3-primary); }
+        .text-emerald-700 { color: var(--emerald-700); }
+        .text-blue-700 { color: var(--blue-700); }
+        .text-rose-700 { color: var(--rose-700); }
+
+        /* App Bar */
+        .app-bar { background-color: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); position: fixed; top: 0; width: 100%; height: 4rem; z-index: 50; border-bottom: 1px solid rgba(202, 196, 208, 0.5); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); display: flex; align-items: center; }
+        .main-content { padding-top: 6rem; }
+
+        /* Buttons */
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.625rem 1.25rem; font-size: 0.875rem; font-weight: 500; border-radius: 9999px; transition: all 0.2s; }
+        .btn-primary { background-color: var(--m3-primary); color: var(--m3-on-primary); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+        .btn-primary:hover { background-color: rgba(103, 80, 164, 0.9); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .btn-primary-container { background-color: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+        .btn-primary-container:hover { background-color: rgba(234, 221, 255, 0.8); }
+        .btn-secondary { background-color: var(--m3-secondary-container); color: var(--m3-on-secondary-container); }
+        .btn-secondary:hover { background-color: rgba(232, 222, 248, 0.8); }
+        .btn-text { color: var(--m3-primary); padding: 0.625rem 1.5rem; }
+        .btn-text:hover { background-color: rgba(103, 80, 164, 0.1); }
+        .btn-icon { width: 2.5rem; height: 2.5rem; padding: 0; color: var(--m3-on-surface-variant); border-radius: 9999px; transition: background-color 0.2s; display: inline-flex; align-items: center; justify-content: center; }
+        .btn-icon:hover { background-color: var(--m3-surface-high); color: var(--m3-on-surface); }
+        .btn-icon.danger:hover { background-color: var(--m3-error-container); color: var(--m3-error); }
+        .icon-circle { width: 2.5rem; height: 2.5rem; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; }
+
+        /* Segmented Control */
+        .segmented-control { display: flex; padding: 0.25rem; background-color: var(--m3-surface-high); border-radius: 9999px; border: 1px solid rgba(202, 196, 208, 0.3); box-shadow: inset 0 2px 4px 0 rgba(0,0,0,0.06); }
+        .segment-btn { padding: 0.375rem 1.25rem; font-size: 0.875rem; font-weight: 500; border-radius: 9999px; transition: all 0.2s; color: var(--m3-on-surface-variant); }
+        .segment-btn:hover { color: var(--m3-on-surface); }
+        .segment-btn.active { background-color: var(--m3-secondary-container); color: var(--m3-on-secondary-container); box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+
+        /* Forms & Inputs */
+        .card { background-color: var(--m3-surface-lowest); border: 1px solid rgba(202, 196, 208, 0.6); border-radius: 28px; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); padding: 1.5rem; }
+        .form-input { width: 100%; padding: 0.875rem 1.25rem; background-color: var(--m3-surface-high); border: 2px solid transparent; border-radius: 16px; color: var(--m3-on-surface); font-family: inherit; transition: all 0.3s; outline: none; }
+        textarea.form-input { resize: vertical; min-height: 80px; }
+        .form-input::placeholder { color: rgba(73, 69, 79, 0.5); }
+        .form-input:focus { background-color: var(--m3-surface-lowest); border-color: var(--m3-primary); box-shadow: 0 0 0 4px rgba(103, 80, 164, 0.1); }
+        .form-input.focus-emerald:focus { border-color: var(--emerald-500); box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1); }
+        .form-input.focus-blue:focus { border-color: var(--blue-500); box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); }
+        .form-input.focus-rose:focus { border-color: var(--rose-500); box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.1); }
+        .visibility-box { border: 1px solid rgba(202, 196, 208, 0.3); background-color: var(--m3-surface-low); padding: 1.25rem; border-radius: 1rem; }
+
+        /* Search Bar */
+        .search-icon { position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--m3-on-surface-variant); }
+        .search-input { width: 100%; padding: 1rem 1.25rem 1rem 3rem; background-color: var(--m3-surface-lowest); border: 1px solid rgba(202, 196, 208, 0.6); border-radius: 9999px; color: var(--m3-on-surface); font-size: 1rem; transition: all 0.3s; outline: none; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+        .search-input:focus { border-color: var(--m3-primary); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+
+        /* Filter Chips */
+        .chip-label { cursor: pointer; position: relative; }
+        .chip-input { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); border-width: 0; }
+        .chip-content { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; border-radius: 12px; border: 1px solid rgba(202, 196, 208, 0.5); background-color: var(--m3-surface-lowest); color: var(--m3-on-surface-variant); font-size: 0.875rem; font-weight: 500; transition: all 0.2s; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); }
+        .chip-content:hover { background-color: var(--m3-surface-high); }
+        .chip-input:checked + .chip-content { background-color: var(--m3-primary-container); color: var(--m3-on-primary-container); border-color: var(--m3-primary-container); }
+        .chip-icon { display: none; font-size: 0.75rem; }
+        .chip-input:checked + .chip-content .chip-icon { display: block; }
+
+        /* Accordion Cards */
+        .list-card { background-color: var(--m3-surface-lowest); border: 1px solid rgba(202, 196, 208, 0.6); border-radius: 24px; box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05); transition: all 0.3s; overflow: hidden; }
+        .list-card:hover { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        .list-card-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem; width: 100%; text-align: left; transition: background-color 0.2s; }
+        .list-card-header:hover { background-color: var(--m3-surface-low); }
         .accordion-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s cubic-bezier(0.2, 0, 0, 1); }
         .accordion-wrapper.open { grid-template-rows: 1fr; }
         .accordion-inner { overflow: hidden; opacity: 0; transition: opacity 0.3s cubic-bezier(0.2, 0, 0, 1); }
         .accordion-wrapper.open .accordion-inner { opacity: 1; }
-        ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #CAC4D0; border-radius: 8px; border: 2px solid #F7F2FA; }
-        ::-webkit-scrollbar-thumb:hover { background: #79747E; }
-        * { -webkit-tap-highlight-color: transparent; }
+        .accordion-content-area { padding: 0.25rem 1.5rem 1.75rem 1.5rem; border-top: 1px solid rgba(202, 196, 208, 0.2); }
+        .expand-icon { transition: transform 0.3s; color: var(--m3-on-surface-variant); border-radius: 9999px; border: 1px solid transparent; }
+        .list-card-header:hover .expand-icon { border-color: rgba(202, 196, 208, 0.4); background-color: var(--m3-surface-high); }
+        .expand-icon.open-icon { transform: rotate(180deg); color: var(--m3-primary); }
+
+        /* Badges */
+        .badge { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.025em; text-transform: uppercase; }
+        .badge-lg { padding: 0.375rem 0.75rem; font-size: 0.75rem; gap: 0.375rem; text-transform: none; letter-spacing: normal; }
+        .badge-primary { background-color: var(--m3-primary-container); color: var(--m3-on-primary-container); }
+        .badge-tertiary { background-color: var(--m3-tertiary-container); color: var(--m3-on-tertiary-container); }
+        .badge-surface { background-color: var(--m3-surface-highest); color: var(--m3-on-surface-variant); }
+        .badge-emerald { background-color: var(--emerald-100); color: var(--emerald-900); }
+        .badge-blue { background-color: var(--blue-100); color: var(--blue-900); }
+        .badge-rose { background-color: var(--rose-100); color: var(--rose-900); }
+
+        /* Lists */
+        .changelog-list { margin-top: 1.5rem; margin-left: 0.25rem; }
+        .changelog-list:first-child { margin-top: 0.75rem; }
+        .changelog-list ul { list-style: none; margin-top: 1rem; }
+        .changelog-list li { position: relative; padding-left: 1.75rem; margin-bottom: 0.75rem; color: var(--m3-on-surface-variant); font-size: 0.9375rem; line-height: 1.6; }
+        .changelog-list li::before { content: ''; position: absolute; left: 0.5rem; top: 0.625rem; width: 0.375rem; height: 0.375rem; border-radius: 50%; }
+        .dot-emerald::before { background-color: var(--emerald-600); }
+        .dot-blue::before { background-color: var(--blue-600); }
+        .dot-rose::before { background-color: var(--rose-600); }
+
+        /* Responsive */
+        .flex-sm-only { display: none; }
+        .sm-inline { display: none; }
+        .grid-2 { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        
+        @media (min-width: 640px) {
+            .container { padding: 0 1.5rem; }
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+            .sm-flex-row { flex-direction: row; }
+            .sm-items-center { align-items: center; }
+            .sm-ml-4 { margin-left: 1rem; }
+            .sm-inline { display: inline; }
+            .flex-sm-only { display: flex; }
+            .card { padding: 2rem; }
+            .changelog-list { margin-left: 1.5rem; }
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--m3-outline-variant); border-radius: 8px; border: 2px solid var(--m3-surface-low); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--m3-outline); }
+    
     </style>
 </head>
-<body class="text-m3-onSurface font-sans antialiased min-h-screen pb-20">
-    <header class="bg-m3-surfaceContainerLowest/90 backdrop-blur-md fixed w-full top-0 z-50 h-16 flex items-center transition-all shadow-sm border-b border-m3-outlineVariant/50">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 w-full flex items-center justify-between">
-            <div class="flex items-center gap-3 text-m3-onSurface">
-                <div class="w-10 h-10 rounded-full flex items-center justify-center text-m3-primary"><i class="fa-solid fa-clock-rotate-left text-xl"></i></div>
-                <h1 class="text-[22px] font-medium tracking-tight text-m3-onSurface">Changelog</h1>
+<body>
+    <header class="app-bar">
+        <div class="container flex justify-between items-center w-full">
+            <div class="flex items-center gap-3">
+                <div class="icon-circle" style="background-color: var(--m3-primary); color: white;">
+                    <i class="fa-solid fa-clock-rotate-left text-xl"></i>
+                </div>
+                <h1>Changelog</h1>
             </div>
             <div class="flex items-center gap-2">
-                <!-- Segmented Control modern pengganti dropdown -->
-                <div class="flex p-1 bg-m3-surfaceContainerHigh rounded-full border border-m3-outlineVariant/30 shadow-inner">
-                    <button onclick="setViewType('public')" id="view-btn-public" class="px-4 py-1.5 text-sm font-medium rounded-full transition-all bg-m3-secondaryContainer text-m3-onSecondaryContainer shadow-sm">Public</button>
-                    <button onclick="setViewType('pro')" id="view-btn-pro" class="px-4 py-1.5 text-sm font-medium rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface">Pro</button>
+                <div class="segmented-control">
+                    <button onclick="setViewType('public')" id="view-btn-public" class="segment-btn active">Public</button>
+                    <button onclick="setViewType('pro')" id="view-btn-pro" class="segment-btn">Pro</button>
                 </div>
             </div>
         </div>
     </header>
-    <main class="max-w-4xl mx-auto px-4 sm:px-6 pt-28">
-        <div class="mb-8 relative max-w-2xl">
-            <i class="fa-solid fa-magnifying-glass absolute left-5 top-1/2 transform -translate-y-1/2 text-m3-onSurfaceVariant"></i>
-            <input type="text" id="search-input" oninput="render()" placeholder="Search versions, features, or fixes..." class="w-full pl-12 pr-5 py-4 bg-m3-surfaceContainerLowest border border-m3-outlineVariant/60 shadow-sm focus:shadow-md text-m3-onSurface rounded-full focus:outline-none transition-all placeholder-m3-onSurfaceVariant/70 text-base focus:border-m3-primary">
+    
+    <main class="container main-content">
+        <div class="relative mb-8" style="max-width: 42rem;">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-input" oninput="render()" placeholder="Search versions, features, or fixes..." class="search-input">
         </div>
-        <div id="empty-state" class="hidden flex-col items-center justify-center py-24 text-m3-onSurfaceVariant">
-            <div class="w-24 h-24 bg-m3-surfaceContainerLowest border border-m3-outlineVariant/50 shadow-sm rounded-full flex items-center justify-center mb-6 text-m3-primary"><i class="fa-solid fa-folder-open text-4xl"></i></div>
-            <p class="text-[22px] font-medium text-m3-onSurface">No history found</p>
+        
+        <div id="empty-state" class="hidden flex-col items-center justify-center" style="padding: 6rem 0; color: var(--m3-on-surface-variant);">
+            <div class="icon-circle mb-6" style="width: 6rem; height: 6rem; background-color: var(--m3-surface-lowest); border: 1px solid rgba(202,196,208,0.5); font-size: 2rem; color: var(--m3-primary);">
+                <i class="fa-regular fa-folder-open"></i>
+            </div>
+            <p style="font-size: 22px; font-weight: 500; color: var(--m3-on-surface);">No history found</p>
         </div>
-        <div id="changelog-container" class="space-y-5"></div>
+        
+        <div id="changelog-container" style="display: flex; flex-direction: column; gap: 1.25rem;"></div>
     </main>
+
     <script>
-        const changelogs = ${staticDataStr}; 
+        const changelogs = [
+    {
+        "id": 1772459610096,
+        "version": "v5.0.0-PRO",
+        "date": "2026-03-01",
+        "tags": [
+            "pro"
+        ],
+        "added": "Exclusive Pro Feature: Advanced Analytics Dashboard is now live!\nPriority support is now integrated directly into the dashboard.",
+        "fixed": "",
+        "removed": ""
+    },
+    {
+        "id": 1772459653834,
+        "version": "1.37.4",
+        "date": "2026-03-02",
+        "tags": [
+            "public",
+            "pro"
+        ],
+        "added": "Hybrid money model supports (/scoreboard) command\nNew feature (HP Bar for Mob)",
+        "fixed": "Store restock settings restored\nImproved store system to support new currency model",
+        "removed": ""
+    }
+]; 
         let activeAccordionId = null; 
         let currentViewType = 'public';
 
@@ -76,79 +257,79 @@
             currentViewType = type;
             const btnPublic = document.getElementById('view-btn-public');
             const btnPro = document.getElementById('view-btn-pro');
-            
-            if(type === 'public') {
-                btnPublic.className = "px-4 py-1.5 text-sm font-medium rounded-full transition-all bg-m3-secondaryContainer text-m3-onSecondaryContainer shadow-sm";
-                btnPro.className = "px-4 py-1.5 text-sm font-medium rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface";
-            } else {
-                btnPro.className = "px-4 py-1.5 text-sm font-medium rounded-full transition-all bg-m3-secondaryContainer text-m3-onSecondaryContainer shadow-sm";
-                btnPublic.className = "px-4 py-1.5 text-sm font-medium rounded-full transition-all text-m3-onSurfaceVariant hover:text-m3-onSurface";
-            }
+            if(type === 'public') { btnPublic.classList.add('active'); btnPro.classList.remove('active'); } 
+            else { btnPro.classList.add('active'); btnPublic.classList.remove('active'); }
             render();
         }
 
         function formatDate(dateStr) { return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }); }
+        
         function getVersionTag(versionStr) {
             const match = versionStr.match(/v?(\d+)\.(\d+)\.(\d+)/i);
             if (match) {
                 const major = parseInt(match[1]), minor = parseInt(match[2]), patch = parseInt(match[3]);
-                if (minor === 0 && patch === 0) return `<span class="px-3 py-1 rounded-full text-[11px] font-medium bg-m3-primaryContainer text-m3-onPrimaryContainer tracking-wide">Major Release</span>`;
-                else if (patch === 0) return `<span class="px-3 py-1 rounded-full text-[11px] font-medium bg-m3-tertiaryContainer text-m3-onTertiaryContainer tracking-wide">Minor Update</span>`;
-                else return `<span class="px-3 py-1 rounded-full text-[11px] font-medium bg-m3-surfaceContainerHighest text-m3-onSurfaceVariant tracking-wide">Patch Fix</span>`;
+                if (minor === 0 && patch === 0) return `<span class="badge badge-primary">Major Release</span>`;
+                else if (patch === 0) return `<span class="badge badge-tertiary">Minor Update</span>`;
+                else return `<span class="badge badge-surface">Patch Fix</span>`;
             }
-            return `<span class="px-3 py-1 rounded-full text-[11px] font-medium bg-m3-surfaceContainerHighest text-m3-onSurfaceVariant tracking-wide">Update</span>`;
+            return `<span class="badge badge-surface">Update</span>`;
         }
+
         function render() {
             const container = document.getElementById('changelog-container'), emptyState = document.getElementById('empty-state'), searchTerm = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
-            
             container.innerHTML = '';
             
             let filteredLogs = changelogs.filter(log => !log.tags || log.tags.includes(currentViewType));
             filteredLogs = filteredLogs.filter(log => log.version.toLowerCase().includes(searchTerm) || (log.added && log.added.toLowerCase().includes(searchTerm)) || (log.fixed && log.fixed.toLowerCase().includes(searchTerm)) || (log.removed && log.removed.toLowerCase().includes(searchTerm)));
             
-            if (filteredLogs.length === 0) { emptyState.classList.remove('hidden'); emptyState.classList.add('flex'); } else { emptyState.classList.add('hidden'); emptyState.classList.remove('flex'); }
+            if (filteredLogs.length === 0) { emptyState.classList.remove('hidden'); emptyState.style.display = 'flex'; } else { emptyState.classList.add('hidden'); emptyState.style.display = 'none'; }
             filteredLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
             let activeId = activeAccordionId; if (searchTerm !== '' && filteredLogs.length > 0) activeId = 'search_mode'; else if (activeId === null && filteredLogs.length > 0) activeId = filteredLogs[0].id;
+            
             filteredLogs.forEach(log => {
                 const isOpen = activeId === log.id || activeId === 'search_mode';
-                let addedHtml = buildList(log.added, 'fa-rocket', 'New', 'bg-emerald-100 text-emerald-900', 'bg-emerald-600'), fixedHtml = buildList(log.fixed, 'fa-bug', 'Fix', 'bg-blue-100 text-blue-900', 'bg-blue-600'), removedHtml = buildList(log.removed, 'fa-trash-can', 'Remove', 'bg-rose-100 text-rose-900', 'bg-rose-600');
+                let addedHtml = buildList(log.added, 'fa-rocket', 'New', 'badge-emerald', 'dot-emerald'), fixedHtml = buildList(log.fixed, 'fa-bug', 'Fix', 'badge-blue', 'dot-blue'), removedHtml = buildList(log.removed, 'fa-trash-can', 'Remove', 'badge-rose', 'dot-rose');
+                
                 container.insertAdjacentHTML('beforeend', `
-                    <div class="bg-m3-surfaceContainerLowest border border-m3-outlineVariant/60 shadow-sm hover:shadow-md rounded-[24px] overflow-hidden transition-all duration-300">
-                        <button onclick="toggleAccordion(${log.id})" class="w-full flex justify-between items-center px-6 py-5 focus:outline-none transition-colors group hover:bg-m3-surfaceContainerLow">
-                            <div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-4 text-left">
-                                <div class="flex flex-col items-start gap-1">
-                                    <span class="text-xl font-medium text-m3-onSurface flex items-center gap-3"><i class="fa-solid fa-tag text-m3-primary/70 text-base"></i> ${log.version}</span>
+                    <div class="list-card">
+                        <button onclick="toggleAccordion(${log.id})" class="list-card-header">
+                            <div class="flex flex-col sm-flex-row sm-items-center gap-1 sm-gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <span class="flex items-center gap-3" style="font-size: 1.25rem; font-weight: 500; color: var(--m3-on-surface);">
+                                        <i class="fa-solid fa-tag" style="color: rgba(103, 80, 164, 0.7); font-size: 1rem;"></i> ${log.version}
+                                    </span>
                                 </div>
-                                <div class="flex items-center gap-3 ml-7 sm:ml-4">${getVersionTag(log.version)}<span class="text-sm text-m3-onSurfaceVariant/80 font-normal hidden sm:block">•</span><span class="text-sm text-m3-onSurfaceVariant font-normal mt-1 sm:mt-0">${formatDate(log.date)}</span></div>
+                                <div class="flex items-center gap-3 ml-7 sm-ml-4">${getVersionTag(log.version)}<span class="sm-inline" style="color: rgba(73, 69, 79, 0.8); font-size: 0.875rem;">•</span><span style="font-size: 0.875rem; color: var(--m3-on-surface-variant); margin-top: 2px;">${formatDate(log.date)}</span></div>
                             </div>
-                            <div class="flex items-center gap-2 sm:gap-4 pl-4">
-                                <div class="w-10 h-10 flex items-center justify-center text-m3-onSurfaceVariant group-hover:text-m3-onSurface group-hover:bg-m3-surfaceContainerHigh transition-colors rounded-full border border-transparent group-hover:border-m3-outlineVariant/40">
-                                    <i id="icon-${log.id}" class="fa-solid fa-chevron-down transform transition-transform duration-300 ${isOpen ? 'rotate-180 text-m3-primary' : ''}"></i>
-                                </div>
+                            <div class="flex items-center gap-2 pl-4">
+                                <div class="btn-icon expand-icon ${isOpen ? 'open-icon' : ''}" id="icon-${log.id}"><i class="fa-solid fa-chevron-down"></i></div>
                             </div>
                         </button>
                         <div id="content-${log.id}" class="accordion-wrapper ${isOpen ? 'open' : ''}">
                             <div class="accordion-inner">
-                                <div class="px-6 pb-7 pt-1 sm:ml-2 border-t border-m3-outlineVariant/20">
-                                    ${(addedHtml || fixedHtml || removedHtml) ? addedHtml + fixedHtml + removedHtml : '<p class="text-m3-onSurfaceVariant italic mt-4 text-sm ml-7">No detailed notes available.</p>'}
+                                <div class="accordion-content-area">
+                                    ${(addedHtml || fixedHtml || removedHtml) ? addedHtml + fixedHtml + removedHtml : '<p style="color: var(--m3-on-surface-variant); font-style: italic; margin-top: 1rem; margin-left: 1.75rem; font-size: 0.875rem;">No detailed release notes available.</p>'}
                                 </div>
                             </div>
                         </div>
                     </div>`);
             });
         }
+
         function buildList(text, iconClass, badgeLabel, badgeClass, dotColorClass) {
             if (!text || text.trim() === '') return '';
             const items = text.split('\n').filter(i => i.trim() !== ''); if (items.length === 0) return '';
-            const listItems = items.map(item => `<li class="relative pl-7 text-m3-onSurfaceVariant text-[15px] sm:text-base mb-3 leading-relaxed"><span class="absolute left-2 top-[10px] w-1.5 h-1.5 rounded-full ${dotColorClass}"></span>${item}</li>`).join('');
-            return `<div class="mt-6 first:mt-3 ml-1 sm:ml-6"><span class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-full ${badgeClass} mb-4"><i class="fa-solid ${iconClass}"></i> ${badgeLabel}</span><ul class="ml-1">${listItems}</ul></div>`;
+            const listItems = items.map(item => `<li class="${dotColorClass}">${item}</li>`).join('');
+            return `<div class="changelog-list"><span class="badge badge-lg ${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${badgeLabel}</span><ul>${listItems}</ul></div>`;
         }
+
         function toggleAccordion(id) {
             const wrapper = document.getElementById(`content-${id}`), icon = document.getElementById(`icon-${id}`);
-            if (wrapper.classList.contains('open')) { wrapper.classList.remove('open'); icon.classList.remove('rotate-180', 'text-m3-primary'); activeAccordionId = null; } 
+            if (wrapper.classList.contains('open')) { wrapper.classList.remove('open'); icon.classList.remove('open-icon'); activeAccordionId = null; } 
             else { 
-                if (activeAccordionId && activeAccordionId !== id) { const oldWrapper = document.getElementById(`content-${activeAccordionId}`), oldIcon = document.getElementById(`icon-${activeAccordionId}`); if (oldWrapper) { oldWrapper.classList.remove('open'); if(oldIcon) oldIcon.classList.remove('rotate-180', 'text-m3-primary'); } }
-                wrapper.classList.add('open'); icon.classList.add('rotate-180', 'text-m3-primary'); activeAccordionId = id; 
+                if (activeAccordionId && activeAccordionId !== id) { const oldWrapper = document.getElementById(`content-${activeAccordionId}`), oldIcon = document.getElementById(`icon-${activeAccordionId}`); if (oldWrapper) { oldWrapper.classList.remove('open'); if(oldIcon) oldIcon.classList.remove('open-icon'); } }
+                wrapper.classList.add('open'); icon.classList.add('open-icon'); activeAccordionId = id; 
             }
         }
     </script>
