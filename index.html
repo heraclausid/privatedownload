@@ -63,7 +63,6 @@
         /* Navigation */
         .navbar { position: fixed; top: 0; width: 100%; height: 4.5rem; z-index: 100; background: rgba(5, 5, 5, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; }
         
-        /* FIX: Sembunyikan kontainer utama agar tidak memakan ruang pada justify-between */
         .nav-links { display: none; } 
         .nav-links a { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
         .nav-links a:hover { color: var(--text-primary); }
@@ -90,7 +89,7 @@
         .menu-btn:hover, .menu-btn:active { background-color: rgba(255, 255, 255, 0.1); }
         
         @media (min-width: 768px) { 
-            .nav-links { display: flex; align-items: center; } /* Tampilkan flex container di Desktop */
+            .nav-links { display: flex; align-items: center; }
             .nav-links a { margin-left: 1.5rem; } 
             .menu-btn { display: none; }
         }
@@ -123,6 +122,17 @@
         .btn-outline { background: rgba(255,255,255,0.03); color: var(--text-primary); border: 1px solid var(--border-highlight); }
         .btn-outline:hover { background: rgba(255,255,255,0.08); }
 
+        /* YouTube Badge */
+        .yt-badge {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; 
+            background: rgba(255, 0, 0, 0.1); border: 1px solid rgba(255, 0, 0, 0.3); 
+            border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 1.5rem; 
+            backdrop-filter: blur(10px); color: var(--text-primary); text-decoration: none; transition: all 0.3s;
+        }
+        .yt-badge:hover { background: rgba(255, 0, 0, 0.2); border-color: rgba(255, 0, 0, 0.5); transform: translateY(-2px); }
+        .yt-icon { color: #ff0000; font-size: 1.1rem; }
+        .yt-verified { color: #3ea6ff; font-size: 0.8rem; }
+
         /* Sections */
         .section-hero { padding: 8rem 0 4rem 0; }
         .section { padding: 4rem 0; }
@@ -153,7 +163,7 @@
         }
 
         /* Pricing Simplified */
-        .pricing-wrap { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 50rem; margin: 2rem auto 0; }
+        .pricing-wrap { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 54rem; margin: 2rem auto 0; }
         .price-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; padding: 2rem 1.5rem; display: flex; flex-direction: column; }
         .price-card.pro { border-color: rgba(139, 92, 246, 0.5); background: linear-gradient(180deg, rgba(139, 92, 246, 0.05), transparent); }
         .price-val { font-family: 'Outfit'; font-size: 3rem; font-weight: 700; color: #fff; line-height: 1; margin: 1rem 0; }
@@ -180,6 +190,9 @@
 
         /* Footer */
         footer { padding: 3rem 0; border-top: 1px solid var(--border-light); text-align: center; margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem; }
+        .social-links { display: inline-flex; gap: 1rem; margin-bottom: 1rem; }
+        .social-links a { color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s; }
+        .social-links a:hover { color: var(--text-primary); }
     </style>
 </head>
 <body>
@@ -192,6 +205,7 @@
     <!-- Nav -->
     <nav class="navbar">
         <div class="container flex justify-between items-center w-full">
+            <!-- Pindahkan link logo ke #top agar halaman scroll ke atas saat ditekan -->
             <a href="#" class="font-outfit" style="font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none;">
                 <i class="fa-solid fa-code text-gradient mr-2"></i> Heraclaus
             </a>
@@ -223,9 +237,14 @@
     <!-- Hero -->
     <section class="section-hero text-center">
         <div class="container flex flex-col items-center">
-            <div style="border: 1px solid var(--border-highlight); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.8rem; margin-bottom: 1.5rem; color: var(--text-secondary); background: var(--bg-card);">
-                <span style="color: #a78bfa; font-weight: 600;">v6.0</span> System Update Available Now
-            </div>
+            
+            <!-- YouTube Channel Badge (Replacing Update Badge) -->
+            <a href="https://www.youtube.com/@heraclaus" target="_blank" class="yt-badge">
+                <i class="fa-brands fa-youtube yt-icon"></i>
+                Heraclaus
+                <i class="fa-solid fa-circle-check yt-verified" title="Verified Creator"></i>
+            </a>
+            
             <h1>Stop installing junk plugins.<br><span class="text-gradient">Build a legendary server.</span></h1>
             <p style="max-width: 40rem; margin: 1rem auto 2.5rem; font-size: 1.15rem;">
                 Premium, all-in-one Minecraft Bedrock add-ons that eliminate lag, fix conflicts, and give you absolute control over your world.
@@ -247,7 +266,7 @@
                         <p class="mt-2">One suite to replace them all. Manage your economy, players, RPG progression, and world security through a single, highly-optimized core. Zero lag, pure performance.</p>
                     </div>
                     <div class="product-header-actions action-group">
-                        <a href="#pricing" class="btn btn-gradient"><i class="fa-solid fa-download"></i> Get Pro License</a>
+                        <a href="#pricing" class="btn btn-gradient"><i class="fa-solid fa-arrow-down"></i> View Pricing</a>
                         <a href="changelog.html" target="_blank" class="btn btn-outline"><i class="fa-solid fa-code-branch"></i> Read Changelog</a>
                     </div>
                 </div>
@@ -256,18 +275,18 @@
                 <div class="feature-grid">
                     <div class="feature-cell">
                         <i class="fa-solid fa-sack-dollar" style="color: #f59e0b;"></i>
-                        <h3>Complex Economy</h3>
-                        <p>Physical currencies, robust buying/selling logic, job assignments, starter kits, and automated daily rewards.</p>
+                        <h3>Hybrid Economy</h3>
+                        <p>Bypass Minecraft's scoreboard limits with our hybrid money model. Includes physical currencies, robust trading, and jobs.</p>
                     </div>
                     <div class="feature-cell">
                         <i class="fa-solid fa-khanda" style="color: #f43f5e;"></i>
                         <h3>RPG Progression</h3>
-                        <p>Keep retention high with skill leveling, interactive quests, and fully customizable PvE/PvP battle mechanics.</p>
+                        <p>Keep retention high with skill leveling, player gravestones upon death, and fully customizable PvE/PvP battle mechanics.</p>
                     </div>
                     <div class="feature-cell">
                         <i class="fa-solid fa-globe" style="color: #3b82f6;"></i>
-                        <h3>World & Security</h3>
-                        <p>Secure land claims, precise role/permission management, and automated repeated broadcast systems.</p>
+                        <h3>Advanced Regions</h3>
+                        <p>Create advanced lobby menus, secure land claims, manage precise roles, and run automated repeated broadcast systems.</p>
                     </div>
                     <div class="feature-cell">
                         <i class="fa-solid fa-users" style="color: #10b981;"></i>
@@ -277,12 +296,12 @@
                     <div class="feature-cell">
                         <i class="fa-solid fa-list-ol" style="color: #8b5cf6;"></i>
                         <h3>Immersive UI & NPCs</h3>
-                        <p>Spawn interactive NPCs, display live sidebars, and set up floating holograms or leaderboards without coding.</p>
+                        <p>Spawn interactive NPCs with custom cosmetics, display live sidebars, and set up floating holograms without coding.</p>
                     </div>
                     <div class="feature-cell">
-                        <i class="fa-solid fa-flask" style="color: var(--text-muted);"></i>
-                        <h3>Native Auth (Beta)</h3>
-                        <p>Built-in registration and login system. Manage player authentications natively within Bedrock.</p>
+                        <i class="fa-solid fa-shield-halved" style="color: #f87171;"></i>
+                        <h3>Security & Logs</h3>
+                        <p>Built-in native login/registration system to secure accounts, plus comprehensive server chat logs for easy moderation.</p>
                     </div>
                 </div>
             </div>
@@ -296,6 +315,7 @@
                         <p class="mt-2">The definitive camera tool for Bedrock creators. Execute smooth bezier camera paths, direct cinematic sequences, and create stunning timelapses effortlessly.</p>
                     </div>
                     <div class="product-header-actions action-group">
+                        <!-- LINK CURSEFORGE SUDAH BERFUNGSI -->
                         <a href="https://www.curseforge.com/minecraft-bedrock/addons/cinemato-studio" target="_blank" class="btn btn-outline">
                             CurseForge <i class="fa-solid fa-arrow-up-right-from-square"></i>
                         </a>
@@ -314,29 +334,32 @@
             <div class="pricing-wrap text-left">
                 <div class="price-card">
                     <h3>Starter</h3>
-                    <div class="price-val">$0 <span>/ lifetime</span></div>
+                    <div class="price-val">$0 <span>/ trial</span></div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: -1rem; margin-bottom: 1rem; font-style: italic;">No license attached. May deactivate anytime.</p>
                     <ul class="check-list">
-                        <li><i class="fa-solid fa-check"></i> Basic World & Player Management</li>
-                        <li><i class="fa-solid fa-check"></i> Core Economy Trading</li>
-                        <li><i class="fa-solid fa-check"></i> Essential Slash Commands</li>
-                        <li class="disabled"><i class="fa-solid fa-xmark"></i> No RPG or Clan Systems</li>
-                        <li class="disabled"><i class="fa-solid fa-xmark"></i> No Holograms or UIs</li>
+                        <li><i class="fa-solid fa-check"></i> Admin, World & Player Management</li>
+                        <li><i class="fa-solid fa-check"></i> Economy, Jobs, Quests & RPG Skills</li>
+                        <li><i class="fa-solid fa-check"></i> Clans, Land Claims & Custom Chat</li>
+                        <li><i class="fa-solid fa-check"></i> Basic Holograms, Sidebars & NPCs</li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> Non-permanent Access (Trial)</li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> No Hybrid Economy or Native Login</li>
                     </ul>
-                    <a href="#" class="btn btn-outline w-full mt-auto">Download Basic</a>
+                    <a href="https://www.curseforge.com/minecraft-bedrock/scripts/admin-suite-server-tools" target="_blank" class="btn btn-outline w-full mt-auto">Download Trial</a>
                 </div>
 
                 <div class="price-card pro">
                     <h3 style="color: #c4b5fd;">Pro License</h3>
-                    <div class="price-val">$19.99 <span>/ one-time</span></div>
+                    <div class="price-val">$5 <span>/ one-time</span></div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: -1rem; margin-bottom: 1rem; font-style: italic;">Equivalent to ~Rp80.000 (Permanent License)</p>
                     <ul class="check-list">
-                        <li><i class="fa-solid fa-check"></i> <strong style="color: white;">Everything in Starter</strong></li>
-                        <li><i class="fa-solid fa-check"></i> Full RPG, Quests & Battle Mechanics</li>
-                        <li><i class="fa-solid fa-check"></i> Clans, Custom Chat & Nametags</li>
-                        <li><i class="fa-solid fa-check"></i> Holograms, Sidebars & NPCs</li>
-                        <li><i class="fa-solid fa-check"></i> Secure Land Claims</li>
-                        <li><i class="fa-solid fa-check"></i> Priority Discord Support</li>
+                        <li><i class="fa-solid fa-check"></i> <strong style="color: white;">Everything in Starter, plus:</strong></li>
+                        <li><i class="fa-solid fa-check"></i> Hybrid Money (No Scoreboard Limits)</li>
+                        <li><i class="fa-solid fa-check"></i> Native Login System & Server Chat Logs</li>
+                        <li><i class="fa-solid fa-check"></i> Custom Leaderboards & Sidebar Icons</li>
+                        <li><i class="fa-solid fa-check"></i> Advanced Regions, Battles & Gravestones</li>
+                        <li><i class="fa-solid fa-check"></i> NPC Cosmetics & Priority Support</li>
                     </ul>
-                    <a href="#" class="btn btn-gradient w-full mt-auto">Unlock Full Suite</a>
+                    <a href="https://discord.gg/XNp95JTz" target="_blank" class="btn btn-gradient w-full mt-auto">Unlock Full Suite</a>
                 </div>
             </div>
         </div>
@@ -423,7 +446,13 @@
     </section>
 
     <footer>
-        <div class="container">
+        <div class="container flex flex-col items-center">
+            <div class="social-links">
+                <!-- YouTube Link -->
+                <a href="https://www.youtube.com/@heraclaus" target="_blank" title="YouTube" style="color: #ff0000;"><i class="fa-brands fa-youtube"></i></a>
+                <!-- Discord Link -->
+                <a href="https://discord.gg/xQStZUvukS" target="_blank" title="Discord"><i class="fa-brands fa-discord"></i></a>
+            </div>
             <p>© 2026 Heraclaus. Not associated with Mojang or Microsoft.</p>
         </div>
     </footer>
@@ -438,11 +467,11 @@
             if (menu.classList.contains('open')) {
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-xmark');
-                document.body.style.overflow = 'hidden'; // Cegah scroll layar belakang saat menu terbuka
+                document.body.style.overflow = 'hidden'; 
             } else {
                 icon.classList.remove('fa-xmark');
                 icon.classList.add('fa-bars');
-                document.body.style.overflow = 'auto'; // Kembalikan scroll
+                document.body.style.overflow = 'auto'; 
             }
         }
 
