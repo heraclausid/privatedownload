@@ -99,6 +99,11 @@
 
         .sidebar-footer { padding: 1.5rem 1rem; border-top: 1px solid var(--border-light); }
         
+        /* Tombol Logout Khusus agar ukurannya seragam dengan Nav Item */
+        .nav-item.logout-btn { background: rgba(244, 63, 94, 0.08); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.2); font-family: inherit; font-size: 0.95rem; justify-content: center; }
+        .nav-item.logout-btn:hover { background: rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5); color: #fff; }
+        .nav-item.logout-btn:hover i { color: #fff; }
+
         /* Main Content Area */
         .main-panel { flex-grow: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative; }
         
@@ -140,13 +145,21 @@
         .profile-field label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: block; font-weight: 600; }
         .profile-field .value { font-size: 1.1rem; font-weight: 500; color: #fff; }
 
-        /* Responsive Mobile */
+        /* Responsive Mobile & Overlay */
+        .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 15; backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.3s; }
+        .sidebar-overlay.show { display: block; opacity: 1; }
+
         @media (max-width: 768px) {
+            .auth-container { padding: 2.5rem 1.5rem; }
             .sidebar { position: fixed; transform: translateX(-100%); width: 280px; }
             .sidebar.show { transform: translateX(0); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
             .mobile-toggle { display: block; }
-            .top-header { padding: 0 1.5rem; }
-            .content-body { padding: 1.5rem; }
+            .top-header { padding: 0 1.25rem; height: 4.5rem; }
+            .content-body { padding: 1.5rem 1.25rem; }
+            .grid-cards { grid-template-columns: 1fr !important; gap: 1.25rem; }
+            .addon-banner { height: 110px; font-size: 2.5rem; }
+            .list-item { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1.25rem 1.5rem; }
+            .key-text { width: 100%; text-align: center; }
         }
     </style>
 </head>
@@ -206,6 +219,9 @@
     <!-- ======================================= -->
     <div class="dashboard-wrapper" id="dashboard-section">
         
+        <!-- Sidebar Overlay untuk Mobile -->
+        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
         <!-- Sidebar Navigation -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -231,7 +247,7 @@
             </nav>
             
             <div class="sidebar-footer">
-                <button class="btn btn-outline" style="width: 100%; border-color: rgba(244, 63, 94, 0.3); color: var(--accent-danger);" onclick="logout()">
+                <button class="nav-item logout-btn" style="width: 100%;" onclick="logout()">
                     <i class="fa-solid fa-right-from-bracket"></i> Sign Out
                 </button>
             </div>
@@ -463,7 +479,9 @@
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
             sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
         }
 
         function logout() {
