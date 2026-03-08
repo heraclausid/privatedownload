@@ -239,32 +239,19 @@
         <div id="changelog-container" style="display: flex; flex-direction: column;"></div>
     </main>
 
+    <!-- Footer Credit -->
+    <footer style="padding: 3rem 0; border-top: 1px solid var(--border-light); text-align: center; color: var(--text-muted); font-size: 0.85rem; margin-top: 2rem;">
+        <div class="container flex flex-col items-center">
+            <div class="flex gap-4 mb-4">
+                <a href="https://www.youtube.com/@heraclaus" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://discord.gg/xQStZUvukS" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'"><i class="fa-brands fa-discord"></i></a>
+            </div>
+            <p>© 2026 Heraclaus. Not associated with Mojang or Microsoft.</p>
+        </div>
+    </footer>
+
     <script>
-        const changelogs = [
-    {
-        "id": 1772459653834,
-        "version": "1.37.4",
-        "date": "2026-03-02",
-        "tags": [
-            "public",
-            "pro"
-        ],
-        "added": "Hybrid money model supports (/scoreboard) command\nNew feature (HP Bar for Mob)",
-        "fixed": "Store restock settings restored\nImproved store system to support new currency model",
-        "removed": ""
-    }
-]; 
-        let activeAccordionId = null; 
-        let currentViewType = 'public';
-
-        document.addEventListener('DOMContentLoaded', () => { render(); });
-
-        function setViewType(type) {
-            currentViewType = type;
-            const btnPublic = document.getElementById('view-btn-public');
-            const btnPro = document.getElementById('view-btn-pro');
-            if(type === 'public') { btnPublic.classList.add('active'); btnPro.classList.remove('active'); } 
-            else { btnPro.classList.add('active'); btnPublic.classList.remove('active'); }
+        const changelogs = ${staticDataStr}; 
             render();
         }
 
