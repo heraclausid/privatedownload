@@ -89,18 +89,19 @@
         /* Sidebar - Matches Navbar from index.html */
         .sidebar { width: var(--sidebar-width); background: rgba(5, 5, 5, 0.75); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; height: 100%; z-index: 20; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: transform 0.3s ease; }
         .sidebar-header { padding: 1.5rem; height: 5rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }
-        .sidebar-nav { padding: 1.5rem 1rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.5rem; }
         
-        /* Unified Nav Items (Fix untuk ukuran & layout patah) */
-        .nav-item { width: 100%; display: flex; align-items: center; gap: 1rem; padding: 0.875rem 1.25rem; background: transparent; color: var(--text-secondary); text-decoration: none; border-radius: 12px; transition: all 0.2s; font-weight: 500; font-size: 0.95rem; font-family: inherit; cursor: pointer; border: 1px solid transparent; text-align: left; white-space: nowrap; }
+        /* FIX LEBAR TOMBOL - Menggunakan align-items: stretch */
+        .sidebar-nav { padding: 1.5rem 1rem; flex-grow: 1; display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; width: 100%; box-sizing: border-box; }
+        
+        /* Unified Nav Items */
+        .nav-item { width: 100%; display: flex; align-items: center; justify-content: flex-start; gap: 1rem; padding: 0.875rem 1.25rem; background: transparent; color: var(--text-secondary); text-decoration: none; border-radius: 12px; transition: all 0.2s; font-weight: 500; font-size: 0.95rem; font-family: inherit; cursor: pointer; border: 1px solid transparent; text-align: left; white-space: nowrap; box-sizing: border-box; }
         .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
         .nav-item.active { background: rgba(139, 92, 246, 0.1); color: var(--text-primary); border-color: rgba(139, 92, 246, 0.2); }
         .nav-item.active i { color: var(--accent-primary); }
         .nav-item i { width: 1.25rem; text-align: center; font-size: 1.1rem; transition: color 0.2s; }
 
-        .sidebar-footer { padding: 1.5rem 1rem; border-top: 1px solid var(--border-light); }
-        
-        /* Tombol Logout Khusus */
+        /* FIX LEBAR TOMBOL LOGOUT */
+        .sidebar-footer { padding: 1.5rem 1rem; border-top: 1px solid var(--border-light); width: 100%; display: flex; align-items: stretch; box-sizing: border-box; }
         .nav-item.logout-btn { background: rgba(244, 63, 94, 0.08); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.2); justify-content: center; }
         .nav-item.logout-btn:hover { background: rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5); color: #fff; }
         .nav-item.logout-btn:hover i { color: #fff; }
@@ -233,25 +234,25 @@
             </div>
             
             <nav class="sidebar-nav">
-                <!-- Gunakan <button> untuk semua menu agar ukurannya seragam sempurna 100% -->
-                <button class="nav-item active" onclick="switchTab('overview', this)">
+                <!-- Tag <a> dijamin meregang full 100% tanpa menyusut di browser apapun -->
+                <a class="nav-item active" onclick="switchTab('overview', this)">
                     <i class="fa-solid fa-chart-pie"></i> Overview
-                </button>
-                <button class="nav-item" onclick="switchTab('addons', this)">
+                </a>
+                <a class="nav-item" onclick="switchTab('addons', this)">
                     <i class="fa-solid fa-box-open"></i> My Add-ons
-                </button>
-                <button class="nav-item" onclick="switchTab('licenses', this)">
+                </a>
+                <a class="nav-item" onclick="switchTab('licenses', this)">
                     <i class="fa-solid fa-key"></i> Licenses
-                </button>
-                <button class="nav-item" onclick="switchTab('profile', this)">
+                </a>
+                <a class="nav-item" onclick="switchTab('profile', this)">
                     <i class="fa-solid fa-user"></i> Profile
-                </button>
+                </a>
             </nav>
             
             <div class="sidebar-footer">
-                <button class="nav-item logout-btn" onclick="logout()">
+                <a class="nav-item logout-btn" onclick="logout()">
                     <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-                </button>
+                </a>
             </div>
         </aside>
 
