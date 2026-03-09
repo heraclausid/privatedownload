@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Client Portal | Heraclaus Admin Suite</title>
     
     <!-- Modern Tech Fonts -->
@@ -43,6 +43,9 @@
         h1, h2, h3, h4, .font-outfit { font-family: 'Outfit', sans-serif; }
         .text-gradient { background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
+        /* Utility Classes */
+        .desktop-only { display: inline-block; }
+
         /* Ambient Glow */
         .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         .blob { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.35; }
@@ -64,7 +67,7 @@
         /* Forms */
         .form-group { margin-bottom: 1.5rem; }
         label { display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
-        input[type="text"], input[type="email"] { width: 100%; padding: 0.875rem 1.25rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-primary); font-size: 0.95rem; outline: none; transition: all 0.3s; font-family: inherit; }
+        input[type="text"], input[type="email"] { width: 100%; padding: 0.875rem 1.25rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-primary); font-size: 1rem; /* 1rem (16px) wajib agar iOS tidak zoom otomatis */ outline: none; transition: all 0.3s; font-family: inherit; }
         input:focus { border-color: var(--accent-primary); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
 
         /* Messages */
@@ -76,9 +79,11 @@
         .nav-container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; justify-content: space-between; align-items: center; }
 
         /* --- AUTH SECTION (LOGIN) --- */
-        .auth-wrapper { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 7rem 1rem 4rem 1rem; position: relative; min-height: 100vh; }
-        .auth-container { max-width: 28rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px); display: none; }
+        /* Menggunakan flex-col agar footer tetap di bawah, tanpa position:absolute yang error saat keyboard mobile terbuka */
+        .auth-wrapper { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 1rem 2rem 1rem; position: relative; min-height: 100vh; }
+        .auth-container { max-width: 28rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px); display: none; margin: auto 0; }
         .auth-container.active { display: block; animation: fadeIn 0.4s ease; }
+        .login-footer { margin-top: auto; padding-top: 2rem; width: 100%; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -152,7 +157,14 @@
         .sidebar-overlay.show { display: block; opacity: 1; }
 
         @media (max-width: 768px) {
-            .auth-container { padding: 2.5rem 1.5rem; }
+            /* Perbaikan Khusus Form Login Mobile */
+            .desktop-only { display: none !important; }
+            .auth-wrapper { padding: 5rem 1rem 1.5rem 1rem; justify-content: flex-start; }
+            .auth-container { padding: 2rem 1.5rem; margin-top: 2rem; border-radius: 20px; }
+            .auth-container h1 { font-size: 1.75rem; }
+            .auth-container p.desc { font-size: 0.85rem; margin-bottom: 1.5rem; }
+            
+            /* Perbaikan Menu Dashboard */
             .sidebar { position: fixed; transform: translateX(-100%); width: 280px; }
             .sidebar.show { transform: translateX(0); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
             .mobile-toggle { display: block; }
@@ -176,10 +188,10 @@
         <div class="nav-container">
             <a href="index.html" class="font-outfit" style="font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
                 <i class="fa-solid fa-code text-gradient mr-2"></i> Heraclaus 
-                <span style="color: var(--text-muted); font-weight: 500; font-family: 'Inter', sans-serif; font-size: 1rem; margin-left: 0.25rem; white-space: nowrap;">| Client Portal</span>
+                <span class="desktop-only" style="color: var(--text-muted); font-weight: 500; font-family: 'Inter', sans-serif; font-size: 1rem; margin-left: 0.25rem; white-space: nowrap;">| Client Portal</span>
             </a>
             <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;">
-                <i class="fa-solid fa-arrow-left"></i> <span class="desktop-only" style="display: inline;">Back to Home</span>
+                <i class="fa-solid fa-arrow-left"></i> <span class="desktop-only" style="margin-left: 0.25rem;">Back to Home</span>
             </a>
         </div>
     </nav>
@@ -189,7 +201,7 @@
     <!-- ======================================= -->
     <main class="auth-wrapper" id="auth-section">
         <div class="auth-container active">
-            <h1 class="font-outfit" style="font-size: 2rem; letter-spacing: -0.02em;">Client Portal</h1>
+            <h1 class="font-outfit" style="letter-spacing: -0.02em;">Client Portal</h1>
             <p class="desc">Login using your Email and Password (License Key) sent to your inbox.</p>
             
             <form id="login-form">
@@ -203,15 +215,15 @@
                     <input type="text" id="login-key" required placeholder="HRC-XXXXX">
                 </div>
                 
-                <button type="submit" class="btn btn-gradient w-full" id="btn-login" style="margin-top: 1.5rem; width: 100%;">
+                <button type="submit" class="btn btn-gradient w-full" id="btn-login" style="margin-top: 1rem; width: 100%;">
                     <i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard
                 </button>
                 <div id="login-msg" class="msg-box msg-error"></div>
             </form>
         </div>
 
-        <!-- Login Footer -->
-        <div style="position: absolute; bottom: 1.5rem; width: 100%; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+        <!-- Login Footer (Disesuaikan posisinya untuk mobile) -->
+        <div class="login-footer">
             <p>© 2026 Heraclaus. Not associated with Mojang or Microsoft.</p>
         </div>
     </main>
@@ -389,9 +401,9 @@
         // LINK WEB APP GOOGLE SCRIPT SUDAH TERPASANG DI SINI
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
 
-        // Cek Session saat halaman dimuat
+        // Cek Session saat halaman dimuat (SEKARANG MENGGUNAKAN sessionStorage)
         document.addEventListener("DOMContentLoaded", () => {
-            const session = localStorage.getItem("heraclaus_session");
+            const session = sessionStorage.getItem("heraclaus_session");
             if (session) {
                 const userData = JSON.parse(session);
                 showDashboard(userData);
@@ -427,7 +439,8 @@
                 if(data.status === "success") {
                     data.email = emailInput;
                     data.licenseKey = keyInput;
-                    localStorage.setItem("heraclaus_session", JSON.stringify(data));
+                    // SIMPAN DI sessionStorage, BUKAN localStorage
+                    sessionStorage.setItem("heraclaus_session", JSON.stringify(data));
                     showDashboard(data);
                 } else {
                     throw new Error(data.message);
@@ -498,7 +511,7 @@
         }
 
         function logout() {
-            localStorage.removeItem("heraclaus_session");
+            sessionStorage.removeItem("heraclaus_session");
             location.reload(); 
         }
     </script>
