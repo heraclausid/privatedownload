@@ -190,16 +190,16 @@
     <main class="auth-wrapper" id="auth-section">
         <div class="auth-container active">
             <h1 class="font-outfit" style="font-size: 2rem; letter-spacing: -0.02em;">Client Portal</h1>
-            <p class="desc">Login menggunakan Email dan Password (License Key) yang dikirim ke email Anda.</p>
+            <p class="desc">Login using your Email and Password (License Key) sent to your inbox.</p>
             
             <form id="login-form">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" id="login-email" required placeholder="Email saat mendaftar">
+                    <input type="email" id="login-email" required placeholder="Registered email">
                 </div>
                 
                 <div class="form-group">
-                    <label>Password (License Key)</label>
+                    <label>Password (Portal Key)</label>
                     <input type="text" id="login-key" required placeholder="HRC-XXXXX">
                 </div>
                 
@@ -335,16 +335,16 @@
                     <div class="list-box">
                         <div class="list-item">
                             <div>
-                                <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.25rem; font-family: 'Outfit';">Admin Suite Pro</h4>
+                                <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.25rem; font-family: 'Outfit';">Admin Suite Pro (In-Game License)</h4>
                                 <p style="color: var(--text-muted); font-size: 0.9rem;">Status: <span style="color: var(--accent-success); font-weight: 500;">Active (Permanent)</span></p>
                             </div>
                             <div class="key-text" id="display-key">
-                                HRC-XXXXX
+                                Loading...
                             </div>
                         </div>
                     </div>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1.25rem; padding-left: 0.5rem;">
-                        <i class="fa-solid fa-circle-info"></i> This license key acts as your password. Do not share it with anyone.
+                        <i class="fa-solid fa-circle-info"></i> Enter this unique 16-digit code in-game to activate your Add-on features.
                     </p>
                 </div>
 
@@ -387,7 +387,7 @@
 
     <script>
         // LINK WEB APP GOOGLE SCRIPT SUDAH TERPASANG DI SINI
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtw7l0_rUIAvfqoilqneT7OJiOgOBQUFWePgKIUCga79DtKnS4FzYw4wtAkRywxZGa2g/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
 
         // Cek Session saat halaman dimuat
         document.addEventListener("DOMContentLoaded", () => {
@@ -464,7 +464,14 @@
             
             if(data.email) document.getElementById("profile-email").innerText = data.email;
             if(data.gamertag) document.getElementById("profile-gamertag").innerText = cleanGamertag;
-            if(data.licenseKey) document.getElementById("display-key").innerText = data.licenseKey;
+            
+            // MENAMPILKAN KODE LISENSI 16 DIGIT (Bukan lagi password loginnya)
+            if(data.addonLicense) {
+                document.getElementById("display-key").innerText = data.addonLicense;
+            } else if (data.licenseKey) {
+                // Fallback (Jika data lama di session belum ada addonLicense)
+                document.getElementById("display-key").innerText = "Please re-login to view key";
+            }
         }
 
         function switchTab(tabId, element) {
