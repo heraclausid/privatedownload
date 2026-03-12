@@ -251,7 +251,35 @@
     </footer>
 
     <script>
-        const changelogs = ${staticDataStr}; 
+        const changelogs = [
+    {
+        "id": 1772459653834,
+        "version": "1.37.4",
+        "date": "2026-03-02",
+        "tags": [
+            "public",
+            "pro"
+        ],
+        "added": "Hybrid money model supports (/scoreboard) command\nNew feature (HP Bar for Mob)",
+        "fixed": "Store restock settings restored\nImproved store system to support new currency model",
+        "removed": ""
+    }
+]; 
+        let activeAccordionId = null;
+        let currentViewType = 'public';
+
+        function setViewType(type) {
+            currentViewType = type;
+            const btnPublic = document.getElementById('view-btn-public');
+            const btnPro = document.getElementById('view-btn-pro');
+            
+            if(type === 'public') {
+                btnPublic.classList.add('active');
+                btnPro.classList.remove('active');
+            } else {
+                btnPro.classList.add('active');
+                btnPublic.classList.remove('active');
+            }
             render();
         }
 
@@ -269,64 +297,15 @@
         }
 
         function render() {
-            const container = document.getElementById('changelog-container'), emptyState = document.getElementById('empty-state'), searchTerm = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : '';
-            container.innerHTML = '';
-            
-            let filteredLogs = changelogs.filter(log => !log.tags || log.tags.includes(currentViewType));
-            filteredLogs = filteredLogs.filter(log => log.version.toLowerCase().includes(searchTerm) || (log.added && log.added.toLowerCase().includes(searchTerm)) || (log.fixed && log.fixed.toLowerCase().includes(searchTerm)) || (log.removed && log.removed.toLowerCase().includes(searchTerm)));
-            
-            if (filteredLogs.length === 0) { emptyState.classList.remove('hidden'); emptyState.style.display = 'flex'; } else { emptyState.classList.add('hidden'); emptyState.style.display = 'none'; }
-            filteredLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            let activeId = activeAccordionId; if (searchTerm !== '' && filteredLogs.length > 0) activeId = 'search_mode'; else if (activeId === null && filteredLogs.length > 0) activeId = filteredLogs[0].id;
-            
-            filteredLogs.forEach(log => {
-                const isOpen = activeId === log.id || activeId === 'search_mode';
-                let addedHtml = buildList(log.added, 'fa-rocket', 'New', 'badge-emerald', 'dot-emerald'), fixedHtml = buildList(log.fixed, 'fa-bug', 'Fix', 'badge-blue', 'dot-blue'), removedHtml = buildList(log.removed, 'fa-trash-can', 'Remove', 'badge-rose', 'dot-rose');
-                
-                container.insertAdjacentHTML('beforeend', `
-                    <div class="list-card ${isOpen ? 'active' : ''}" id="card-${log.id}">
-                        <button onclick="toggleAccordion(${log.id})" class="list-card-header">
-                            <div class="flex flex-col sm-flex-row sm-items-center gap-2 sm-gap-4">
-                                <div class="flex items-center gap-3">
-                                    <span class="font-outfit" style="font-size: 1.25rem; font-weight: 700;">${log.version}</span>
-                                </div>
-                                <div class="flex items-center gap-3 sm-ml-4">
-                                    ${getVersionTag(log.version)}
-                                    <span class="sm-inline hidden" style="color: var(--border-highlight);">•</span>
-                                    <span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">${formatDate(log.date)}</span>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-2 pl-4">
-                                <div class="btn-icon expand-icon"><i class="fa-solid fa-chevron-down"></i></div>
-                            </div>
-                        </button>
-                        <div class="accordion-wrapper">
-                            <div class="accordion-inner">
-                                <div class="accordion-content-area">
-                                    ${(addedHtml || fixedHtml || removedHtml) ? addedHtml + fixedHtml + removedHtml : '<p style="color: var(--text-muted); font-style: italic; margin-top: 1rem; margin-left: 1.75rem; font-size: 0.875rem;">No detailed release notes available.</p>'}
-                                </div>
-                            </div>
-                        </div>
-                    </div>`);
-            });
+            const container = document.getElementById('changelog-container'), emptyState = document.getElementById('empty-state'), searchTerm = document.getElementById('search-input') ? document.getElementById('search-input').value.toLowerCase() : ''; container.innerHTML = ''; let filteredLogs = changelogs.filter(log => !log.tags || log.tags.includes(currentViewType)); filteredLogs = filteredLogs.filter(log => log.version.toLowerCase().includes(searchTerm) || (log.added && log.added.toLowerCase().includes(searchTerm)) || (log.fixed && log.fixed.toLowerCase().includes(searchTerm)) || (log.removed && log.removed.toLowerCase().includes(searchTerm))); if (filteredLogs.length === 0) { emptyState.classList.remove('hidden'); emptyState.style.display = 'flex'; } else { emptyState.classList.add('hidden'); emptyState.style.display = 'none'; } filteredLogs.sort((a, b) => new Date(b.date) - new Date(a.date)); let activeId = activeAccordionId; if (searchTerm !== '' && filteredLogs.length > 0) activeId = 'search_mode'; else if (activeId === null && filteredLogs.length > 0) activeId = filteredLogs[0].id; filteredLogs.forEach(log => { const isOpen = activeId === log.id || activeId === 'search_mode'; let addedHtml = buildList(log.added, 'fa-rocket', 'New', 'badge-emerald', 'dot-emerald'), fixedHtml = buildList(log.fixed, 'fa-bug', 'Fix', 'badge-blue', 'dot-blue'), removedHtml = buildList(log.removed, 'fa-trash-can', 'Remove', 'badge-rose', 'dot-rose'); container.insertAdjacentHTML('beforeend', `<div class="list-card ${isOpen ? 'active' : ''}" id="card-${log.id}"><button onclick="toggleAccordion(${log.id})" class="list-card-header"><div class="flex flex-col sm-flex-row sm-items-center gap-2 sm-gap-4"><div class="flex items-center gap-3"><span class="font-outfit" style="font-size: 1.25rem; font-weight: 700;">${log.version}</span></div><div class="flex items-center gap-3 sm-ml-4">${getVersionTag(log.version)}<span class="sm-inline hidden" style="color: var(--border-highlight);">•</span><span style="font-size: 0.875rem; color: var(--text-muted); font-weight: 500;">${formatDate(log.date)}</span></div></div><div class="flex items-center gap-2 pl-4"><div class="btn-icon expand-icon"><i class="fa-solid fa-chevron-down"></i></div></div></button><div class="accordion-wrapper"><div class="accordion-inner"><div class="accordion-content-area">${(addedHtml || fixedHtml || removedHtml) ? addedHtml + fixedHtml + removedHtml : '<p style="color: var(--text-muted); font-style: italic; margin-top: 1rem; margin-left: 1.75rem; font-size: 0.875rem;">No detailed release notes available.</p>'}</div></div></div></div>`);});
         }
 
-        function buildList(text, iconClass, badgeLabel, badgeClass, dotColorClass) {
-            if (!text || text.trim() === '') return '';
-            const items = text.split('\n').filter(i => i.trim() !== ''); if (items.length === 0) return '';
-            const listItems = items.map(item => `<li class="${dotColorClass}">${item}</li>`).join('');
-            return `<div class="changelog-list"><span class="badge badge-lg ${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${badgeLabel}</span><ul>${listItems}</ul></div>`;
-        }
+        function buildList(text, iconClass, badgeLabel, badgeClass, dotColorClass) { if (!text || text.trim() === '') return ''; const items = text.split('\n').filter(i => i.trim() !== ''); if (items.length === 0) return ''; const listItems = items.map(item => `<li class="${dotColorClass}">${item}</li>`).join(''); return `<div class="changelog-list"><span class="badge badge-lg ${badgeClass}"><i class="fa-solid ${iconClass}"></i> ${badgeLabel}</span><ul>${listItems}</ul></div>`; } function toggleAccordion(id) { const card = document.getElementById(`card-${id}`); if (card.classList.contains('active')) { card.classList.remove('active'); activeAccordionId = null; } else { if (activeAccordionId && activeAccordionId !== id) { const oldCard = document.getElementById(`card-${activeAccordionId}`); if (oldCard) oldCard.classList.remove('active'); } card.classList.add('active'); activeAccordionId = id; } }
 
-        function toggleAccordion(id) {
-            const card = document.getElementById(`card-${id}`);
-            if (card.classList.contains('active')) { card.classList.remove('active'); activeAccordionId = null; } 
-            else { 
-                if (activeAccordionId && activeAccordionId !== id) { const oldCard = document.getElementById(`card-${activeAccordionId}`); if (oldCard) oldCard.classList.remove('active'); }
-                card.classList.add('active'); activeAccordionId = id; 
-            }
-        }
+        // Initialize view
+        document.addEventListener('DOMContentLoaded', () => {
+            render();
+        });
     </script>
 </body>
 </html>
