@@ -29,9 +29,11 @@
             --accent-primary: #8b5cf6; 
             --accent-success: #10b981; 
             --accent-danger: #f43f5e;
+            --accent-admin: #f59e0b; /* Amber color for Admin */
             
             --gradient-hero: linear-gradient(135deg, #e879f9 0%, #8b5cf6 50%, #3b82f6 100%);
             --gradient-admin: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-master: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
             
             --sidebar-width: 260px;
         }
@@ -39,140 +41,122 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; line-height: 1.6; }
         
-        /* Typography */
         h1, h2, h3, h4, .font-outfit { font-family: 'Outfit', sans-serif; }
         .text-gradient { background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* Utility Classes */
+        .text-admin { background: var(--gradient-master); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .desktop-only { display: inline-block; }
 
-        /* Ambient Glow */
         .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
         .blob { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.35; }
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(139, 92, 246, 0.15); }
         .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(59, 130, 246, 0.15); }
 
-        /* Unified Buttons */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0 1.5rem; min-height: 3rem; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; font-family: 'Inter', sans-serif; text-align: center; }
         .btn-gradient { background: var(--gradient-admin); color: #fff; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); border: 1px solid rgba(255,255,255,0.1); }
         .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5); filter: brightness(1.1); }
-        .btn-gradient:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        .btn-master { background: var(--gradient-master); color: #fff; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-master:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5); filter: brightness(1.1); }
+
+        .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
         .btn-outline { background: rgba(255,255,255,0.02); color: var(--text-primary); border: 1px solid var(--border-highlight); }
         .btn-outline:hover { background: rgba(255,255,255,0.06); }
+        .btn-sm { min-height: 2.25rem; padding: 0 1rem; font-size: 0.85rem; border-radius: 8px; }
 
-        /* Badges */
         .badge { display: inline-block; padding: 0.35rem 0.85rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); }
         .badge.success { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.25); }
+        .badge.admin { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border-color: rgba(245, 158, 11, 0.25); }
 
-        /* Forms - FIXED: Added input[type="password"] to ensure consistent styling */
         .form-group { margin-bottom: 1.5rem; }
         label { display: block; font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem; font-weight: 500; }
-        input[type="text"], input[type="email"], input[type="password"] { 
-            width: 100%; 
-            padding: 0.875rem 1.25rem; 
-            background: rgba(0,0,0,0.4); 
-            border: 1px solid var(--border-light); 
-            border-radius: 12px; 
-            color: var(--text-primary); 
-            font-size: 1rem; 
-            outline: none; 
-            transition: all 0.3s; 
-            font-family: inherit; 
-        }
-        input:focus { border-color: var(--accent-primary); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
+        input[type="text"], input[type="email"], input[type="password"] { width: 100%; padding: 0.875rem 1.25rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-primary); font-size: 1rem; outline: none; transition: all 0.3s; font-family: inherit; }
+        textarea { width: 100%; padding: 0.875rem 1.25rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 12px; color: var(--text-primary); font-size: 1rem; outline: none; transition: all 0.3s; font-family: inherit; resize: vertical; min-height: 80px; }
+        
+        input:focus, textarea:focus { border-color: var(--accent-primary); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15); }
 
-        /* Messages */
         .msg-box { margin-top: 1.25rem; padding: 0.875rem; border-radius: 12px; font-size: 0.9rem; font-weight: 500; text-align: center; display: none; }
         .msg-error { background: rgba(244, 63, 94, 0.1); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.3); }
         .msg-success { background: rgba(16, 185, 129, 0.1); color: var(--accent-success); border: 1px solid rgba(16, 185, 129, 0.3); }
 
-        /* --- NAVBAR (LOGIN SCREEN) --- */
-        .navbar { position: fixed; top: 0; width: 100%; height: 5rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; transition: all 0.3s ease; }
+        /* Navbar (Login Screen) */
+        .navbar { position: fixed; top: 0; width: 100%; height: 5rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; transition: all 0.3s ease; }
         .nav-container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; justify-content: space-between; align-items: center; }
 
-        /* --- AUTH SECTION (LOGIN) --- */
+        /* Auth Sections */
         .auth-wrapper { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 6rem 1rem 2rem 1rem; position: relative; min-height: 100vh; }
         .auth-container { max-width: 28rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 24px; padding: 3rem 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3); backdrop-filter: blur(10px); display: none; margin: auto 0; }
         .auth-container.active { display: block; animation: fadeIn 0.4s ease; }
         .login-footer { margin-top: auto; padding-top: 2rem; width: 100%; text-align: center; color: var(--text-muted); font-size: 0.85rem; }
-        
+        .admin-link { display: inline-block; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted); text-decoration: underline; cursor: pointer; transition: color 0.2s; }
+        .admin-link:hover { color: var(--accent-admin); }
+
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- DASHBOARD SECTION (PANEL ADMIN) --- */
+        /* Dashboard Global */
         .dashboard-wrapper { display: none; height: 100vh; width: 100vw; overflow: hidden; }
         .dashboard-wrapper.active { display: flex; animation: fadeIn 0.4s ease; }
-
-        /* Sidebar - Matches Navbar from index.html */
-        .sidebar { width: var(--sidebar-width); background: rgba(5, 5, 5, 0.75); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; height: 100%; z-index: 20; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); transition: transform 0.3s ease; }
-        .sidebar-header { padding: 1.5rem; height: 5rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }
         
+        .sidebar { width: var(--sidebar-width); background: rgba(5, 5, 5, 0.75); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; height: 100%; z-index: 20; backdrop-filter: blur(24px); transition: transform 0.3s ease; }
+        .sidebar-header { padding: 1.5rem; height: 5rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }
         .sidebar-nav { padding: 1.5rem 1rem; flex-grow: 1; display: flex; flex-direction: column; align-items: stretch; gap: 0.5rem; width: 100%; box-sizing: border-box; }
         
-        /* Unified Nav Items */
-        .nav-item { width: 100%; display: flex; align-items: center; justify-content: flex-start; gap: 1rem; padding: 0.875rem 1.25rem; background: transparent; color: var(--text-secondary); text-decoration: none; border-radius: 12px; transition: all 0.2s; font-weight: 500; font-size: 0.95rem; font-family: inherit; cursor: pointer; border: 1px solid transparent; text-align: left; white-space: nowrap; box-sizing: border-box; }
+        .nav-item { width: 100%; display: flex; align-items: center; justify-content: flex-start; gap: 1rem; padding: 0.875rem 1.25rem; background: transparent; color: var(--text-secondary); text-decoration: none; border-radius: 12px; transition: all 0.2s; font-weight: 500; font-size: 0.95rem; font-family: inherit; cursor: pointer; border: 1px solid transparent; text-align: left; }
         .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
         .nav-item.active { background: rgba(139, 92, 246, 0.1); color: var(--text-primary); border-color: rgba(139, 92, 246, 0.2); }
         .nav-item.active i { color: var(--accent-primary); }
+        .nav-item.admin-active { background: rgba(245, 158, 11, 0.1); color: var(--text-primary); border-color: rgba(245, 158, 11, 0.2); }
+        .nav-item.admin-active i { color: var(--accent-admin); }
         .nav-item i { width: 1.25rem; text-align: center; font-size: 1.1rem; transition: color 0.2s; }
 
-        /* FIX LEBAR TOMBOL LOGOUT */
         .sidebar-footer { padding: 1.5rem 1rem; border-top: 1px solid var(--border-light); width: 100%; display: flex; align-items: stretch; box-sizing: border-box; }
         .nav-item.logout-btn { background: rgba(244, 63, 94, 0.08); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.2); justify-content: center; }
         .nav-item.logout-btn:hover { background: rgba(244, 63, 94, 0.2); border-color: rgba(244, 63, 94, 0.5); color: #fff; }
-        .nav-item.logout-btn:hover i { color: #fff; }
 
-        /* Main Content Area */
         .main-panel { flex-grow: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative; }
-        
-        /* Top Header */
         .top-header { height: 5rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; background: rgba(5,5,5,0.5); backdrop-filter: blur(24px); z-index: 10; }
         .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        
         .user-profile-mini { display: flex; align-items: center; gap: 1rem; }
         .avatar-mini { width: 2.75rem; height: 2.75rem; border-radius: 50%; background: var(--gradient-admin); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Outfit'; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
+        .avatar-mini.admin { background: var(--gradient-master); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
 
-        /* Content Body */
         .content-body { padding: 2.5rem; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; flex-shrink: 0; }
         .tab-content.active { display: block; }
-        
         h2.section-title { font-size: 1.75rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 0.75rem; font-weight: 700; }
 
-        /* Cards & Grids */
+        /* Shared Dashboard Elements */
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
         .stat-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 20px; padding: 1.75rem; display: flex; flex-direction: column; gap: 1rem; transition: transform 0.2s; }
-        .stat-card:hover { transform: translateY(-3px); border-color: var(--border-highlight); }
         .stat-icon { width: 3.5rem; height: 3.5rem; border-radius: 12px; background: rgba(139, 92, 246, 0.15); color: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
         
-        /* Add-on Card */
         .addon-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.3s; }
-        .addon-card:hover { border-color: var(--border-highlight); }
         .addon-banner { height: 140px; background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 70%); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; color: rgba(255,255,255,0.2); }
         .addon-info { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
         
-        /* Table/List for Licenses */
         .list-box { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 20px; overflow: hidden; }
-        .list-item { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .list-item { padding: 1.5rem 2rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; transition: background 0.2s; }
+        .list-item:hover { background: rgba(255,255,255,0.02); }
         .list-item:last-child { border-bottom: none; }
         .key-text { font-family: monospace; background: rgba(0,0,0,0.5); padding: 0.75rem 1.25rem; border-radius: 10px; border: 1px dashed var(--border-light); color: var(--accent-primary); letter-spacing: 1.5px; font-size: 1.1rem; }
 
-        /* Profile Details */
+        /* History Table Styling */
+        .history-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .history-table th { color: var(--text-muted); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-light); }
+        .history-table td { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 0.95rem; vertical-align: middle; }
+        .history-table tr:last-child td { border-bottom: none; }
+        .version-badge { background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); padding: 0.25rem 0.5rem; border-radius: 6px; font-family: 'Outfit'; font-weight: 600; color: #fff; }
+
         .profile-grid { display: grid; gap: 1.5rem; max-width: 36rem; }
         .profile-field { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); padding: 1.25rem 1.5rem; border-radius: 16px; transition: border-color 0.3s; }
-        .profile-field:hover { border-color: var(--border-highlight); }
         .profile-field label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; display: block; font-weight: 600; }
         .profile-field .value { font-size: 1.1rem; font-weight: 500; color: #fff; }
 
-        /* Responsive Mobile & Overlay */
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 15; backdrop-filter: blur(3px); opacity: 0; transition: opacity 0.3s; }
         .sidebar-overlay.show { display: block; opacity: 1; }
 
         @media (max-width: 768px) {
             .desktop-only { display: none !important; }
-            .auth-wrapper { padding: 5rem 1rem 1.5rem 1rem; justify-content: flex-start; }
-            .auth-container { padding: 2rem 1.5rem; margin-top: 2rem; border-radius: 20px; }
-            .auth-container h1 { font-size: 1.75rem; }
-            .auth-container p.desc { font-size: 0.85rem; margin-bottom: 1.5rem; }
-            
             .sidebar { position: fixed; transform: translateX(-100%); width: 280px; }
             .sidebar.show { transform: translateX(0); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
             .mobile-toggle { display: block; }
@@ -180,8 +164,7 @@
             .content-body { padding: 1.5rem 1.25rem; }
             .grid-cards { grid-template-columns: 1fr !important; gap: 1.25rem; }
             .addon-banner { height: 110px; font-size: 2.5rem; }
-            .list-item { flex-direction: column; align-items: flex-start; gap: 0.75rem; padding: 1.25rem 1.5rem; }
-            .key-text { width: 100%; text-align: center; }
+            .history-table th:nth-child(3), .history-table td:nth-child(3) { display: none; } /* Hide notes on mobile */
         }
     </style>
 </head>
@@ -189,14 +172,12 @@
 
     <div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
 
-    <!-- ======================================= -->
-    <!-- SECTION: NAVBAR (Khusus Halaman Login)  -->
-    <!-- ======================================= -->
+    <!-- NAVBAR LOGIN -->
     <nav class="navbar" id="main-navbar">
         <div class="nav-container">
             <a href="index.html" class="font-outfit" style="font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
                 <i class="fa-solid fa-code text-gradient mr-2"></i> Heraclaus 
-                <span class="desktop-only" style="color: var(--text-muted); font-weight: 500; font-family: 'Inter', sans-serif; font-size: 1rem; margin-left: 0.25rem; white-space: nowrap;">| Client Portal</span>
+                <span class="desktop-only" style="color: var(--text-muted); font-weight: 500; font-family: 'Inter', sans-serif; font-size: 1rem; margin-left: 0.25rem;">| Client Portal</span>
             </a>
             <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s;">
                 <i class="fa-solid fa-arrow-left"></i> <span class="desktop-only" style="margin-left: 0.25rem;">Back to Home</span>
@@ -204,30 +185,51 @@
         </div>
     </nav>
 
-    <!-- ======================================= -->
-    <!-- SECTION: AUTHENTICATION (LOGIN)         -->
-    <!-- ======================================= -->
+    <!-- SECTION: USER LOGIN -->
     <main class="auth-wrapper" id="auth-section">
-        <div class="auth-container active">
+        <div class="auth-container active" id="user-login-box">
             <h1 class="font-outfit" style="letter-spacing: -0.02em;">Client Portal</h1>
-            <p class="desc">Login using your Email and Password (Portal Key) sent to your inbox.</p>
+            <p class="desc" style="text-align:center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Login using your Email and Portal Key.</p>
             
             <form id="login-form">
                 <div class="form-group">
                     <label>Email Address</label>
                     <input type="email" id="login-email" required placeholder="Registered email">
                 </div>
-                
                 <div class="form-group">
                     <label>Password (Portal Key)</label>
                     <input type="password" id="login-key" required placeholder="HRC-XXXXX">
                 </div>
-                
                 <button type="submit" class="btn btn-gradient w-full" id="btn-login" style="margin-top: 1rem; width: 100%;">
                     <i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard
                 </button>
                 <div id="login-msg" class="msg-box msg-error"></div>
             </form>
+            
+            <div style="text-align: center;">
+                <span class="admin-link" onclick="toggleAuthMode('admin')"><i class="fa-solid fa-shield-halved"></i> Admin Console</span>
+            </div>
+        </div>
+
+        <!-- SECTION: ADMIN LOGIN -->
+        <div class="auth-container" id="admin-login-box" style="border-top: 4px solid var(--accent-admin);">
+            <h1 class="font-outfit text-admin" style="letter-spacing: -0.02em;">Master Panel</h1>
+            <p class="desc" style="text-align:center; color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem;">Restricted access. Authentication required.</p>
+            
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label>Master Password</label>
+                    <input type="password" id="admin-key" required placeholder="Enter admin password">
+                </div>
+                <button type="submit" class="btn btn-master w-full" id="btn-admin-login" style="margin-top: 1rem; width: 100%;">
+                    <i class="fa-solid fa-unlock-keyhole"></i> Authenticate
+                </button>
+                <div id="admin-login-msg" class="msg-box msg-error"></div>
+            </form>
+            
+            <div style="text-align: center;">
+                <span class="admin-link" onclick="toggleAuthMode('user')"><i class="fa-solid fa-arrow-left"></i> Back to Client Portal</span>
+            </div>
         </div>
 
         <div class="login-footer">
@@ -235,55 +237,33 @@
         </div>
     </main>
 
-    <!-- ======================================= -->
-    <!-- SECTION: DASHBOARD (ADMIN PANEL STYLE)  -->
-    <!-- ======================================= -->
-    <div class="dashboard-wrapper" id="dashboard-section">
-        
-        <!-- Sidebar Overlay untuk Mobile -->
-        <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
-
-        <!-- Sidebar Navigation -->
-        <aside class="sidebar" id="sidebar">
+    <!-- SECTION: USER DASHBOARD -->
+    <div class="dashboard-wrapper" id="user-dashboard">
+        <div class="sidebar-overlay" onclick="toggleSidebar('user-sidebar')"></div>
+        <aside class="sidebar" id="user-sidebar">
             <div class="sidebar-header">
-                <a href="index.html" class="font-outfit" style="font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
+                <span class="font-outfit" style="font-size: 1.35rem; font-weight: 800; color: #fff;">
                     <i class="fa-solid fa-code text-gradient mr-2"></i> Heraclaus
-                </a>
-                <button class="mobile-toggle" onclick="toggleSidebar()" style="font-size: 1.25rem;"><i class="fa-solid fa-xmark"></i></button>
+                </span>
+                <button class="mobile-toggle" onclick="toggleSidebar('user-sidebar')"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
             <nav class="sidebar-nav">
-                <!-- Tag <a> dijamin meregang full 100% tanpa menyusut di browser apapun -->
-                <a class="nav-item active" onclick="switchTab('overview', this)">
-                    <i class="fa-solid fa-chart-pie"></i> Overview
-                </a>
-                <a class="nav-item" onclick="switchTab('addons', this)">
-                    <i class="fa-solid fa-box-open"></i> My Add-ons
-                </a>
-                <a class="nav-item" onclick="switchTab('licenses', this)">
-                    <i class="fa-solid fa-key"></i> Licenses
-                </a>
-                <a class="nav-item" onclick="switchTab('profile', this)">
-                    <i class="fa-solid fa-user"></i> Profile
-                </a>
+                <a class="nav-item active" onclick="switchTab('user', 'overview', this)"><i class="fa-solid fa-chart-pie"></i> Overview</a>
+                <a class="nav-item" onclick="switchTab('user', 'addons', this)"><i class="fa-solid fa-box-open"></i> My Add-ons</a>
+                <a class="nav-item" onclick="switchTab('user', 'licenses', this)"><i class="fa-solid fa-key"></i> Licenses</a>
+                <a class="nav-item" onclick="switchTab('user', 'profile', this)"><i class="fa-solid fa-user"></i> Profile</a>
             </nav>
-            
             <div class="sidebar-footer">
-                <a class="nav-item logout-btn" onclick="logout()">
-                    <i class="fa-solid fa-right-from-bracket"></i> Sign Out
-                </a>
+                <a class="nav-item logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
             </div>
         </aside>
 
-        <!-- Main Panel -->
         <main class="main-panel">
-            
-            <!-- Top Header -->
             <header class="top-header">
-                <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+                <button class="mobile-toggle" onclick="toggleSidebar('user-sidebar')"><i class="fa-solid fa-bars"></i></button>
                 <div style="flex-grow: 1;"></div>
                 <div class="user-profile-mini">
-                    <div style="text-align: right; display: none;" class="desktop-only">
+                    <div style="text-align: right;" class="desktop-only">
                         <div style="font-weight: 600; font-size: 0.95rem; color: #fff; line-height: 1.2;" id="top-gamertag">Player</div>
                         <div style="font-size: 0.75rem; color: var(--accent-success); font-weight: 500;">Pro Member</div>
                     </div>
@@ -291,74 +271,84 @@
                 </div>
             </header>
 
-            <!-- Scrollable Content -->
             <div class="content-body">
-                
-                <!-- TAB: OVERVIEW -->
-                <div id="tab-overview" class="tab-content active">
+                <!-- USER TAB: OVERVIEW -->
+                <div id="tab-user-overview" class="tab-content active">
                     <h2 class="section-title font-outfit">Welcome back, <span id="welcome-name" class="text-gradient">Player</span>!</h2>
-                    
                     <div class="grid-cards">
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa-solid fa-crown"></i></div>
                             <div>
                                 <h3 style="font-size: 1.75rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;">1 Active</h3>
-                                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Total Pro Licenses</p>
+                                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Pro Licenses</p>
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-success);"><i class="fa-solid fa-box"></i></div>
+                            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-success);"><i class="fa-solid fa-clock-rotate-left"></i></div>
                             <div>
-                                <h3 style="font-size: 1.75rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;">1 Product</h3>
-                                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Add-ons Owned</p>
+                                <h3 style="font-size: 1.75rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;" id="latest-ver-text">v1.0</h3>
+                                <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">Latest Release</p>
                             </div>
                         </div>
                     </div>
-                    
                     <div class="list-box" style="padding: 2rem;">
                         <h3 class="font-outfit" style="margin-bottom: 1rem; font-size: 1.25rem;"><i class="fa-solid fa-bullhorn text-gradient" style="margin-right: 0.5rem;"></i> System Notice</h3>
                         <p style="color: var(--text-secondary); font-size: 1rem; line-height: 1.7;">
-                            Your Admin Suite Pro is fully active. You can check for new updates or read the changelog directly from our website. Do not share your downloaded files to avoid license termination.
+                            Your Admin Suite Pro is fully active. Do not share your downloaded files to avoid license termination.
                         </p>
                     </div>
                 </div>
 
-                <!-- TAB: MY ADD-ONS -->
-                <div id="tab-addons" class="tab-content">
+                <!-- USER TAB: ADDONS -->
+                <div id="tab-user-addons" class="tab-content">
                     <h2 class="section-title font-outfit">My Add-ons</h2>
-                    
                     <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
                         <div class="addon-card">
-                            <div class="addon-banner">
-                                <i class="fa-solid fa-server"></i>
-                            </div>
+                            <div class="addon-banner"><i class="fa-solid fa-server"></i></div>
                             <div class="addon-info">
-                                <span class="badge success">OWNED • PRO</span>
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;">
+                                    <span class="badge success">OWNED • PRO</span>
+                                    <span class="badge" id="addon-badge-version" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">v?.?</span>
+                                </div>
                                 <h3 style="font-size: 1.35rem; color: #fff; margin-bottom: 0.75rem; font-family: 'Outfit';">Admin Suite Pro</h3>
                                 <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem; flex-grow: 1; line-height: 1.6;">
-                                    The complete server management system. Includes Hybrid Economy, Custom Regions, RPG mechanics, and Native Auth.
+                                    The complete server management system. Click download to get the latest updated file directly from our secure server.
                                 </p>
-                                <a id="btn-download" href="#" target="_blank" class="btn btn-gradient w-full">
+                                <button id="btn-download" class="btn btn-gradient w-full">
                                     <i class="fa-solid fa-download"></i> Download Latest
-                                </a>
+                                </button>
                             </div>
                         </div>
                     </div>
+
+                    <h3 class="font-outfit" style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.25rem; color: #fff;">Version History</h3>
+                    <div class="list-box">
+                        <table class="history-table" id="user-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Version</th>
+                                    <th>Release Date</th>
+                                    <th>Update Notes</th>
+                                    <th style="text-align: right;">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <!-- TAB: LICENSES -->
-                <div id="tab-licenses" class="tab-content">
+                <!-- USER TAB: LICENSES -->
+                <div id="tab-user-licenses" class="tab-content">
                     <h2 class="section-title font-outfit">My Licenses</h2>
-                    
                     <div class="list-box">
                         <div class="list-item">
                             <div>
                                 <h4 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.25rem; font-family: 'Outfit';">Admin Suite Pro (In-Game License)</h4>
                                 <p style="color: var(--text-muted); font-size: 0.9rem;">Status: <span style="color: var(--accent-success); font-weight: 500;">Active (Permanent)</span></p>
                             </div>
-                            <div class="key-text" id="display-key">
-                                Loading...
-                            </div>
+                            <div class="key-text" id="display-key">Loading...</div>
                         </div>
                     </div>
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 1.25rem; padding-left: 0.5rem;">
@@ -366,10 +356,9 @@
                     </p>
                 </div>
 
-                <!-- TAB: PROFILE -->
-                <div id="tab-profile" class="tab-content">
+                <!-- USER TAB: PROFILE -->
+                <div id="tab-user-profile" class="tab-content">
                     <h2 class="section-title font-outfit">Profile Settings</h2>
-                    
                     <div class="profile-grid">
                         <div class="profile-field">
                             <label>Gamertag (Xbox/Minecraft)</label>
@@ -379,21 +368,9 @@
                             <label>Account Email</label>
                             <div class="value" id="profile-email">Loading...</div>
                         </div>
-                        <div class="profile-field">
-                            <label>Account Level</label>
-                            <div class="value" style="color: var(--accent-success); display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fa-solid fa-circle-check"></i> VIP Pro Member
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- NEW: SECURITY / CHANGE PASSWORD SECTION -->
                     <h3 class="font-outfit" style="margin-top: 2.5rem; margin-bottom: 1.25rem; font-size: 1.35rem; color: #fff;">Security</h3>
                     <div class="profile-field" style="max-width: 36rem;">
-                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5;">
-                            <i class="fa-solid fa-shield-halved text-gradient" style="margin-right: 0.25rem;"></i> Change your portal login password here. <br>
-                            <span style="color: var(--accent-danger); font-size: 0.8rem; font-weight: 600;">NOTE: Limit 1 change per 30 days.</span>
-                        </p>
                         <form id="change-pwd-form">
                             <div class="form-group">
                                 <label>Current Portal Password</label>
@@ -403,196 +380,355 @@
                                 <label>New Portal Password</label>
                                 <input type="password" id="cp-new" required placeholder="Enter new password (min. 5 chars)" minlength="5">
                             </div>
-                            <button type="submit" class="btn btn-outline" id="btn-change-pwd" style="width: 100%; margin-top: 0.5rem;">
-                                <i class="fa-solid fa-key"></i> Update Password
-                            </button>
+                            <button type="submit" class="btn btn-outline" id="btn-change-pwd" style="width: 100%;">Update Password</button>
                             <div id="cp-msg" class="msg-box" style="margin-top: 1.5rem;"></div>
                         </form>
                     </div>
-
                 </div>
-
-                <!-- Footer Dashboard -->
-                <div style="margin-top: auto; padding-top: 4rem;">
-                    <footer style="border-top: 1px solid var(--border-light); padding-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--text-muted); font-size: 0.85rem;">
-                        <div style="display: flex; gap: 1rem;">
-                            <a href="https://www.youtube.com/@heraclaus" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'"><i class="fa-brands fa-youtube"></i></a>
-                            <a href="https://discord.gg/xQStZUvukS" target="_blank" style="color: var(--text-muted); font-size: 1.25rem; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-muted)'"><i class="fa-brands fa-discord"></i></a>
-                        </div>
-                        <p>© 2026 Heraclaus. Not associated with Mojang or Microsoft.</p>
-                    </footer>
-                </div>
-
             </div>
         </main>
     </div>
 
+    <!-- SECTION: ADMIN DASHBOARD -->
+    <div class="dashboard-wrapper" id="admin-dashboard">
+        <div class="sidebar-overlay" onclick="toggleSidebar('admin-sidebar')"></div>
+        <aside class="sidebar" id="admin-sidebar" style="border-right-color: rgba(245, 158, 11, 0.2);">
+            <div class="sidebar-header">
+                <span class="font-outfit text-admin" style="font-size: 1.35rem; font-weight: 800;">
+                    <i class="fa-solid fa-shield-halved mr-2"></i> Master Panel
+                </span>
+                <button class="mobile-toggle" onclick="toggleSidebar('admin-sidebar')"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item admin-active" onclick="switchTab('admin', 'publish', this)"><i class="fa-solid fa-cloud-arrow-up"></i> Publish Update</a>
+                <a class="nav-item" onclick="switchTab('admin', 'database', this)"><i class="fa-solid fa-database"></i> File Database</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a class="nav-item logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Lock Console</a>
+            </div>
+        </aside>
+
+        <main class="main-panel">
+            <header class="top-header">
+                <button class="mobile-toggle" onclick="toggleSidebar('admin-sidebar')"><i class="fa-solid fa-bars"></i></button>
+                <div style="flex-grow: 1;"></div>
+                <div class="user-profile-mini">
+                    <div style="text-align: right;" class="desktop-only">
+                        <div style="font-weight: 600; font-size: 0.95rem; color: #fff; line-height: 1.2;">System Admin</div>
+                        <div style="font-size: 0.75rem; color: var(--accent-admin); font-weight: 500;">God Mode</div>
+                    </div>
+                    <div class="avatar-mini admin"><i class="fa-solid fa-bolt"></i></div>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- ADMIN TAB: PUBLISH -->
+                <div id="tab-admin-publish" class="tab-content active">
+                    <h2 class="section-title font-outfit">Release New Add-on Update</h2>
+                    <div class="profile-field" style="max-width: 48rem; background: var(--bg-card);">
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2rem;">
+                            Upload file ke Google Drive, lalu paste linknya ke sini. Sistem akan otomatis mengubah link biasa menjadi <b>Direct Download Link</b> rahasia yang tidak bisa dilacak oleh pembeli!
+                        </p>
+                        
+                        <form id="admin-upload-form">
+                            <div class="form-group">
+                                <label>Version Name</label>
+                                <input type="text" id="up-version" required placeholder="e.g. v6.2.0">
+                            </div>
+                            <div class="form-group">
+                                <label>Google Drive Share Link (Biasa)</label>
+                                <input type="url" id="up-link" required placeholder="https://drive.google.com/file/d/XXXXX/view">
+                            </div>
+                            <div class="form-group">
+                                <label>Update Notes / Changelog Singkat</label>
+                                <textarea id="up-notes" placeholder="Tulis fitur baru atau perbaikan bug di versi ini..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-master w-full" id="btn-upload-version" style="margin-top: 1rem;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> Publish to All Members
+                            </button>
+                            <div id="upload-msg" class="msg-box" style="margin-top: 1.5rem;"></div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ADMIN TAB: DATABASE -->
+                <div id="tab-admin-database" class="tab-content">
+                    <h2 class="section-title font-outfit">System File Database</h2>
+                    <div class="list-box">
+                        <table class="history-table" id="admin-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Version</th>
+                                    <th>Release Date</th>
+                                    <th>Direct Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Injected via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Hidden Iframe untuk Download Bawah Tanah -->
+    <iframe id="hidden-download-frame" style="display:none;"></iframe>
+
     <script>
         // LINK WEB APP GOOGLE SCRIPT ANDA
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwTMq1bdhD7uxXK-5Qbo8rpPosN9eWJJDNx6G_ZnyxTds9FYMTS-n6dz9lnhZxBJXvUgQ/exec";
 
         document.addEventListener("DOMContentLoaded", () => {
             const session = sessionStorage.getItem("heraclaus_session");
             if (session) {
-                const userData = JSON.parse(session);
-                showDashboard(userData);
+                const data = JSON.parse(session);
+                if (data.role === "admin") {
+                    showAdminDashboard(data);
+                } else {
+                    showUserDashboard(data);
+                }
             }
         });
 
-        // Proses Login
+        // --- AUTH TOGGLE ---
+        function toggleAuthMode(mode) {
+            if(mode === 'admin') {
+                document.getElementById('user-login-box').classList.remove('active');
+                document.getElementById('admin-login-box').classList.add('active');
+            } else {
+                document.getElementById('admin-login-box').classList.remove('active');
+                document.getElementById('user-login-box').classList.add('active');
+            }
+        }
+
+        // --- USER LOGIN ---
         document.getElementById("login-form").addEventListener("submit", function(e) {
             e.preventDefault();
-            
             const btn = document.getElementById("btn-login");
             const msgBox = document.getElementById("login-msg");
             
-            const emailInput = document.getElementById("login-email").value.trim();
-            const keyInput = document.getElementById("login-key").value.trim();
-            
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...';
-            msgBox.style.display = "none";
-            msgBox.className = "msg-box msg-error";
-
-            const payload = {
-                action: "login",
-                email: emailInput,
-                licenseKey: keyInput
-            };
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...';
+            msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(data => {
+                body: JSON.stringify({
+                    action: "login",
+                    email: document.getElementById("login-email").value.trim(),
+                    licenseKey: document.getElementById("login-key").value.trim()
+                })
+            }).then(res => res.json()).then(data => {
                 if(data.status === "success") {
-                    data.email = emailInput;
-                    data.licenseKey = keyInput;
+                    data.role = "user";
                     sessionStorage.setItem("heraclaus_session", JSON.stringify(data));
-                    showDashboard(data);
-                } else {
-                    throw new Error(data.message);
-                }
-            })
-            .catch(err => {
+                    showUserDashboard(data);
+                } else throw new Error(data.message);
+            }).catch(err => {
                 msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message;
                 msgBox.style.display = "block";
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard';
+            }).finally(() => {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard';
             });
         });
 
-        // Proses Ubah Password
-        document.getElementById("change-pwd-form").addEventListener("submit", function(e) {
+        // --- ADMIN LOGIN ---
+        document.getElementById("admin-login-form").addEventListener("submit", function(e) {
             e.preventDefault();
+            const btn = document.getElementById("btn-admin-login");
+            const msgBox = document.getElementById("admin-login-msg");
             
-            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-            if(!session) return logout();
-
-            const btn = document.getElementById("btn-change-pwd");
-            const msgBox = document.getElementById("cp-msg");
-            
-            const oldKey = document.getElementById("cp-old").value.trim();
-            const newKey = document.getElementById("cp-new").value.trim();
-            
-            btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...';
-            msgBox.style.display = "none";
-            msgBox.className = "msg-box";
-
-            const payload = {
-                action: "change_password",
-                email: session.email,
-                oldKey: oldKey,
-                newKey: newKey
-            };
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...';
+            msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
 
             fetch(GOOGLE_SCRIPT_URL, {
                 method: "POST",
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(data => {
+                body: JSON.stringify({
+                    action: "admin_login",
+                    adminPassword: document.getElementById("admin-key").value.trim()
+                })
+            }).then(res => res.json()).then(data => {
+                if(data.status === "success") {
+                    data.role = "admin";
+                    data.adminPassword = document.getElementById("admin-key").value.trim();
+                    sessionStorage.setItem("heraclaus_session", JSON.stringify(data));
+                    showAdminDashboard(data);
+                } else throw new Error(data.message);
+            }).catch(err => {
+                msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message;
+                msgBox.style.display = "block";
+            }).finally(() => {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Authenticate';
+            });
+        });
+
+        // --- GOOGLE DRIVE AUTO-CONVERTER ---
+        function convertDriveLink(url) {
+            // Mengubah format https://drive.google.com/file/d/ID/view menjadi Direct Link
+            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+                return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+            }
+            return url; // Kembalikan apa adanya jika bukan link google drive standar
+        }
+
+        // --- ADMIN: UPLOAD NEW VERSION ---
+        document.getElementById("admin-upload-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            if(!session || session.role !== 'admin') return logout();
+
+            const btn = document.getElementById("btn-upload-version");
+            const msgBox = document.getElementById("upload-msg");
+            
+            const rawLink = document.getElementById("up-link").value.trim();
+            const directLink = convertDriveLink(rawLink); // Keajaiban Auto Convert!
+
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...';
+            msgBox.style.display = "none"; msgBox.className = "msg-box";
+
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    action: "admin_upload_version",
+                    adminPassword: session.adminPassword,
+                    versionName: document.getElementById("up-version").value.trim(),
+                    link: directLink,
+                    notes: document.getElementById("up-notes").value.trim()
+                })
+            }).then(res => res.json()).then(data => {
                 if(data.status === "success") {
                     msgBox.className = "msg-box msg-success";
                     msgBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> ' + data.message;
                     msgBox.style.display = "block";
                     
-                    // Update session storage dengan key yang baru agar tidak ter-logout
-                    session.licenseKey = newKey;
-                    sessionStorage.setItem("heraclaus_session", JSON.stringify(session));
+                    document.getElementById("admin-upload-form").reset();
                     
-                    document.getElementById("change-pwd-form").reset();
-                } else {
-                    throw new Error(data.message);
-                }
-            })
-            .catch(err => {
+                    // Update session history
+                    session.history = data.history;
+                    sessionStorage.setItem("heraclaus_session", JSON.stringify(session));
+                    renderAdminDatabase(data.history);
+                } else throw new Error(data.message);
+            }).catch(err => {
                 msgBox.className = "msg-box msg-error";
                 msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message;
                 msgBox.style.display = "block";
-            })
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-key"></i> Update Password';
+            }).finally(() => {
+                btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish to All Members';
             });
         });
 
-        function showDashboard(data) {
+        // --- RENDER DAHSBOARDS ---
+        function showUserDashboard(data) {
             document.getElementById("main-navbar").style.display = "none";
             document.getElementById("auth-section").style.display = "none";
-            document.getElementById("dashboard-section").classList.add("active");
-            
-            const desktopEls = document.querySelectorAll('.desktop-only');
-            desktopEls.forEach(el => el.style.display = 'block');
+            document.getElementById("user-dashboard").classList.add("active");
             
             const cleanGamertag = data.gamertag ? data.gamertag.trim() : "Player";
-            
             document.getElementById("top-gamertag").innerText = cleanGamertag;
             document.getElementById("top-avatar").innerText = cleanGamertag.charAt(0).toUpperCase();
             document.getElementById("welcome-name").innerText = cleanGamertag;
-            document.getElementById("btn-download").href = data.downloadLink;
+            document.getElementById("profile-email").innerText = data.email || "-";
+            document.getElementById("profile-gamertag").innerText = cleanGamertag;
+            document.getElementById("display-key").innerText = data.addonLicense || "Code not generated.";
             
-            if(data.email) document.getElementById("profile-email").innerText = data.email;
-            if(data.gamertag) document.getElementById("profile-gamertag").innerText = cleanGamertag;
-            
-            if(data.addonLicense) {
-                document.getElementById("display-key").innerText = data.addonLicense;
-            } else if (data.licenseKey) {
-                document.getElementById("display-key").innerText = "Please re-login to view key";
+            // Render History File
+            const history = data.addonHistory || [];
+            if(history.length > 0) {
+                document.getElementById("latest-ver-text").innerText = history[0].versionName;
+                document.getElementById("addon-badge-version").innerText = history[0].versionName;
+                
+                // Isi tabel
+                const tbody = document.querySelector("#user-history-table tbody");
+                tbody.innerHTML = "";
+                history.forEach((h, index) => {
+                    const dateStr = new Date(h.date).toLocaleDateString();
+                    const noteStr = h.notes || "-";
+                    // Untuk tabel user, tombol download yang akan meng-inject link ke iframe
+                    const btnHtml = `<button onclick="triggerDownload('${h.link}')" class="btn btn-sm btn-outline"><i class="fa-solid fa-download"></i></button>`;
+                    
+                    tbody.innerHTML += `<tr>
+                        <td><span class="version-badge">${h.versionName}</span> ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.75rem; margin-left:0.5rem; font-weight:600;">LATEST</span>' : ''}</td>
+                        <td>${dateStr}</td>
+                        <td style="font-size: 0.85rem;">${noteStr}</td>
+                        <td style="text-align:right;">${btnHtml}</td>
+                    </tr>`;
+                });
+            } else {
+                document.querySelector("#user-history-table tbody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>No releases available yet.</td></tr>";
             }
         }
 
-        function switchTab(tabId, element) {
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
+        function showAdminDashboard(data) {
+            document.getElementById("main-navbar").style.display = "none";
+            document.getElementById("auth-section").style.display = "none";
+            document.getElementById("admin-dashboard").classList.add("active");
+            
+            renderAdminDatabase(data.history || []);
+        }
+
+        function renderAdminDatabase(history) {
+            const tbody = document.querySelector("#admin-history-table tbody");
+            tbody.innerHTML = "";
+            if(history.length === 0) {
+                tbody.innerHTML = "<tr><td colspan='3' style='text-align:center;'>Database is empty.</td></tr>";
+                return;
+            }
+            history.forEach(h => {
+                const dateStr = new Date(h.date).toLocaleDateString();
+                tbody.innerHTML += `<tr>
+                    <td><span class="version-badge" style="border-color: rgba(245, 158, 11, 0.4); color: #fcd34d;">${h.versionName}</span></td>
+                    <td>${dateStr}</td>
+                    <td><input type="text" value="${h.link}" readonly style="background:transparent; border:none; color:var(--text-muted); width:100%; font-size:0.8rem;" onclick="this.select()"></td>
+                </tr>`;
             });
-            document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
+        }
+
+        // --- HIDDEN DOWNLOAD SYSTEM ---
+        function triggerDownload(url) {
+            const iframe = document.getElementById('hidden-download-frame');
+            iframe.src = url; // Mengeksekusi direct download tanpa mengubah tab browser
+        }
+
+        // Tombol Download Latest Utama
+        document.getElementById("btn-download").addEventListener("click", function() {
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            if (!session || !session.addonHistory || session.addonHistory.length === 0) return alert("No files available for download yet.");
+            
+            const btn = this;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Preparing...';
+            btn.disabled = true;
+
+            triggerDownload(session.addonHistory[0].link); // Unduh versi urutan 0 (Terbaru)
+
+            setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 3000);
+        });
+
+        // --- UI UTILITIES ---
+        function switchTab(role, tabId, element) {
+            const dash = document.getElementById(`${role}-dashboard`);
+            dash.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            dash.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
                 item.classList.remove('active');
+                item.classList.remove('admin-active');
             });
             
-            document.getElementById(`tab-${tabId}`).classList.add('active');
-            element.classList.add('active');
-            
-            if (window.innerWidth <= 768) {
-                toggleSidebar();
-            }
+            document.getElementById(`tab-${role}-${tabId}`).classList.add('active');
+            element.classList.add(role === 'admin' ? 'admin-active' : 'active');
+            if (window.innerWidth <= 768) toggleSidebar(`${role}-sidebar`);
         }
 
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('sidebar-overlay');
+        function toggleSidebar(sidebarId) {
+            const sidebar = document.getElementById(sidebarId);
+            const overlay = sidebar.previousElementSibling;
             sidebar.classList.toggle('show');
             overlay.classList.toggle('show');
         }
 
-        function logout() {
-            sessionStorage.removeItem("heraclaus_session");
-            location.reload(); 
-        }
+        function logout() { sessionStorage.removeItem("heraclaus_session"); location.reload(); }
     </script>
 </body>
 </html>
