@@ -5,286 +5,192 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Heraclaus | Premium Minecraft Bedrock Add-ons</title>
     
-    <!-- Modern Tech Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* * PURE VANILLA CSS - MODERN TECH SAAS THEME * */
-         
         :root {
-            --bg-base: #050505; 
-            --bg-surface: #0a0a0a;
-            --bg-card: rgba(255, 255, 255, 0.03);
-            --bg-card-hover: rgba(255, 255, 255, 0.05);
-            
-            --border-light: rgba(255, 255, 255, 0.08);
-            --border-highlight: rgba(255, 255, 255, 0.15);
-            
-            --text-primary: #ffffff;
-            --text-secondary: #a1a1aa;
-            --text-muted: #71717a;
-            
-            --accent-primary: #8b5cf6; 
-            --accent-secondary: #3b82f6; 
-            
+            --bg-base: #050505; --bg-surface: #0a0a0a; --bg-card: rgba(255, 255, 255, 0.03); --bg-card-hover: rgba(255, 255, 255, 0.05);
+            --border-light: rgba(255, 255, 255, 0.08); --border-highlight: rgba(255, 255, 255, 0.15);
+            --text-primary: #ffffff; --text-secondary: #a1a1aa; --text-muted: #71717a;
+            --accent-primary: #8b5cf6; --accent-secondary: #3b82f6; 
             --gradient-hero: linear-gradient(135deg, #e879f9 0%, #8b5cf6 50%, #3b82f6 100%);
             --gradient-admin: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; }
         
-        /* Tambahkan kode html ini untuk efek scroll meluncur yang mulus dan mencegah tertutup navbar */
-        html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
-        
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
-        
-        .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; }
+        .container { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; }
         .flex { display: flex; } .flex-col { flex-direction: column; }
         .items-center { align-items: center; } .justify-between { justify-content: space-between; } .justify-center { justify-content: center; }
-        .gap-2 { gap: 0.5rem; } .gap-4 { gap: 1rem; } .gap-6 { gap: 1.5rem; } .gap-8 { gap: 2rem; }
         .w-full { width: 100%; } .text-center { text-align: center; }
-        .mb-2 { margin-bottom: 0.5rem; } .mb-4 { margin-bottom: 1rem; } .mb-8 { margin-bottom: 2rem; } .mt-4 { margin-top: 1rem; }
         
-        /* Typography Polish */
+        /* Typography Scaled Down */
         h1, h2, h3, h4, .font-outfit { font-family: 'Outfit', sans-serif; }
-        h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; }
-        h2 { font-size: clamp(2rem, 5vw, 2.75rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; }
-        h3 { font-size: 1.25rem; font-weight: 600; letter-spacing: -0.01em; color: var(--text-primary); line-height: 1.3; }
-        p { color: var(--text-secondary); font-size: clamp(0.95rem, 3vw, 1.05rem); }
-        
+        h1 { font-size: clamp(1.75rem, 5vw, 3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; }
+        h2 { font-size: clamp(1.25rem, 3.5vw, 1.875rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+        h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+        p { color: var(--text-secondary); font-size: clamp(0.85rem, 1.5vw, 0.9rem); }
         .text-gradient { background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Ambient Glow (Softer, larger) */
         .ambient-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
-        .blob { position: absolute; border-radius: 50%; filter: blur(140px); opacity: 0.35; }
-        .blob-1 { top: -20%; left: -10%; width: 60vw; height: 60vw; background: rgba(139, 92, 246, 0.15); }
-        .blob-2 { bottom: -20%; right: -10%; width: 50vw; height: 50vw; background: rgba(59, 130, 246, 0.15); }
+        .blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.25; }
+        .blob-1 { top: -20%; left: -10%; width: 50vw; height: 50vw; background: rgba(139, 92, 246, 0.15); }
+        .blob-2 { bottom: -20%; right: -10%; width: 40vw; height: 40vw; background: rgba(59, 130, 246, 0.15); }
 
-        /* Navigation - MINIMALIST */
-        .navbar { position: fixed; top: 0; width: 100%; height: 5rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; transition: all 0.3s ease; }
-        
+        /* Navbar Scaled Down */
+        .navbar { position: fixed; top: 0; width: 100%; height: 3.5rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; transition: all 0.3s ease; }
         .nav-links { display: none; } 
-        .nav-links a.reg-link { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: color 0.2s; }
+        .nav-links a.reg-link { color: var(--text-secondary); text-decoration: none; font-weight: 500; font-size: 0.8rem; transition: color 0.2s; }
         .nav-links a.reg-link:hover { color: var(--text-primary); }
-        
-        /* Nav Icon Button (Discord) */
-        .nav-icon-btn { color: var(--text-secondary); font-size: 1.25rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 8px; background: transparent; }
+        .nav-icon-btn { color: var(--text-secondary); font-size: 1rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 6px; }
         .nav-icon-btn:hover { color: #5865F2; background: rgba(88, 101, 242, 0.1); }
+        .nav-divider { width: 1px; height: 0.8rem; background: var(--border-light); margin: 0 0.5rem; }
+        .login-nav-btn { background: rgba(255,255,255,0.04); color: #fff; padding: 0.35rem 0.85rem; border-radius: 6px; border: 1px solid var(--border-light); text-decoration: none; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
+        .login-nav-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-highlight); }
 
-        .nav-divider { width: 1px; height: 1.5rem; background: var(--border-light); margin: 0 0.5rem; }
+        .menu-btn { display: flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; font-size: 1.1rem; color: var(--text-primary); background: transparent; border: none; cursor: pointer; border-radius: 6px; margin-right: -0.5rem; }
         
-        /* Nav Login Button */
-        .login-nav-btn { background: rgba(255,255,255,0.04); color: #fff; padding: 0.6rem 1.25rem; border-radius: 10px; border: 1px solid var(--border-light); text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.2s; }
-        .login-nav-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-highlight); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        @media (min-width: 768px) { .nav-links { display: flex; align-items: center; gap: 1rem; } .menu-btn { display: none; } }
 
-        /* Hamburger */
-        .menu-btn { display: flex; align-items: center; justify-content: center; width: 3rem; height: 3rem; font-size: 1.5rem; color: var(--text-primary); background: transparent; border: none; cursor: pointer; border-radius: 8px; margin-right: -0.5rem; transition: background-color 0.2s; }
-        .menu-btn:hover { background-color: rgba(255, 255, 255, 0.05); }
-        
-        @media (min-width: 768px) { 
-            .nav-links { display: flex; align-items: center; gap: 1.5rem; }
-            .menu-btn { display: none; }
-        }
-
-        /* Mobile Menu */
-        .mobile-menu { position: fixed; top: 5rem; left: 0; width: 100%; height: calc(100vh - 5rem); overflow-y: auto; background: var(--bg-surface); padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; transform: translateY(-100%); opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; z-index: 90; border-bottom: 1px solid var(--border-light); }
+        .mobile-menu { position: fixed; top: 3.5rem; left: 0; width: 100%; height: calc(100vh - 3.5rem); overflow-y: auto; background: var(--bg-surface); padding: 1.25rem; display: flex; flex-direction: column; gap: 0.25rem; transform: translateY(-100%); opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 90; border-bottom: 1px solid var(--border-light); }
         .mobile-menu.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
-        .mobile-menu a { color: var(--text-primary); text-decoration: none; font-size: 1.125rem; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 1.25rem 0; display: flex; align-items: center; gap: 1rem; }
-        .mobile-menu a i { width: 1.5rem; text-align: center; color: var(--text-muted); }
-        .mobile-menu .login-nav-btn { border-bottom: none; margin-top: 1.5rem; padding: 1rem; justify-content: center; }
+        .mobile-menu a { color: var(--text-primary); text-decoration: none; font-size: 0.9rem; font-weight: 500; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0.85rem 0; display: flex; align-items: center; gap: 0.75rem; }
+        .mobile-menu .login-nav-btn { border-bottom: none; margin-top: 1rem; padding: 0.65rem; justify-content: center; }
 
-        /* Buttons */
-        .action-group { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0 1.75rem; min-height: 3.25rem; border-radius: 12px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; font-family: 'Inter', sans-serif; text-align: center; width: 100%; letter-spacing: 0.01em; }
-        
-        @media (min-width: 640px) { 
-            .action-group { flex-direction: row; } 
-            .action-group.justify-center { justify-content: center; }
-            .btn { width: auto; } 
-        }
+        /* Buttons Scaled Down */
+        .action-group { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0 1rem; min-height: 2.25rem; border-radius: 6px; font-weight: 600; font-size: 0.8rem; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; text-align: center; width: 100%; }
+        @media (min-width: 640px) { .action-group { flex-direction: row; } .btn { width: auto; } }
 
         .btn-primary { background: var(--text-primary); color: var(--bg-base); }
-        .btn-primary:hover { background: #e4e4e7; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.1); }
-        .btn-gradient { background: var(--gradient-admin); color: #fff; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-gradient:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5); filter: brightness(1.1); }
+        .btn-primary:hover { background: #e4e4e7; transform: translateY(-1px); }
+        .btn-gradient { background: var(--gradient-admin); color: #fff; box-shadow: 0 2px 10px rgba(139, 92, 246, 0.2); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-gradient:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4); filter: brightness(1.1); }
         .btn-outline { background: rgba(255,255,255,0.02); color: var(--text-primary); border: 1px solid var(--border-highlight); }
         .btn-outline:hover { background: rgba(255,255,255,0.06); }
 
-        /* YouTube Badge */
-        .yt-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; background: rgba(255, 0, 0, 0.05); border: 1px solid rgba(255, 0, 0, 0.2); border-radius: 9999px; font-size: 0.875rem; font-weight: 600; margin-bottom: 2rem; color: var(--text-primary); text-decoration: none; transition: all 0.3s; }
-        .yt-badge:hover { background: rgba(255, 0, 0, 0.1); border-color: rgba(255, 0, 0, 0.4); transform: translateY(-2px); }
-        .yt-icon { color: #ff0000; font-size: 1.1rem; }
-        .yt-verified { color: #3ea6ff; font-size: 0.8rem; }
+        .yt-badge { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.6rem; background: rgba(255, 0, 0, 0.05); border: 1px solid rgba(255, 0, 0, 0.2); border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1.25rem; color: var(--text-primary); text-decoration: none; transition: all 0.2s; }
+        .yt-badge:hover { background: rgba(255, 0, 0, 0.1); border-color: rgba(255, 0, 0, 0.4); }
+        .yt-icon { color: #ff0000; font-size: 0.85rem; }
 
-        /* Sections Spacing */
-        .section-hero { padding: 9rem 0 5rem 0; }
-        .section { padding: 5rem 0; }
-        @media (min-width: 768px) { .section-hero { padding: 11rem 0 7rem 0; } .section { padding: 7rem 0; } }
-
-        /* Product Container */
-        .product-box { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 24px; overflow: hidden; margin-bottom: 3rem; }
-        .product-header { padding: 2.5rem 1.5rem; border-bottom: 1px solid var(--border-light); background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.08), transparent 60%); display: flex; flex-direction: column; gap: 1.5rem; }
-        .product-header-actions { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; }
+        /* Sections Scaled Down */
+        .section-hero { padding: 6rem 0 2rem 0; }
+        .section { padding: 3rem 0; }
         
-        .badge { display: inline-block; padding: 0.35rem 0.85rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1.25rem; border: 1px solid rgba(139, 92, 246, 0.25); }
+        .product-box { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; }
+        .product-header { padding: 1.25rem; border-bottom: 1px solid var(--border-light); background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.05), transparent 60%); display: flex; flex-direction: column; gap: 0.75rem; }
+        .product-header-actions { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
+        .badge { display: inline-block; padding: 0.2rem 0.5rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; border: 1px solid rgba(139, 92, 246, 0.25); }
         
-        /* Clean Feature Grid */
-        .feature-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; padding: 1.5rem; background: transparent; }
-        .feature-cell { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); border-radius: 16px; padding: 1.75rem; transition: background 0.3s, border-color 0.3s; }
+        .feature-grid { display: grid; grid-template-columns: 1fr; gap: 0.5rem; padding: 0.75rem; }
+        .feature-cell { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); border-radius: 8px; padding: 1rem; transition: background 0.3s; }
         .feature-cell:hover { background: rgba(255,255,255,0.04); border-color: var(--border-highlight); }
-        .feature-cell i { font-size: 1.75rem; margin-bottom: 1.25rem; display: block; }
-        .feature-cell p { font-size: 0.95rem; margin-top: 0.5rem; color: var(--text-secondary); line-height: 1.6; }
+        .feature-cell i { font-size: 1.1rem; margin-bottom: 0.5rem; display: block; }
+        .feature-cell p { font-size: 0.8rem; margin-top: 0.2rem; }
 
         @media (min-width: 768px) {
-            .product-header { padding: 4rem 3rem; flex-direction: row; align-items: center; justify-content: space-between; gap: 4rem; }
-            .product-header-text { flex: 1; }
-            .product-header-actions { width: auto; min-width: 240px; }
-            .feature-grid { grid-template-columns: repeat(2, 1fr); padding: 2rem; gap: 1.5rem; }
-            .feature-cell { padding: 2rem; }
+            .product-header { padding: 1.75rem; flex-direction: row; align-items: center; justify-content: space-between; gap: 1.5rem; }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); padding: 1.25rem; gap: 0.75rem; }
+            .feature-cell { padding: 1.25rem; }
         }
-        @media (min-width: 1024px) {
-            .feature-grid { grid-template-columns: repeat(3, 1fr); }
-        }
+        @media (min-width: 1024px) { .feature-grid { grid-template-columns: repeat(3, 1fr); } }
 
-        /* Pricing Simplified */
-        .pricing-wrap { display: grid; grid-template-columns: 1fr; gap: 1.5rem; max-width: 56rem; margin: 3rem auto 0; }
-        .price-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 24px; padding: 2.5rem 2rem; display: flex; flex-direction: column; transition: transform 0.3s; }
-        .price-card:hover { transform: translateY(-4px); }
-        .price-card.pro { border-color: rgba(139, 92, 246, 0.4); background: linear-gradient(180deg, rgba(139, 92, 246, 0.08), transparent); position: relative; overflow: hidden; }
-        .price-val { font-family: 'Outfit'; font-size: 3.5rem; font-weight: 700; color: #fff; line-height: 1; margin: 1rem 0; letter-spacing: -0.02em; }
-        .price-val span { font-size: 1rem; color: var(--text-secondary); font-weight: 400; font-family: 'Inter'; letter-spacing: normal; }
-        .check-list { list-style: none; margin: 1.5rem 0 2.5rem 0; flex-grow: 1; }
-        .check-list li { display: flex; align-items: flex-start; gap: 1rem; font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem; }
-        .check-list i { color: #10b981; font-size: 0.85rem; margin-top: 0.35rem; flex-shrink: 0; }
+        /* Pricing Details Scaled Down */
+        .pricing-wrap { display: grid; grid-template-columns: 1fr; gap: 0.75rem; max-width: 44rem; margin: 1.5rem auto 0; }
+        .price-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; transition: transform 0.2s; }
+        .price-card.pro { border-color: rgba(139, 92, 246, 0.4); background: linear-gradient(180deg, rgba(139, 92, 246, 0.05), transparent); }
+        .price-val { font-family: 'Outfit'; font-size: 2rem; font-weight: 700; color: #fff; line-height: 1; margin: 0.4rem 0; letter-spacing: -0.02em; }
+        .price-val span { font-size: 0.8rem; color: var(--text-secondary); font-weight: 400; font-family: 'Inter'; }
+        .check-list { list-style: none; margin: 0.75rem 0 1.25rem 0; flex-grow: 1; }
+        .check-list li { display: flex; align-items: flex-start; gap: 0.4rem; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        .check-list i { color: #10b981; font-size: 0.7rem; margin-top: 0.2rem; flex-shrink: 0; }
         
-        @media (min-width: 768px) { .pricing-wrap { grid-template-columns: 1fr 1fr; gap: 2rem; } .price-card { padding: 3rem; } }
+        @media (min-width: 768px) { .pricing-wrap { grid-template-columns: 1fr 1fr; } .price-card { padding: 1.5rem; } }
 
-        /* Smooth FAQ */
-        .faq-wrap { max-width: 50rem; margin: 3rem auto 0; display: flex; flex-direction: column; gap: 1rem; }
-        .faq-item { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; transition: border-color 0.3s; }
+        /* FAQ Compact */
+        .faq-wrap { max-width: 38rem; margin: 1.5rem auto 0; display: flex; flex-direction: column; gap: 0.4rem; }
+        .faq-item { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 8px; }
         .faq-item.active { border-color: var(--border-highlight); background: rgba(255,255,255,0.04); }
-        .faq-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 1.5rem; background: none; border: none; color: var(--text-primary); font-family: 'Outfit'; font-size: 1.1rem; font-weight: 600; cursor: pointer; text-align: left; gap: 1rem; }
-        .faq-btn i { color: var(--text-muted); transition: transform 0.3s ease; flex-shrink: 0; }
+        .faq-btn { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 0.85rem 1rem; background: none; border: none; color: var(--text-primary); font-family: 'Outfit'; font-size: 0.9rem; font-weight: 600; cursor: pointer; text-align: left; gap: 0.75rem; }
+        .faq-btn i { color: var(--text-muted); transition: transform 0.2s ease; font-size: 0.75rem; }
         .faq-item.active .faq-btn i { transform: rotate(180deg); color: var(--text-primary); }
         .faq-content { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.3s ease; }
         .faq-item.active .faq-content { grid-template-rows: 1fr; }
         .faq-inner { overflow: hidden; }
-        .faq-inner p { padding: 0 1.5rem 1.5rem 1.5rem; font-size: 0.95rem; margin: 0; color: var(--text-secondary); line-height: 1.6; }
+        .faq-inner p { padding: 0 1rem 1rem 1rem; font-size: 0.8rem; margin: 0; }
 
-        /* Pre-footer CTA */
-        .cta-section { padding: 6rem 0; border-top: 1px solid var(--border-light); background: radial-gradient(circle at center, rgba(139, 92, 246, 0.08), transparent 60%); text-align: center; }
+        .cta-section { padding: 3rem 0; border-top: 1px solid var(--border-light); background: radial-gradient(circle at center, rgba(139, 92, 246, 0.05), transparent 60%); text-align: center; }
 
-        /* Advanced Footer */
-        footer { padding: 4rem 0 2rem 0; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 0.9rem; background: rgba(0,0,0,0.5); }
-        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 3rem; text-align: left; }
+        footer { padding: 2.5rem 0 1rem 0; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 0.8rem; background: rgba(0,0,0,0.5); }
+        .footer-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1.5rem; text-align: left; }
         @media (min-width: 768px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr; } }
-        .footer-brand h3 { font-family: 'Outfit'; font-size: 1.5rem; color: #fff; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
-        .footer-links-col { display: flex; flex-direction: column; gap: 0.75rem; }
-        .footer-links-col h4 { color: #fff; font-family: 'Outfit'; font-size: 1.1rem; margin-bottom: 0.75rem; }
-        .footer-links-col a { color: var(--text-secondary); text-decoration: none; transition: all 0.2s; font-weight: 500; display: inline-flex; align-items: center; gap: 0.5rem; }
-        .footer-links-col a:hover { color: var(--accent-primary); transform: translateX(4px); }
-        .footer-bottom { padding-top: 2rem; border-top: 1px solid var(--border-light); display: flex; flex-direction: column; align-items: center; gap: 1.5rem; }
+        .footer-brand h3 { font-family: 'Outfit'; font-size: 1.1rem; color: #fff; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem; }
+        .footer-links-col { display: flex; flex-direction: column; gap: 0.4rem; }
+        .footer-links-col h4 { color: #fff; font-family: 'Outfit'; font-size: 0.85rem; margin-bottom: 0.2rem; }
+        .footer-links-col a { color: var(--text-secondary); text-decoration: none; transition: all 0.2s; font-size: 0.8rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .footer-links-col a:hover { color: var(--accent-primary); }
+        .footer-bottom { padding-top: 1rem; border-top: 1px solid var(--border-light); display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
         @media (min-width: 768px) { .footer-bottom { flex-direction: row; justify-content: space-between; } }
-        .social-row { display: flex; gap: 1rem; }
-        .social-row a { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all 0.2s; font-size: 1.1rem; border: 1px solid transparent; }
-        .social-row a:hover { background: rgba(139, 92, 246, 0.1); color: #fff; border-color: rgba(139, 92, 246, 0.3); transform: translateY(-3px); }
+        .social-row { display: flex; gap: 0.4rem; }
+        .social-row a { width: 1.75rem; height: 1.75rem; border-radius: 4px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all 0.2s; font-size: 0.8rem; border: 1px solid transparent; }
+        .social-row a:hover { background: rgba(139, 92, 246, 0.1); color: #fff; border-color: rgba(139, 92, 246, 0.3); }
 
-        /* Scroll Animation Classes */
-        .animate-on-scroll {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: opacity, transform;
-        }
-        .animate-on-scroll.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Delays for staggered animations */
-        .delay-100 { transition-delay: 100ms; }
-        .delay-200 { transition-delay: 200ms; }
-        .delay-300 { transition-delay: 300ms; }
+        .animate-on-scroll { opacity: 0; transform: translateY(15px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .animate-on-scroll.is-visible { opacity: 1; transform: translateY(0); }
+        .delay-100 { transition-delay: 100ms; } .delay-200 { transition-delay: 200ms; }
     </style>
 </head>
 <body>
 
-    <div class="ambient-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-    </div>
+    <div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
 
-    <!-- Nav (Minimal & Important Only) -->
     <nav class="navbar" id="navbar">
         <div class="container flex justify-between items-center w-full">
-            <a href="#" class="font-outfit" style="font-size: 1.35rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
+            <a href="#" class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
                 <i class="fa-solid fa-code text-gradient mr-2"></i> Heraclaus
             </a>
-            
-            <button class="menu-btn" id="mobile-menu-btn" onclick="toggleMenu()">
-                <i class="fa-solid fa-bars"></i>
-            </button>
-
-            <!-- Desktop Links -->
+            <button class="menu-btn" id="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
             <div class="nav-links">
                 <a href="#admin-suite" class="reg-link">Admin Suite</a>
                 <a href="#pricing" class="reg-link">Pricing</a>
-                
                 <div class="nav-divider"></div>
-                
-                <a href="https://discord.gg/xQStZUvukS" target="_blank" class="nav-icon-btn" title="Join our Discord">
-                    <i class="fa-brands fa-discord"></i>
-                </a>
-                <a href="client.html" class="login-nav-btn">
-                    <i class="fa-solid fa-right-to-bracket text-gradient"></i> Client Portal
-                </a>
+                <a href="https://discord.gg/xQStZUvukS" target="_blank" class="nav-icon-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="client.html" class="login-nav-btn"><i class="fa-solid fa-right-to-bracket text-gradient"></i> Portal</a>
             </div>
         </div>
     </nav>
 
-    <!-- Mobile Menu Overlay -->
     <div class="mobile-menu" id="mobile-menu">
         <a href="#admin-suite" onclick="toggleMenu()"><i class="fa-solid fa-server"></i> Admin Suite</a>
         <a href="#cinemato" onclick="toggleMenu()"><i class="fa-solid fa-film"></i> Cinemato Studio</a>
         <a href="#pricing" onclick="toggleMenu()"><i class="fa-solid fa-tag"></i> Pricing</a>
         <a href="#faq" onclick="toggleMenu()"><i class="fa-solid fa-circle-question"></i> FAQ & ToS</a>
         <a href="changelog.html" target="_blank" onclick="toggleMenu()"><i class="fa-solid fa-clock-rotate-left"></i> System Changelog</a>
-        
-        <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 1rem 0;"></div>
-        
-        <a href="https://discord.gg/xQStZUvukS" target="_blank" style="color: #a5b4fc;" onclick="toggleMenu()">
-            <i class="fa-brands fa-discord"></i> Join Discord
-        </a>
-        <a href="client.html" class="login-nav-btn" onclick="toggleMenu()">
-            <i class="fa-solid fa-right-to-bracket text-gradient"></i> Login to Portal
-        </a>
+        <div style="height: 1px; background: rgba(255,255,255,0.05); margin: 0.5rem 0;"></div>
+        <a href="https://discord.gg/xQStZUvukS" target="_blank" style="color: #a5b4fc;" onclick="toggleMenu()"><i class="fa-brands fa-discord"></i> Join Discord</a>
+        <a href="client.html" class="login-nav-btn" onclick="toggleMenu()"><i class="fa-solid fa-right-to-bracket text-gradient"></i> Login to Portal</a>
     </div>
 
-    <!-- Hero -->
     <section class="section-hero text-center">
         <div class="container flex flex-col items-center animate-on-scroll">
-            
             <a href="https://www.youtube.com/@heraclaus" target="_blank" class="yt-badge">
-                <i class="fa-brands fa-youtube yt-icon"></i>
-                Heraclaus
-                <i class="fa-solid fa-circle-check yt-verified" title="Verified Creator"></i>
+                <i class="fa-brands fa-youtube yt-icon"></i> Heraclaus <i class="fa-solid fa-circle-check yt-verified"></i>
             </a>
-            
             <h1>Stop installing junk plugins.<br><span class="text-gradient">Build a legendary server.</span></h1>
-            <p style="max-width: 42rem; margin: 1.25rem auto 3rem; font-size: 1.15rem; line-height: 1.7;">
+            <p style="max-width: 32rem; margin: 0.75rem auto 1.5rem; line-height: 1.5;">
                 Premium, all-in-one Minecraft Bedrock add-ons that eliminate lag, fix conflicts, and give you absolute control over your world's economy and progression.
             </p>
-            <div class="action-group justify-center delay-200 animate-on-scroll" style="max-width: 26rem; margin: 0 auto;">
+            <div class="action-group justify-center delay-200 animate-on-scroll">
                 <a href="#admin-suite" class="btn btn-primary">Explore Admin Suite</a>
             </div>
         </div>
     </section>
 
-    <!-- Products: Admin Suite -->
     <section id="admin-suite" class="section" style="padding-top: 0;">
         <div class="container">
             <div class="product-box animate-on-scroll">
@@ -292,104 +198,66 @@
                     <div class="product-header-text">
                         <span class="badge"><i class="fa-solid fa-crown"></i> Flagship Architecture</span>
                         <h2>Admin Suite</h2>
-                        <p class="mt-2" style="font-size: 1.05rem;">One suite to replace them all. Manage your economy, players, RPG progression, and world security through a single, highly-optimized core. Zero lag, pure performance.</p>
+                        <p class="mt-2">One suite to replace them all. Manage your economy, players, RPG progression, and world security through a single, highly-optimized core. Zero lag, pure performance.</p>
                     </div>
                     <div class="product-header-actions action-group">
-                        <a href="#pricing" class="btn btn-gradient"><i class="fa-solid fa-arrow-down"></i> View Pricing</a>
-                        <a href="changelog.html" target="_blank" class="btn btn-outline"><i class="fa-solid fa-code-branch"></i> Read Changelog</a>
+                        <a href="#pricing" class="btn btn-gradient"><i class="fa-solid fa-arrow-down"></i> Pricing</a>
+                        <a href="changelog.html" target="_blank" class="btn btn-outline"><i class="fa-solid fa-code-branch"></i> Changelog</a>
                     </div>
                 </div>
-                
-                <!-- Clean Feature Grid -->
                 <div class="feature-grid">
-                    <div class="feature-cell animate-on-scroll">
-                        <i class="fa-solid fa-sack-dollar" style="color: #f59e0b;"></i>
-                        <h3 style="margin-bottom: 0.25rem;">Hybrid Economy</h3>
-                        <p>Bypass Minecraft's scoreboard limits with our hybrid money model. Includes physical currencies, robust trading, and jobs.</p>
-                    </div>
-                    <div class="feature-cell animate-on-scroll delay-100">
-                        <i class="fa-solid fa-khanda" style="color: #f43f5e;"></i>
-                        <h3 style="margin-bottom: 0.25rem;">RPG Progression</h3>
-                        <p>Keep retention high with skill leveling, player gravestones upon death, and fully customizable PvE/PvP battle mechanics.</p>
-                    </div>
-                    <div class="feature-cell animate-on-scroll delay-200">
-                        <i class="fa-solid fa-globe" style="color: #3b82f6;"></i>
-                        <h3 style="margin-bottom: 0.25rem;">Advanced Regions</h3>
-                        <p>Create advanced lobby menus, secure land claims, manage precise roles, and run automated repeated broadcast systems.</p>
-                    </div>
-                    <div class="feature-cell animate-on-scroll">
-                        <i class="fa-solid fa-users" style="color: #10b981;"></i>
-                        <h3 style="margin-bottom: 0.25rem;">Clan Ecosystem</h3>
-                        <p>Allow players to form alliances, manage members, use private clan chats, and equip custom overhead nametags.</p>
-                    </div>
-                    <div class="feature-cell animate-on-scroll delay-100">
-                        <i class="fa-solid fa-list-ol" style="color: #8b5cf6;"></i>
-                        <h3 style="margin-bottom: 0.25rem;">Immersive UI & NPCs</h3>
-                        <p>Spawn interactive NPCs with custom cosmetics, display live sidebars, and set up floating holograms without coding.</p>
-                    </div>
-                    <div class="feature-cell animate-on-scroll delay-200">
-                        <i class="fa-solid fa-shield-halved" style="color: #f87171;"></i>
-                        <h3 style="margin-bottom: 0.25rem;">Security & Logs</h3>
-                        <p>Built-in native login/registration system to secure accounts, plus comprehensive server chat logs for easy moderation.</p>
-                    </div>
+                    <div class="feature-cell animate-on-scroll"><i class="fa-solid fa-sack-dollar" style="color: #f59e0b;"></i><h3 style="margin-bottom: 0.2rem;">Hybrid Economy</h3><p>Bypass Minecraft's scoreboard limits with our hybrid money model. Includes physical currencies & jobs.</p></div>
+                    <div class="feature-cell animate-on-scroll delay-100"><i class="fa-solid fa-khanda" style="color: #f43f5e;"></i><h3 style="margin-bottom: 0.2rem;">RPG Progression</h3><p>Keep retention high with skill leveling, player gravestones, and customizable PvE/PvP mechanics.</p></div>
+                    <div class="feature-cell animate-on-scroll delay-200"><i class="fa-solid fa-globe" style="color: #3b82f6;"></i><h3 style="margin-bottom: 0.2rem;">Advanced Regions</h3><p>Create secure land claims, manage precise roles, and run automated repeated broadcasts.</p></div>
+                    <div class="feature-cell animate-on-scroll"><i class="fa-solid fa-users" style="color: #10b981;"></i><h3 style="margin-bottom: 0.2rem;">Clan Ecosystem</h3><p>Allow players to form alliances, manage members, and equip custom overhead nametags.</p></div>
+                    <div class="feature-cell animate-on-scroll delay-100"><i class="fa-solid fa-list-ol" style="color: #8b5cf6;"></i><h3 style="margin-bottom: 0.2rem;">Immersive UI & NPCs</h3><p>Spawn interactive NPCs, display live sidebars, and set up floating holograms without coding.</p></div>
+                    <div class="feature-cell animate-on-scroll delay-200"><i class="fa-solid fa-shield-halved" style="color: #f87171;"></i><h3 style="margin-bottom: 0.2rem;">Security & Logs</h3><p>Built-in native login system to secure accounts, plus comprehensive chat logs for moderation.</p></div>
                 </div>
             </div>
 
-            <!-- Products: Cinemato -->
             <div id="cinemato" class="product-box animate-on-scroll" style="margin-bottom: 0; border-color: rgba(16, 185, 129, 0.2);">
-                <div class="product-header" style="background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.05), transparent 50%); border-bottom: none; padding-bottom: 3rem;">
+                <div class="product-header" style="background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.05), transparent 50%); border-bottom: none; padding-bottom: 1.5rem;">
                     <div class="product-header-text">
                         <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.25);"><i class="fa-solid fa-film"></i> Creator Tool</span>
                         <h2>Cinemato Studio</h2>
-                        <p class="mt-2" style="font-size: 1.05rem;">The definitive camera tool for Bedrock creators. Execute smooth bezier camera paths, direct cinematic sequences, and create stunning timelapses effortlessly.</p>
+                        <p class="mt-2">The definitive camera tool for Bedrock creators. Execute smooth bezier camera paths and create stunning timelapses effortlessly.</p>
                     </div>
                     <div class="product-header-actions action-group">
-                        <a href="https://www.curseforge.com/minecraft-bedrock/addons/cinemato-studio" target="_blank" class="btn btn-outline" style="border-color: rgba(16, 185, 129, 0.3);">
-                            CurseForge <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.85rem;"></i>
-                        </a>
+                        <a href="https://www.curseforge.com/minecraft-bedrock/addons/cinemato-studio" target="_blank" class="btn btn-outline" style="border-color: rgba(16, 185, 129, 0.3);">CurseForge <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7rem;"></i></a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing (No Fluff) -->
     <section id="pricing" class="section" style="border-top: 1px solid var(--border-light); background: rgba(0,0,0,0.4);">
         <div class="container text-center animate-on-scroll">
             <h2>Simple Pricing. No Subscriptions.</h2>
-            <p style="font-size: 1.1rem; margin-top: 0.5rem;">Pay once, dominate your server forever.</p>
+            <p style="margin-top: 0.25rem;">Pay once, dominate your server forever.</p>
             
             <div class="pricing-wrap text-left">
-                <!-- Starter Edition -->
                 <div class="price-card animate-on-scroll">
                     <h3>Starter</h3>
                     <div class="price-val">$0 <span>/ trial</span></div>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1.5rem;">
-                        No license attached. May deactivate anytime without notice.
-                    </p>
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: -0.2rem; margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.75rem;">No license attached. May deactivate anytime.</p>
                     <ul class="check-list">
                         <li><i class="fa-solid fa-check"></i> Admin, World & Player Management</li>
                         <li><i class="fa-solid fa-check"></i> Economy, Jobs, Quests & RPG Skills</li>
                         <li><i class="fa-solid fa-check"></i> Clans, Land Claims & Custom Chat</li>
                         <li><i class="fa-solid fa-check"></i> Basic Holograms, Sidebars & NPCs</li>
                         <li style="opacity: 0.5;"><i class="fa-solid fa-xmark" style="color: var(--text-muted);"></i> Non-permanent Access (Trial)</li>
-                        <li style="opacity: 0.5;"><i class="fa-solid fa-xmark" style="color: var(--text-muted);"></i> No Hybrid Economy or Native Login</li>
                     </ul>
                     <a href="https://www.curseforge.com/minecraft-bedrock/scripts/admin-suite-server-tools" target="_blank" class="btn btn-outline w-full mt-auto">Download Trial</a>
                 </div>
 
-                <!-- Pro Edition -->
-                <div class="price-card pro animate-on-scroll delay-200">
+                <div class="price-card pro animate-on-scroll delay-100">
                     <h3 style="color: #c4b5fd;">Pro License</h3>
                     <div class="price-val">$5 <span>/ one-time</span></div>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: -0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(139, 92, 246, 0.2); padding-bottom: 1.5rem;">
-                        Equivalent to ~Rp80.000. Permanent License.
-                    </p>
+                    <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: -0.2rem; margin-bottom: 1rem; border-bottom: 1px solid rgba(139, 92, 246, 0.2); padding-bottom: 0.75rem;">Equivalent to ~Rp80.000. Permanent License.</p>
                     <ul class="check-list">
                         <li><i class="fa-solid fa-check"></i> <strong style="color: white;">Everything in Starter, plus:</strong></li>
                         <li><i class="fa-solid fa-check"></i> Hybrid Money (No Scoreboard Limits)</li>
                         <li><i class="fa-solid fa-check"></i> Native Login System & Server Chat Logs</li>
-                        <li><i class="fa-solid fa-check"></i> Custom Leaderboards & Sidebar Icons</li>
                         <li><i class="fa-solid fa-check"></i> Advanced Regions, Battles & Gravestones</li>
                         <li><i class="fa-solid fa-check"></i> Access to the Heraclaus Client Portal</li>
                     </ul>
@@ -399,119 +267,47 @@
         </div>
     </section>
 
-    <!-- FAQ & ToS -->
     <section id="faq" class="section" style="border-top: 1px solid var(--border-light);">
         <div class="container animate-on-scroll">
             <h2 class="text-center">FAQ & Terms of Service</h2>
-            
             <div class="faq-wrap">
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>How do I get my files after payment?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>After you complete the checkout via QRIS, we will verify your payment and email you a secure <strong>License Key</strong>. You can then use it to login to our <strong>Client Portal</strong> and download your files.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>Will Admin Suite cause lag?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>No. Replacing 10+ unoptimized plugins with our single, cohesive architecture actually reduces your server's load and drastically improves TPS.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>Do I need coding experience?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>Zero. Everything from the economy to custom NPCs is managed through intuitive in-game menus and simple slash commands.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>What happens when Minecraft updates?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>We push compatibility patches within 24-48 hours of major Bedrock updates, ensuring your server never faces long downtimes. You can download updates directly from the Client Portal.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>Is the Pro License a monthly subscription?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>No, this is a full lifetime license. You buy it once and use it forever. Every member is given the same access and benefits.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>Can I use the Pro License on multiple accounts?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>No. One license is strictly tied to one gamertag. Please make sure you do not change your gamertag after purchasing it, as the license cannot be transferred.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn" onclick="toggleFaq(this)">
-                        <span>Are there strict rules for Pro members?</span> <i class="fa-solid fa-chevron-down"></i>
-                    </button>
-                    <div class="faq-content">
-                        <div class="faq-inner">
-                            <p>Yes. You may not share anything related to the Pro version without the creator's permission, nor attempt to find security loopholes. Violating these absolute terms will result in the deletion of all your benefits and permanent removal from the VIP forum.</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>How do I get my files after payment?</span> <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content"><div class="faq-inner"><p>After checkout, we will verify your payment and email your <strong>License Key</strong> to login to the <strong>Client Portal</strong>.</p></div></div></div>
+                <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Will Admin Suite cause lag?</span> <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content"><div class="faq-inner"><p>No. Replacing 10+ unoptimized plugins with our single core drastically improves TPS.</p></div></div></div>
+                <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Do I need coding experience?</span> <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content"><div class="faq-inner"><p>Zero. Everything is managed through intuitive in-game menus.</p></div></div></div>
+                <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>What happens when Minecraft updates?</span> <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content"><div class="faq-inner"><p>We push compatibility patches rapidly. You can download updates directly from the Portal.</p></div></div></div>
+                <div class="faq-item"><button class="faq-btn" onclick="toggleFaq(this)"><span>Can I use the Pro License on multiple accounts?</span> <i class="fa-solid fa-chevron-down"></i></button><div class="faq-content"><div class="faq-inner"><p>No. One license is strictly tied to one gamertag and cannot be transferred.</p></div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Final Call to Action -->
     <section class="cta-section animate-on-scroll">
         <div class="container">
-            <h2 style="font-size: clamp(2rem, 5vw, 2.5rem); margin-bottom: 1rem;">Ready to level up your server?</h2>
-            <p style="margin-bottom: 2rem; color: var(--text-secondary); font-size: 1.1rem;">Join thousands of players and admins using Heraclaus Add-ons.</p>
-            <div class="action-group justify-center">
-                <a href="#pricing" class="btn btn-gradient" style="padding: 0 3rem; font-size: 1.05rem; height: 3.5rem;">Get Pro License Now</a>
-            </div>
+            <h2 style="font-size: clamp(1.25rem, 3.5vw, 1.75rem); margin-bottom: 0.5rem;">Ready to level up your server?</h2>
+            <p style="margin-bottom: 1.25rem;">Join thousands of players and admins using Heraclaus Add-ons.</p>
+            <div class="action-group justify-center"><a href="#pricing" class="btn btn-gradient" style="padding: 0 1.5rem;">Get Pro License Now</a></div>
         </div>
     </section>
 
-    <!-- Advanced Footer -->
     <footer class="animate-on-scroll">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
                     <h3><i class="fa-solid fa-code text-gradient"></i> Heraclaus</h3>
-                    <p style="max-width: 22rem; line-height: 1.6;">Premium Minecraft Bedrock add-ons built for performance, security, and absolute control. Stop dealing with junk plugins.</p>
+                    <p style="max-width: 18rem;">Premium Minecraft Bedrock add-ons built for performance, security, and absolute control.</p>
                 </div>
                 <div class="footer-links-col">
                     <h4>Products</h4>
-                    <a href="#admin-suite"><i class="fa-solid fa-angle-right" style="font-size:0.75rem"></i> Admin Suite</a>
-                    <a href="#cinemato"><i class="fa-solid fa-angle-right" style="font-size:0.75rem"></i> Cinemato Studio</a>
-                    <a href="#pricing"><i class="fa-solid fa-angle-right" style="font-size:0.75rem"></i> Pricing & Trial</a>
+                    <a href="#admin-suite"><i class="fa-solid fa-angle-right"></i> Admin Suite</a>
+                    <a href="#cinemato"><i class="fa-solid fa-angle-right"></i> Cinemato Studio</a>
+                    <a href="#pricing"><i class="fa-solid fa-angle-right"></i> Pricing & Trial</a>
                 </div>
                 <div class="footer-links-col">
                     <h4>Resources</h4>
-                    <a href="client.html"><i class="fa-solid fa-angle-right" style="font-size:0.75rem"></i> Client Portal</a>
-                    <a href="changelog.html" target="_blank"><i class="fa-solid fa-angle-right" style="font-size:0.75rem"></i> System Changelog</a>
-                    <a href="#faq"><i class="fa-solid fa-angle-right" style="font-size:0.75rem"></i> Terms of Service</a>
+                    <a href="client.html"><i class="fa-solid fa-angle-right"></i> Client Portal</a>
+                    <a href="changelog.html" target="_blank"><i class="fa-solid fa-angle-right"></i> Changelog</a>
+                    <a href="#faq"><i class="fa-solid fa-angle-right"></i> Terms</a>
                 </div>
             </div>
-            
             <div class="footer-bottom">
                 <p>© 2026 Heraclaus. Not associated with Mojang or Microsoft.</p>
                 <div class="social-row">
@@ -523,62 +319,32 @@
     </footer>
 
     <script>
-        // Scroll Animation Observer (NEW)
         document.addEventListener("DOMContentLoaded", () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15 // Elemen akan animasi ketika 15% masuk ke layar
-            };
-
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target); // Animasi hanya terjadi 1 kali
-                    }
+                    if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); }
                 });
             }, observerOptions);
-
-            document.querySelectorAll('.animate-on-scroll').forEach(el => {
-                observer.observe(el);
-            });
+            document.querySelectorAll('.animate-on-scroll').forEach(el => { observer.observe(el); });
         });
 
-        // Navbar scroll effect
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
-            if (window.scrollY > 20) {
-                nav.style.background = 'rgba(5, 5, 5, 0.9)';
-                nav.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-            } else {
-                nav.style.background = 'rgba(5, 5, 5, 0.75)';
-                nav.style.boxShadow = 'none';
-            }
+            if (window.scrollY > 20) { nav.style.background = 'rgba(5, 5, 5, 0.9)'; nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.5)'; } 
+            else { nav.style.background = 'rgba(5, 5, 5, 0.75)'; nav.style.boxShadow = 'none'; }
         });
 
         function toggleMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const icon = document.querySelector('#mobile-menu-btn i');
-            
+            const menu = document.getElementById('mobile-menu'), icon = document.querySelector('#mobile-menu-btn i');
             menu.classList.toggle('open');
-            
-            if (menu.classList.contains('open')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-xmark');
-                document.body.style.overflow = 'hidden'; 
-            } else {
-                icon.classList.remove('fa-xmark');
-                icon.classList.add('fa-bars');
-                document.body.style.overflow = 'auto'; 
-            }
+            if (menu.classList.contains('open')) { icon.classList.remove('fa-bars'); icon.classList.add('fa-xmark'); document.body.style.overflow = 'hidden'; } 
+            else { icon.classList.remove('fa-xmark'); icon.classList.add('fa-bars'); document.body.style.overflow = 'auto'; }
         }
 
         function toggleFaq(btn) {
             const currentItem = btn.parentElement;
-            document.querySelectorAll('.faq-item').forEach(item => {
-                if(item !== currentItem) item.classList.remove('active');
-            });
+            document.querySelectorAll('.faq-item').forEach(item => { if(item !== currentItem) item.classList.remove('active'); });
             currentItem.classList.toggle('active');
         }
     </script>
