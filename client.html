@@ -50,7 +50,7 @@
         .btn-icon.danger { border-color: rgba(244,63,94,0.3); color: var(--accent-danger); background: transparent; }
         .btn-icon.danger:hover { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.5); }
 
-        .badge { display: inline-block; padding: 0.2rem 0.6rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); }
+        .badge { display: inline-flex; align-items: center; justify-content: center; padding: 0.2rem 0.6rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); gap: 0.3rem; }
         .badge.success { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.25); }
 
         .form-group { margin-bottom: 1rem; position: relative; }
@@ -114,38 +114,42 @@
         .avatar-mini { width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--gradient-admin); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Outfit'; font-size: 0.95rem; box-shadow: 0 2px 10px rgba(139, 92, 246, 0.2); }
         .avatar-mini.admin { background: var(--gradient-master); box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2); }
 
-        .content-body { padding: 1.5rem; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
+        .content-body { padding: 2rem; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; flex-shrink: 0; }
         .tab-content.active { display: block; }
         h2.section-title { font-size: 1.35rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; }
 
         .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-        .stat-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.75rem; }
-        .stat-icon { width: 2.75rem; height: 2.75rem; border-radius: 8px; background: rgba(139, 92, 246, 0.15); color: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; transition: transform 0.2s ease; }
+        .stat-card:hover { transform: translateY(-2px); border-color: var(--border-highlight); background: var(--bg-card-hover); }
+        .stat-icon { width: 3rem; height: 3rem; border-radius: 8px; background: rgba(139, 92, 246, 0.15); color: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
         
-        .addon-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
-        .addon-banner { height: 100px; background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 70%); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: rgba(255,255,255,0.1); }
+        .addon-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s ease; }
+        .addon-card:hover { transform: translateY(-2px); border-color: var(--border-highlight); background: var(--bg-card-hover); }
+        .addon-banner { height: 120px; background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 70%); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: rgba(255,255,255,0.1); }
         .addon-info { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         
         .list-box { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; }
         .list-item { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .key-text { font-family: monospace; background: rgba(0,0,0,0.5); padding: 0.6rem 1rem; border-radius: 8px; border: 1px dashed var(--border-light); color: var(--accent-primary); letter-spacing: 1px; font-size: 0.95rem; text-align: center; }
+        .key-text { font-family: monospace; background: rgba(0,0,0,0.5); padding: 0.75rem 1rem; border-radius: 8px; border: 1px dashed var(--border-light); color: var(--accent-primary); letter-spacing: 1px; font-size: 0.95rem; text-align: center; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .key-text.empty { color: var(--text-muted); font-style: italic; font-weight: normal; border-color: transparent; background: transparent; }
 
         .history-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .history-table th { color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-light); }
-        .history-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 0.85rem; }
+        .history-table th { color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.02); }
+        .history-table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 0.85rem; vertical-align: middle; }
         .history-table tr:last-child td { border-bottom: none; }
-        .version-badge { background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'Outfit'; font-weight: 600; color: #fff; font-size: 0.75rem; }
+        .history-table tr:hover td { background: rgba(255,255,255,0.01); }
+        .version-badge { background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); padding: 0.2rem 0.5rem; border-radius: 6px; font-family: 'Outfit'; font-weight: 600; color: #fff; font-size: 0.8rem; display: inline-block; text-align: center; min-width: 60px; }
 
-        .profile-grid { display: grid; gap: 1rem; max-width: 32rem; }
-        .profile-field { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); padding: 1rem 1.25rem; border-radius: 12px; }
-        .profile-field label { color: var(--text-muted); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 0.4rem; display: block; font-weight: 600; }
-        .profile-field .value { font-size: 1rem; font-weight: 500; color: #fff; }
+        .profile-grid { display: grid; gap: 1.5rem; max-width: 36rem; }
+        .profile-field { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); padding: 1.25rem 1.5rem; border-radius: 12px; }
+        .profile-field label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; font-weight: 600; }
+        .profile-field .value { font-size: 1.05rem; font-weight: 500; color: #fff; }
 
-        .guide-step { display: flex; gap: 1rem; margin-bottom: 1.5rem; }
-        .guide-number { width: 2.25rem; height: 2.25rem; border-radius: 50%; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); display: flex; align-items: center; justify-content: center; font-family: 'Outfit'; font-weight: 700; font-size: 1rem; color: var(--accent-primary); flex-shrink: 0; }
-        .guide-content h4 { font-family: 'Outfit'; font-size: 1.05rem; color: #fff; margin-bottom: 0.25rem; }
-        .guide-content p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0; }
+        .guide-step { display: flex; gap: 1.25rem; margin-bottom: 1.5rem; align-items: flex-start; }
+        .guide-number { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); display: flex; align-items: center; justify-content: center; font-family: 'Outfit'; font-weight: 700; font-size: 1.1rem; color: var(--accent-primary); flex-shrink: 0; }
+        .guide-content h4 { font-family: 'Outfit'; font-size: 1.1rem; color: #fff; margin-bottom: 0.25rem; line-height: 1.2; }
+        .guide-content p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0; line-height: 1.6; }
 
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 15; backdrop-filter: blur(2px); opacity: 0; transition: opacity 0.3s; }
         .sidebar-overlay.show { display: block; opacity: 1; }
@@ -155,7 +159,7 @@
             .sidebar { position: fixed; transform: translateX(-100%); }
             .sidebar.show { transform: translateX(0); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
             .mobile-toggle { display: block; }
-            .content-body { padding: 1rem; }
+            .content-body { padding: 1.25rem; }
             .history-table th:nth-child(3), .history-table td:nth-child(3) { display: none; } 
         }
     </style>
@@ -244,7 +248,7 @@
                 <div class="user-profile-mini">
                     <div style="text-align: right;" class="desktop-only">
                         <div style="font-weight: 600; font-size: 0.85rem; color: #fff;" id="top-gamertag">Player</div>
-                        <div style="font-size: 0.7rem; color: var(--accent-success); font-weight: 500;">Pro Member</div>
+                        <div style="font-size: 0.7rem; color: var(--accent-success); font-weight: 500;"><i class="fa-solid fa-circle-check" style="font-size: 0.6rem;"></i> Pro Member</div>
                     </div>
                     <div class="avatar-mini" id="top-avatar">P</div>
                 </div>
@@ -253,19 +257,25 @@
             <div class="content-body">
                 <!-- OVERVIEW -->
                 <div id="tab-user-overview" class="tab-content active">
-                    <h2 class="section-title font-outfit">Welcome, <span id="welcome-name" class="text-gradient">Player</span>!</h2>
+                    <h2 class="section-title font-outfit">Welcome back, <span id="welcome-name" class="text-gradient">Player</span>!</h2>
                     <div class="grid-cards">
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa-solid fa-crown"></i></div>
-                            <div><h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;">1 Active</h3><p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">Pro Licenses</p></div>
+                            <div>
+                                <h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;">1 Active</h3>
+                                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">Pro Licenses</p>
+                            </div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-success);"><i class="fa-solid fa-clock-rotate-left"></i></div>
-                            <div><h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;" id="latest-ver-text">v?.?</h3><p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">Latest Release</p></div>
+                            <div>
+                                <h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;" id="latest-ver-text">v?.?</h3>
+                                <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">Latest Release</p>
+                            </div>
                         </div>
                     </div>
-                    <div class="list-box" style="padding: 1.5rem;">
-                        <h3 class="font-outfit" style="margin-bottom: 0.5rem; font-size: 1.1rem;"><i class="fa-solid fa-bullhorn text-gradient" style="margin-right: 0.4rem;"></i> System Notice</h3>
+                    <div class="list-box" style="padding: 1.5rem; border-left: 4px solid var(--accent-primary);">
+                        <h3 class="font-outfit" style="margin-bottom: 0.5rem; font-size: 1.1rem; color: #fff;"><i class="fa-solid fa-bullhorn text-gradient" style="margin-right: 0.4rem;"></i> System Notice</h3>
                         <p style="color: var(--text-secondary); font-size: 0.9rem;">Your Admin Suite Pro is fully active. Silakan menuju tab <b>Installation</b> jika Anda belum mengerti cara memasang Add-on ini ke dalam game.</p>
                     </div>
                 </div>
@@ -278,21 +288,23 @@
                             <div class="addon-banner"><i class="fa-solid fa-server"></i></div>
                             <div class="addon-info">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                    <span class="badge success">OWNED • PRO</span>
+                                    <span class="badge success"><i class="fa-solid fa-check" style="margin-right: 0.2rem;"></i> OWNED • PRO</span>
                                     <span class="badge" id="addon-badge-version" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">v?.?</span>
                                 </div>
-                                <h3 style="font-size: 1.2rem; color: #fff; margin-bottom: 0.5rem; font-family: 'Outfit';">Admin Suite Pro</h3>
+                                <h3 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; font-family: 'Outfit';">Admin Suite Pro</h3>
                                 <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem; flex-grow: 1;">Download the latest updated file directly from our secure server.</p>
                                 <button id="btn-download" class="btn btn-gradient w-full"><i class="fa-solid fa-download"></i> Download Latest (.mcpack)</button>
                             </div>
                         </div>
                     </div>
-                    <h3 class="font-outfit" style="margin-top: 1.5rem; margin-bottom: 0.75rem; font-size: 1.1rem; color: #fff;">Version History</h3>
+                    <h3 class="font-outfit" style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.15rem; color: #fff;">Version History</h3>
                     <div class="list-box">
-                        <table class="history-table" id="user-history-table">
-                            <thead><tr><th>Version</th><th>Release Date</th><th>Update Notes</th><th style="text-align: right;">Download</th></tr></thead>
-                            <tbody></tbody>
-                        </table>
+                        <div style="overflow-x: auto;">
+                            <table class="history-table" id="user-history-table">
+                                <thead><tr><th style="width: 25%;">Version</th><th style="width: 25%;">Release Date</th><th>Update Notes</th><th style="text-align: right; width: 10%;">Download</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -300,39 +312,42 @@
                 <div id="tab-user-licenses" class="tab-content">
                     <h2 class="section-title font-outfit">My Licenses</h2>
                     <div class="list-box">
-                        <div class="list-item">
-                            <div>
-                                <h4 style="color: #fff; font-size: 1rem; margin-bottom: 0.2rem; font-family: 'Outfit';">Admin Suite Pro</h4>
-                                <p style="color: var(--text-muted); font-size: 0.8rem;">Status: <span style="color: var(--accent-success); font-weight: 500;">Active (Permanent)</span></p>
+                        <div class="list-item" style="align-items: center;">
+                            <div style="flex: 1;">
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                                    <h4 style="color: #fff; font-size: 1.1rem; font-family: 'Outfit'; margin: 0;">Admin Suite Pro</h4>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; color: var(--accent-success); text-transform: uppercase; font-weight: 700;"><i class="fa-solid fa-circle" style="font-size: 0.4rem;"></i> Active</span>
+                                </div>
+                                <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">Permanent Binding</p>
                             </div>
-                            <div style="display: flex; gap: 0.4rem; align-items: stretch;">
-                                <div class="key-text" id="display-key" style="margin: 0;">Loading...</div>
-                                <button onclick="copyLicenseKey()" class="btn-icon" title="Copy License Key"><i class="fa-regular fa-copy"></i></button>
+                            <div style="display: flex; gap: 0.5rem; align-items: stretch; width: 100%; max-width: 280px; margin-top: 0.5rem;">
+                                <div class="key-text" id="display-key" style="margin: 0; width: 100%;">Loading...</div>
+                                <button onclick="copyLicenseKey()" class="btn-icon" title="Copy License Key" style="height: auto; width: 3rem;"><i class="fa-regular fa-copy"></i></button>
                             </div>
                         </div>
                     </div>
-                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;"><i class="fa-solid fa-circle-info"></i> Enter this unique 16-digit code in-game to activate your Add-on features.</p>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;"><i class="fa-solid fa-circle-info" style="margin-right: 0.3rem;"></i> Enter this unique 16-digit code in-game to activate your Add-on features.</p>
                 </div>
 
                 <!-- GUIDE -->
                 <div id="tab-user-guide" class="tab-content">
                     <h2 class="section-title font-outfit">Installation Guide</h2>
-                    <div class="profile-field" style="max-width: 42rem; background: var(--bg-card);">
+                    <div class="profile-field" style="max-width: 48rem; background: var(--bg-card); padding: 2rem;">
                         <div class="guide-step">
                             <div class="guide-number">1</div>
-                            <div class="guide-content"><h4>Download File</h4><p>Buka tab <b>My Add-ons</b> dan klik tombol <b>Download Latest</b>. Tunggu hingga file <code>.mcpack</code> terunduh.</p></div>
+                            <div class="guide-content"><h4>Download File</h4><p>Buka tab <b>My Add-ons</b> dan klik tombol <b>Download Latest</b>. Tunggu hingga file <code>.mcpack</code> selesai diunduh ke perangkat Anda.</p></div>
                         </div>
                         <div class="guide-step">
                             <div class="guide-number">2</div>
-                            <div class="guide-content"><h4>Install ke Minecraft</h4><p>Klik file <code>.mcpack</code> yang diunduh. Minecraft otomatis terbuka dan memulai proses Import.</p></div>
+                            <div class="guide-content"><h4>Install ke Minecraft</h4><p>Klik ganda (double-click) file <code>.mcpack</code> yang baru saja diunduh. Minecraft akan otomatis terbuka dan memunculkan tulisan "Import Started" di bagian atas layar.</p></div>
                         </div>
                         <div class="guide-step">
                             <div class="guide-number">3</div>
-                            <div class="guide-content"><h4>Pasang di World</h4><p>Masuk menu Edit World. Pasang <b>Behavior & Resource Pack</b> Admin Suite. Aktifkan <b>Beta APIs</b>.</p></div>
+                            <div class="guide-content"><h4>Pasang di World</h4><p>Masuk ke menu Edit World. Pastikan Anda memasang <b>Behavior Pack</b> dan <b>Resource Pack</b> Admin Suite. Aktifkan juga opsi <b>Beta APIs</b> di bagian Experiments.</p></div>
                         </div>
                         <div class="guide-step" style="margin-bottom: 0;">
                             <div class="guide-number" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);">4</div>
-                            <div class="guide-content"><h4>Verifikasi In-Game</h4><p>Gunakan item Admin di world. Masukkan <b>16-Digit License Key</b> dari tab Licenses ke dalam form yang muncul. Selesai!</p></div>
+                            <div class="guide-content"><h4>Verifikasi In-Game</h4><p>Masuk ke dalam world Anda. Gunakan item Admin atau ketik command <code>/as:info</code>. Sistem akan meminta Anda memasukkan <b>16-Digit License Key</b> dari tab Licenses. Selesai!</p></div>
                         </div>
                     </div>
                 </div>
@@ -340,19 +355,19 @@
                 <!-- SUPPORT -->
                 <div id="tab-user-support" class="tab-content">
                     <h2 class="section-title font-outfit">Support & Help Desk</h2>
-                    <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
-                        <div class="stat-card" style="align-items: center; text-align: center; padding: 2rem;">
-                            <i class="fa-brands fa-discord" style="font-size: 3rem; color: #5865F2; margin-bottom: 0.5rem;"></i>
-                            <h3 style="color: #fff; font-family: 'Outfit'; font-size: 1.25rem;">Join VIP Community</h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">Dapatkan role khusus VIP Pro Member dan akses prioritas bantuan teknis.</p>
+                    <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
+                        <div class="stat-card" style="align-items: center; text-align: center; padding: 2.5rem 2rem;">
+                            <i class="fa-brands fa-discord" style="font-size: 3.5rem; color: #5865F2; margin-bottom: 0.5rem;"></i>
+                            <h3 style="color: #fff; font-family: 'Outfit'; font-size: 1.35rem;">Join VIP Community</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">Dapatkan role khusus VIP Pro Member dan akses prioritas bantuan teknis langsung dari developer.</p>
                             <a href="https://discord.gg/xQStZUvukS" target="_blank" class="btn btn-outline" style="border-color: rgba(88, 101, 242, 0.5); color: #fff; background: rgba(88, 101, 242, 0.1);">Connect to Discord</a>
                         </div>
-                        <div class="list-box" style="padding: 1.5rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h3 class="font-outfit" style="color: #fff; margin-bottom: 0.5rem; font-size: 1.15rem;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-admin);"></i> Lupa Password?</h3>
-                            <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Jika Anda lupa Portal Key, buka tiket (Ticket) di Discord. Admin akan meresetnya manual setelah verifikasi.</p>
-                            <div style="padding: 0.75rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed var(--border-light);">
-                                <span style="display: block; font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase;">Server Email</span>
-                                <span style="color: #fff; font-weight: 500; font-size: 0.9rem;">admin@heradigital.my.id</span>
+                        <div class="list-box" style="padding: 2rem; display: flex; flex-direction: column; justify-content: center;">
+                            <h3 class="font-outfit" style="color: #fff; margin-bottom: 0.75rem; font-size: 1.2rem;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-admin); margin-right: 0.4rem;"></i> Lupa Password?</h3>
+                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Jika Anda lupa Portal Key dan tidak bisa login, silakan buka tiket bantuan (Ticket) di server Discord kami. Admin akan mereset password Anda secara manual.</p>
+                            <div style="padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed var(--border-light);">
+                                <span style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.2rem;">Server Email Support</span>
+                                <span style="color: #fff; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.5px;">admin@heradigital.my.id</span>
                             </div>
                         </div>
                     </div>
@@ -362,14 +377,15 @@
                 <div id="tab-user-profile" class="tab-content">
                     <h2 class="section-title font-outfit">Profile Settings</h2>
                     <div class="profile-grid">
-                        <div class="profile-field"><label>Gamertag</label><div class="value" id="profile-gamertag">Loading...</div></div>
-                        <div class="profile-field"><label>Email</label><div class="value" id="profile-email">Loading...</div></div>
+                        <div class="profile-field"><label>Gamertag (Xbox/Minecraft)</label><div class="value" id="profile-gamertag">Loading...</div></div>
+                        <div class="profile-field"><label>Account Email</label><div class="value" id="profile-email" style="font-family: monospace;">Loading...</div></div>
+                        <div class="profile-field"><label>Account Status</label><div class="value" style="color: var(--accent-success); display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-circle-check"></i> Verified Pro Member</div></div>
                     </div>
-                    <h3 class="font-outfit" style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.15rem; color: #fff;">Security</h3>
-                    <div class="profile-field" style="max-width: 32rem;">
+                    <h3 class="font-outfit" style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.25rem; color: #fff; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; max-width: 36rem;">Security</h3>
+                    <div class="profile-field" style="max-width: 36rem;">
                         <form id="change-pwd-form">
-                            <div class="form-group"><label>Current Password</label><div class="pwd-wrapper"><input type="password" id="cp-old" required placeholder="HRC-XXXXX"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-old', this)"></i></div></div>
-                            <div class="form-group"><label>New Password</label><div class="pwd-wrapper"><input type="password" id="cp-new" required placeholder="New password" minlength="5"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-new', this)"></i></div></div>
+                            <div class="form-group"><label>Current Portal Password</label><div class="pwd-wrapper"><input type="password" id="cp-old" required placeholder="HRC-XXXXX"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-old', this)"></i></div></div>
+                            <div class="form-group"><label>New Portal Password</label><div class="pwd-wrapper"><input type="password" id="cp-new" required placeholder="Enter new password" minlength="5"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-new', this)"></i></div></div>
                             <button type="submit" class="btn btn-outline w-full" id="btn-change-pwd">Update Password</button>
                             <div id="cp-msg" class="msg-box"></div>
                         </form>
@@ -411,16 +427,17 @@
                 <!-- ADMIN: PUBLISH -->
                 <div id="tab-admin-publish" class="tab-content active">
                     <h2 class="section-title font-outfit">Publish Global Release</h2>
-                    <div class="profile-field" style="max-width: 42rem; background: var(--bg-card);">
+                    <div class="profile-field" style="max-width: 48rem; background: var(--bg-card); padding: 2rem;">
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Fill the details below to push an update to all members and the public changelog.</p>
                         <form id="admin-publish-form">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                                 <div><label>Version Name</label><input type="text" id="p-version" required placeholder="e.g. v6.2.0"></div>
                                 <div><label>Release Date</label><input type="date" id="p-date" required></div>
                             </div>
                             <div class="form-group"><label>Google Drive Link</label><input type="url" id="p-link" required placeholder="https://drive.google.com/file/d/XXXXX/view"></div>
-                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket mr-1"></i> New Features</label><textarea id="p-added" class="focus-emerald"></textarea></div>
-                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug mr-1"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue"></textarea></div>
-                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can mr-1"></i> Removed</label><textarea id="p-removed" class="focus-rose"></textarea></div>
+                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket mr-1"></i> New Features</label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug mr-1"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can mr-1"></i> Removed</label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
                             <button type="submit" class="btn btn-master w-full" id="btn-publish-release"><i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All</button>
                             <div id="publish-msg" class="msg-box"></div>
                         </form>
@@ -431,10 +448,12 @@
                 <div id="tab-admin-database" class="tab-content">
                     <h2 class="section-title font-outfit">Release Management</h2>
                     <div class="list-box">
-                        <table class="history-table" id="admin-history-table">
-                            <thead><tr><th>Version</th><th>Date</th><th>Link Data</th><th style="text-align: right;">Action</th></tr></thead>
-                            <tbody></tbody>
-                        </table>
+                        <div style="overflow-x: auto;">
+                            <table class="history-table" id="admin-history-table">
+                                <thead><tr><th style="width: 20%;">Version</th><th style="width: 20%;">Date</th><th>Link Data</th><th style="text-align: right; width: 10%;">Action</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -498,7 +517,7 @@
             fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", email: document.getElementById("login-email").value.trim(), licenseKey: document.getElementById("login-key").value.trim() }) })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
-                    data.role = "user"; sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showUserDashboard(data); showToast('Welcome back!');
+                    data.role = "user"; sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showUserDashboard(data); showToast('Welcome back, ' + data.gamertag + '!');
                 } else throw new Error(data.message);
             }).catch(err => { msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
             .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard'; });
@@ -580,21 +599,30 @@
             const cleanGamertag = data.gamertag ? data.gamertag.trim() : "Player";
             document.getElementById("top-gamertag").innerText = cleanGamertag; document.getElementById("top-avatar").innerText = cleanGamertag.charAt(0).toUpperCase();
             document.getElementById("welcome-name").innerText = cleanGamertag; document.getElementById("profile-email").innerText = data.email || "-";
-            document.getElementById("profile-gamertag").innerText = cleanGamertag; document.getElementById("display-key").innerText = data.addonLicense || "Code not generated.";
+            document.getElementById("profile-gamertag").innerText = cleanGamertag;
+            
+            const keyEl = document.getElementById("display-key");
+            if (data.addonLicense) {
+                keyEl.innerText = data.addonLicense;
+                keyEl.classList.remove("empty");
+            } else {
+                keyEl.innerText = "License pending generation...";
+                keyEl.classList.add("empty");
+            }
             
             const history = data.addonHistory || [];
             if(history.length > 0) {
                 document.getElementById("latest-ver-text").innerText = history[0].versionName; document.getElementById("addon-badge-version").innerText = history[0].versionName;
                 const tbody = document.querySelector("#user-history-table tbody"); tbody.innerHTML = "";
                 history.forEach((h, index) => {
-                    const noteStr = h.added ? h.added.split('\n')[0].substring(0, 40) + "..." : "System patch.";
+                    const noteStr = h.added ? h.added.split('\n')[0].substring(0, 50) + "..." : "System patch.";
                     tbody.innerHTML += `<tr>
-                        <td><span class="version-badge">${h.versionName}</span> ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.7rem; margin-left:0.4rem;">LATEST</span>' : ''}</td>
-                        <td>${new Date(h.date).toLocaleDateString()}</td><td style="font-size: 0.8rem;"><span style="opacity:0.7">${noteStr}</span></td>
+                        <td><span class="version-badge">${h.versionName}</span> ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.7rem; margin-left:0.4rem; font-weight:700;">LATEST</span>' : ''}</td>
+                        <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.85rem;"><span style="opacity:0.8">${noteStr}</span></td>
                         <td style="text-align:right;"><button onclick="triggerDownload('${h.link}')" class="btn btn-sm btn-outline"><i class="fa-solid fa-download"></i></button></td>
                     </tr>`;
                 });
-            } else { document.querySelector("#user-history-table tbody").innerHTML = "<tr><td colspan='4' style='text-align:center;'>No releases yet.</td></tr>"; }
+            } else { document.querySelector("#user-history-table tbody").innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-highlight); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted);'>No releases available yet.</span></td></tr>"; }
         }
 
         function showAdminDashboard(data) {
@@ -604,12 +632,12 @@
 
         function renderAdminDatabase(history) {
             const tbody = document.querySelector("#admin-history-table tbody"); tbody.innerHTML = "";
-            if(history.length === 0) return tbody.innerHTML = "<tr><td colspan='4' style='text-align:center;'>Empty.</td></tr>";
+            if(history.length === 0) return tbody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><span style='color: var(--text-muted);'>Database is empty.</span></td></tr>";
             history.forEach(h => {
                 tbody.innerHTML += `<tr>
                     <td><span class="version-badge" style="border-color: rgba(245, 158, 11, 0.4); color: #fcd34d;">${h.versionName}</span></td>
-                    <td>${new Date(h.date).toLocaleDateString()}</td>
-                    <td><input type="text" value="${h.link}" readonly style="background:transparent; border:none; color:var(--text-muted); width:100%; font-size:0.75rem;" onclick="this.select()"></td>
+                    <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td>
+                    <td><input type="text" value="${h.link}" readonly style="background:transparent; border:none; color:var(--text-muted); width:100%; font-size:0.8rem; font-family: monospace;" onclick="this.select()"></td>
                     <td style="text-align:right;"><button onclick="deleteRelease(${h.id})" class="btn-icon danger"><i class="fa-solid fa-trash-can"></i></button></td>
                 </tr>`;
             });
