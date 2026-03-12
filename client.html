@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
+        /* * PURE VANILLA CSS - COMPACT SAAS THEME * */
         :root {
             --bg-base: #050505; --bg-surface: #0a0a0a; --bg-card: rgba(255, 255, 255, 0.03);
             --border-light: rgba(255, 255, 255, 0.08); --border-highlight: rgba(255, 255, 255, 0.15);
@@ -35,122 +36,150 @@
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(139, 92, 246, 0.15); }
         .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(59, 130, 246, 0.15); }
 
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0 1.25rem; min-height: 2.5rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; text-align: center; }
-        .btn-gradient { background: var(--gradient-admin); color: #fff; box-shadow: 0 2px 10px rgba(139, 92, 246, 0.2); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-gradient:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
-        .btn-master { background: var(--gradient-master); color: #fff; box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-master:hover { transform: translateY(-1px); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+        /* --- PRECISE BUTTONS --- */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0 1rem; min-height: 2.25rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; font-family: inherit; }
+        .btn-gradient { background: var(--gradient-admin); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-gradient:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); filter: brightness(1.1); }
+        .btn-master { background: var(--gradient-master); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
+        .btn-master:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); filter: brightness(1.1); }
         .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
         .btn-outline { background: rgba(255,255,255,0.02); color: var(--text-primary); border: 1px solid var(--border-highlight); }
-        .btn-outline:hover { background: rgba(255,255,255,0.06); }
-        .btn-sm { min-height: 2rem; padding: 0 0.8rem; font-size: 0.8rem; border-radius: 6px; }
+        .btn-outline:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.3); }
+        .btn-sm { min-height: 1.8rem; padding: 0 0.75rem; font-size: 0.75rem; border-radius: 6px; }
         
         .btn-icon { width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid var(--border-light); color: var(--text-secondary); cursor: pointer; transition: all 0.2s; background: rgba(255,255,255,0.05); }
         .btn-icon:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: var(--border-highlight); }
         .btn-icon.danger { border-color: rgba(244,63,94,0.3); color: var(--accent-danger); background: transparent; }
         .btn-icon.danger:hover { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.5); }
 
-        .badge { display: inline-flex; align-items: center; justify-content: center; padding: 0.2rem 0.6rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); gap: 0.3rem; }
+        .badge { display: inline-flex; align-items: center; justify-content: center; padding: 0.2rem 0.5rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); gap: 0.3rem; }
         .badge.success { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.25); }
 
+        /* --- COMPACT FORMS --- */
         .form-group { margin-bottom: 1rem; position: relative; }
-        label { display: block; font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.4rem; font-weight: 500; }
-        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="url"], textarea { width: 100%; padding: 0.65rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-primary); font-size: 0.9rem; outline: none; transition: all 0.3s; font-family: inherit; }
+        label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.3rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="url"], textarea { width: 100%; padding: 0.6rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; outline: none; transition: all 0.3s; font-family: inherit; }
         input[type="date"] { color-scheme: dark; }
-        textarea { resize: vertical; min-height: 70px; }
+        textarea { resize: vertical; min-height: 80px; }
         input:focus, textarea:focus { border-color: var(--accent-primary); background: rgba(0,0,0,0.6); box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.15); }
         .focus-emerald:focus { border-color: #10b981; box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.15); }
         .focus-blue:focus { border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15); }
         .focus-rose:focus { border-color: #f43f5e; box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.15); }
 
         .pwd-wrapper { position: relative; width: 100%; }
-        .pwd-toggle { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); cursor: pointer; font-size: 0.9rem; }
+        .pwd-toggle { position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); cursor: pointer; font-size: 0.9rem; transition: color 0.2s; }
         .pwd-toggle:hover { color: var(--text-primary); }
 
-        .msg-box { margin-top: 1rem; padding: 0.75rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; text-align: center; display: none; }
+        .msg-box { margin-top: 1rem; padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 500; text-align: center; display: none; }
         .msg-error { background: rgba(244, 63, 94, 0.1); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.3); }
         .msg-success { background: rgba(16, 185, 129, 0.1); color: var(--accent-success); border: 1px solid rgba(16, 185, 129, 0.3); }
 
+        /* --- TOAST --- */
         #toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1000; display: flex; flex-direction: column; gap: 0.5rem; }
-        .toast { background: rgba(16, 185, 129, 0.95); color: #fff; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 15px rgba(0,0,0,0.2); backdrop-filter: blur(10px); transform: translateY(50px); opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 0.5rem; border: 1px solid rgba(255,255,255,0.2); }
+        .toast { background: rgba(16, 185, 129, 0.95); color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 15px rgba(0,0,0,0.2); backdrop-filter: blur(10px); transform: translateY(50px); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 0.6rem; border: 1px solid rgba(255,255,255,0.2); }
         .toast.show { transform: translateY(0); opacity: 1; }
 
-        .navbar { position: fixed; top: 0; width: 100%; height: 4rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; }
+        /* --- COMPACT HEADERS --- */
+        .navbar { position: fixed; top: 0; width: 100%; height: 3.5rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; }
         .nav-container { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; justify-content: space-between; align-items: center; }
 
-        .auth-wrapper { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 1rem 2rem 1rem; position: relative; min-height: 100vh; }
-        .auth-container { max-width: 24rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(10px); display: none; margin: auto 0; }
-        .auth-container.active { display: block; animation: fadeIn 0.4s ease; }
-        .auth-container h1 { font-size: 1.75rem; }
-        .login-footer { margin-top: auto; padding-top: 2rem; width: 100%; text-align: center; color: var(--text-muted); font-size: 0.8rem; }
-        .admin-link { display: inline-block; margin-top: 1rem; font-size: 0.75rem; color: var(--text-muted); text-decoration: underline; cursor: pointer; }
+        /* --- CENTERED LOGIN --- */
+        .auth-wrapper { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 1.25rem 2rem 1.25rem; min-height: 100vh; }
+        .auth-container { max-width: 24rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem 1.75rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(10px); display: none; flex-direction: column; align-items: stretch; margin: 0 auto; }
+        .auth-container.active { display: flex; animation: fadeIn 0.4s ease; }
+        .auth-container h1 { font-size: 1.5rem; margin-bottom: 0.25rem; letter-spacing: -0.02em; text-align: center; }
+        .login-footer { margin-top: auto; padding-top: 2rem; width: 100%; text-align: center; color: var(--text-muted); font-size: 0.75rem; }
+        .admin-link { display: inline-block; margin-top: 1.25rem; font-size: 0.75rem; color: var(--text-muted); text-decoration: underline; cursor: pointer; transition: color 0.2s; text-align: center;}
         .admin-link:hover { color: var(--accent-admin); }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* --- DASHBOARD LAYOUT --- */
         .dashboard-wrapper { display: none; height: 100vh; width: 100vw; overflow: hidden; }
         .dashboard-wrapper.active { display: flex; animation: fadeIn 0.4s ease; }
         
         .sidebar { width: var(--sidebar-width); background: rgba(5, 5, 5, 0.75); border-right: 1px solid var(--border-light); display: flex; flex-direction: column; height: 100%; z-index: 20; backdrop-filter: blur(24px); flex-shrink: 0; transition: transform 0.3s; }
-        .sidebar-header { padding: 1rem 1.5rem; height: 4rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .sidebar-header { padding: 1rem 1.25rem; height: 3.5rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
         .sidebar-nav { padding: 1rem; flex-grow: 1; display: flex; flex-direction: column; gap: 0.25rem; overflow-y: auto; }
         
-        .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1rem; background: transparent; color: var(--text-secondary); border-radius: 8px; transition: all 0.2s; font-weight: 500; font-size: 0.85rem; cursor: pointer; border: 1px solid transparent; }
+        .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem 0.85rem; background: transparent; color: var(--text-secondary); border-radius: 6px; transition: all 0.2s; font-weight: 500; font-size: 0.85rem; cursor: pointer; border: 1px solid transparent; }
         .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); }
         .nav-item.active { background: rgba(139, 92, 246, 0.1); color: var(--text-primary); border-color: rgba(139, 92, 246, 0.2); }
         .nav-item.active i { color: var(--accent-primary); }
         .nav-item.admin-active { background: rgba(245, 158, 11, 0.1); color: var(--text-primary); border-color: rgba(245, 158, 11, 0.2); }
         .nav-item.admin-active i { color: var(--accent-admin); }
-        .nav-item i { width: 1.1rem; text-align: center; font-size: 1rem; }
+        .nav-item i { width: 1.1rem; text-align: center; font-size: 0.9rem; }
 
         .sidebar-footer { padding: 1rem; border-top: 1px solid var(--border-light); flex-shrink: 0; }
         .nav-item.logout-btn { background: rgba(244, 63, 94, 0.08); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.2); justify-content: center; }
 
         .main-panel { flex-grow: 1; display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative; }
-        .top-header { height: 4rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: rgba(5,5,5,0.5); z-index: 10; flex-shrink: 0; }
-        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.25rem; cursor: pointer; }
+        .top-header { height: 3.5rem; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; background: rgba(5,5,5,0.5); z-index: 10; flex-shrink: 0; }
+        .mobile-toggle { display: none; background: none; border: none; color: white; font-size: 1.1rem; cursor: pointer; }
         
         .user-profile-mini { display: flex; align-items: center; gap: 0.75rem; }
-        .avatar-mini { width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--gradient-admin); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Outfit'; font-size: 0.95rem; box-shadow: 0 2px 10px rgba(139, 92, 246, 0.2); }
-        .avatar-mini.admin { background: var(--gradient-master); box-shadow: 0 2px 10px rgba(245, 158, 11, 0.2); }
+        .avatar-mini { width: 2rem; height: 2rem; border-radius: 50%; background: var(--gradient-admin); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Outfit'; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2); }
+        .avatar-mini.admin { background: var(--gradient-master); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2); }
 
+        /* --- CENTERED CANVAS CONTENT --- */
         .content-body { padding: 2rem; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
-        .tab-content { display: none; animation: fadeIn 0.3s ease; flex-shrink: 0; }
+        .tab-content { display: none; animation: fadeIn 0.3s ease; flex-shrink: 0; max-width: 60rem; width: 100%; margin: 0 auto; }
         .tab-content.active { display: block; }
-        h2.section-title { font-size: 1.35rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; }
-
-        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-        .stat-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; transition: transform 0.2s ease; }
-        .stat-card:hover { transform: translateY(-2px); border-color: var(--border-highlight); background: var(--bg-card-hover); }
-        .stat-icon { width: 3rem; height: 3rem; border-radius: 8px; background: rgba(139, 92, 246, 0.15); color: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
         
-        .addon-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s ease; }
+        h2.section-title { font-size: 1.35rem; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 700; letter-spacing: -0.01em; }
+
+        .grid-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; transition: transform 0.2s ease, border-color 0.2s ease; }
+        .stat-card:hover { transform: translateY(-2px); border-color: var(--border-highlight); background: var(--bg-card-hover); }
+        .stat-icon { width: 2.75rem; height: 2.75rem; border-radius: 8px; background: rgba(139, 92, 246, 0.15); color: var(--accent-primary); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+        
+        .addon-card { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s ease, border-color 0.2s ease; }
         .addon-card:hover { transform: translateY(-2px); border-color: var(--border-highlight); background: var(--bg-card-hover); }
-        .addon-banner { height: 120px; background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 70%); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: rgba(255,255,255,0.1); }
+        .addon-banner { height: 110px; background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.15), transparent 70%); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; color: rgba(255,255,255,0.1); }
         .addon-info { padding: 1.5rem; flex-grow: 1; display: flex; flex-direction: column; }
         
         .list-box { background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; }
         .list-item { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-        .key-text { font-family: monospace; background: rgba(0,0,0,0.5); padding: 0.75rem 1rem; border-radius: 8px; border: 1px dashed var(--border-light); color: var(--accent-primary); letter-spacing: 1px; font-size: 0.95rem; text-align: center; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .key-text.empty { color: var(--text-muted); font-style: italic; font-weight: normal; border-color: transparent; background: transparent; }
+        .key-text { font-family: monospace; background: rgba(0,0,0,0.5); padding: 0.6rem 1rem; border-radius: 6px; border: 1px dashed var(--border-light); color: var(--accent-primary); letter-spacing: 1px; font-size: 1rem; text-align: center; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; }
+        .key-text.empty { color: var(--text-muted); font-style: italic; font-weight: normal; border-color: transparent; background: transparent; letter-spacing: normal; }
 
         .history-table { width: 100%; border-collapse: collapse; text-align: left; }
-        .history-table th { color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.02); }
-        .history-table td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 0.85rem; vertical-align: middle; }
+        .history-table th { color: var(--text-muted); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--border-light); background: rgba(255,255,255,0.02); }
+        .history-table td { padding: 1rem 1.25rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 0.85rem; vertical-align: middle; }
         .history-table tr:last-child td { border-bottom: none; }
         .history-table tr:hover td { background: rgba(255,255,255,0.01); }
-        .version-badge { background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); padding: 0.2rem 0.5rem; border-radius: 6px; font-family: 'Outfit'; font-weight: 600; color: #fff; font-size: 0.8rem; display: inline-block; text-align: center; min-width: 60px; }
+        .version-badge { background: rgba(255,255,255,0.05); border: 1px solid var(--border-light); padding: 0.2rem 0.5rem; border-radius: 4px; font-family: 'Outfit'; font-weight: 600; color: #fff; font-size: 0.75rem; display: inline-block; text-align: center; min-width: 50px; }
 
-        .profile-grid { display: grid; gap: 1.5rem; max-width: 36rem; }
-        .profile-field { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); padding: 1.25rem 1.5rem; border-radius: 12px; }
-        .profile-field label { color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 0.5rem; display: block; font-weight: 600; }
-        .profile-field .value { font-size: 1.05rem; font-weight: 500; color: #fff; }
+        .profile-grid { display: grid; gap: 1.25rem; max-width: 36rem; }
+        .profile-field { background: rgba(255,255,255,0.02); border: 1px solid var(--border-light); padding: 1.25rem; border-radius: 12px; }
+        .profile-field .value { font-size: 1rem; font-weight: 500; color: #fff; }
 
         .guide-step { display: flex; gap: 1.25rem; margin-bottom: 1.5rem; align-items: flex-start; }
-        .guide-number { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); display: flex; align-items: center; justify-content: center; font-family: 'Outfit'; font-weight: 700; font-size: 1.1rem; color: var(--accent-primary); flex-shrink: 0; }
-        .guide-content h4 { font-family: 'Outfit'; font-size: 1.1rem; color: #fff; margin-bottom: 0.25rem; line-height: 1.2; }
-        .guide-content p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0; line-height: 1.6; }
+        .guide-number { width: 2.25rem; height: 2.25rem; border-radius: 50%; background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); display: flex; align-items: center; justify-content: center; font-family: 'Outfit'; font-weight: 700; font-size: 1rem; color: var(--accent-primary); flex-shrink: 0; }
+        .guide-content h4 { font-family: 'Outfit'; font-size: 1.05rem; color: #fff; margin-bottom: 0.3rem; line-height: 1.2; }
+        .guide-content p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0; line-height: 1.5; }
 
+        /* --- 2-WAY SUPPORT CHAT BUBBLES --- */
+        .chat-container { display: flex; flex-direction: column; gap: 0.85rem; height: 300px; overflow-y: auto; padding: 1rem; border: 1px solid var(--border-light); border-radius: 10px; background: rgba(0,0,0,0.2); margin-bottom: 1rem; }
+        .chat-bubble { max-width: 85%; padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.85rem; line-height: 1.5; position: relative; word-wrap: break-word; }
+        .chat-admin { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #fff; align-self: flex-start; border-bottom-left-radius: 4px; }
+        .chat-user { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-highlight); color: var(--text-primary); align-self: flex-end; border-bottom-right-radius: 4px; }
+        .chat-time { display: block; font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem; text-align: right; }
+        .chat-input-area { display: flex; gap: 0.5rem; }
+        .chat-input-area input { flex-grow: 1; border-radius: 8px; }
+        .chat-input-area button { background: var(--accent-primary); color: #fff; border: none; width: 2.5rem; height: 2.5rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1rem; }
+        .chat-input-area button:hover { background: #7c3aed; transform: scale(1.05); }
+
+        /* Admin Ticket List */
+        .ticket-layout { display: grid; grid-template-columns: 280px 1fr; gap: 1.25rem; height: 450px; }
+        .ticket-list { border: 1px solid var(--border-light); border-radius: 10px; background: var(--bg-card); overflow-y: auto; display: flex; flex-direction: column; }
+        .ticket-item { padding: 0.85rem; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.2s; }
+        .ticket-item:hover { background: rgba(255,255,255,0.05); }
+        .ticket-item.active { background: rgba(245, 158, 11, 0.1); border-left: 3px solid var(--accent-admin); }
+        .ticket-name { font-weight: 600; color: #fff; font-size: 0.85rem; margin-bottom: 0.15rem; }
+        .ticket-email { font-size: 0.75rem; color: var(--text-muted); }
+        .ticket-preview { font-size: 0.75rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.4rem; }
+        
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); z-index: 15; backdrop-filter: blur(2px); opacity: 0; transition: opacity 0.3s; }
         .sidebar-overlay.show { display: block; opacity: 1; }
 
@@ -159,8 +188,10 @@
             .sidebar { position: fixed; transform: translateX(-100%); }
             .sidebar.show { transform: translateX(0); box-shadow: 0 0 30px rgba(0,0,0,0.8); }
             .mobile-toggle { display: block; }
-            .content-body { padding: 1.25rem; }
+            .content-body { padding: 1rem; }
             .history-table th:nth-child(3), .history-table td:nth-child(3) { display: none; } 
+            .chat-bubble { max-width: 90%; }
+            .ticket-layout { grid-template-columns: 1fr; grid-template-rows: 180px 1fr; height: auto; }
         }
     </style>
 </head>
@@ -170,21 +201,23 @@
 
     <nav class="navbar" id="main-navbar">
         <div class="nav-container">
-            <a href="index.html" class="font-outfit" style="font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none;">
-                <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus <span class="desktop-only" style="color: var(--text-muted); font-weight: 500; font-family: 'Inter'; font-size: 0.9rem;">| Client Portal</span>
+            <a href="index.html" class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none;">
+                <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus <span class="desktop-only" style="color: var(--text-muted); font-weight: 500; font-family: 'Inter'; font-size: 0.85rem; margin-left: 0.25rem;">| Client Portal</span>
             </a>
-            <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500;">
+            <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">
                 <i class="fa-solid fa-arrow-left"></i> <span class="desktop-only">Back</span>
             </a>
         </div>
     </nav>
 
-    <!-- LOGIN USER -->
+    <!-- LOGIN USER & ADMIN -->
     <main class="auth-wrapper" id="auth-section">
+        
+        <!-- User Login Box -->
         <div class="auth-container active" id="user-login-box">
             <h1 class="font-outfit">Client Portal</h1>
             <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">Login using your Email and Portal Key.</p>
-            <form id="login-form">
+            <form id="login-form" style="display: flex; flex-direction: column; align-items: stretch; width: 100%;">
                 <div class="form-group"><label>Email Address</label><input type="email" id="login-email" required placeholder="Registered email"></div>
                 <div class="form-group">
                     <label>Password (Portal Key)</label>
@@ -199,11 +232,11 @@
             <div style="text-align: center;"><span class="admin-link" onclick="toggleAuthMode('admin')"><i class="fa-solid fa-shield-halved"></i> Admin Console</span></div>
         </div>
 
-        <!-- LOGIN ADMIN -->
+        <!-- Admin Login Box -->
         <div class="auth-container" id="admin-login-box" style="border-top: 3px solid var(--accent-admin);">
             <h1 class="font-outfit text-admin">Master Panel</h1>
             <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">Restricted access. Authentication required.</p>
-            <form id="admin-login-form">
+            <form id="admin-login-form" style="display: flex; flex-direction: column; align-items: stretch; width: 100%;">
                 <div class="form-group">
                     <label>Master Password</label>
                     <div class="pwd-wrapper">
@@ -216,7 +249,8 @@
             </form>
             <div style="text-align: center;"><span class="admin-link" onclick="toggleAuthMode('user')"><i class="fa-solid fa-arrow-left"></i> Back to Client Portal</span></div>
         </div>
-        <div class="login-footer"><p>© 2026 Heraclaus.</p></div>
+        
+        <div class="login-footer"><p>© 2026 Heraclaus. Secure Access.</p></div>
     </main>
 
     <!-- USER DASHBOARD -->
@@ -224,16 +258,16 @@
         <div class="sidebar-overlay" onclick="toggleSidebar('user-sidebar')"></div>
         <aside class="sidebar" id="user-sidebar">
             <div class="sidebar-header">
-                <span class="font-outfit" style="font-size: 1.2rem; font-weight: 800; color: #fff;"><i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus</span>
+                <span class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff;"><i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus</span>
                 <button class="mobile-toggle" onclick="toggleSidebar('user-sidebar')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <nav class="sidebar-nav">
-                <p style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 0.5rem 0 0.2rem 1rem;">Main Menu</p>
+                <p style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 0.5rem 0 0.2rem 0.5rem; letter-spacing: 0.05em;">Main Menu</p>
                 <a class="nav-item active" onclick="switchTab('user', 'overview', this)"><i class="fa-solid fa-chart-pie"></i> Overview</a>
                 <a class="nav-item" onclick="switchTab('user', 'addons', this)"><i class="fa-solid fa-box-open"></i> My Add-ons</a>
                 <a class="nav-item" onclick="switchTab('user', 'licenses', this)"><i class="fa-solid fa-key"></i> Licenses</a>
                 
-                <p style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 1rem 0 0.2rem 1rem;">Help & Settings</p>
+                <p style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 1rem 0 0.2rem 0.5rem; letter-spacing: 0.05em;">Help & Settings</p>
                 <a class="nav-item" onclick="switchTab('user', 'guide', this)"><i class="fa-solid fa-book"></i> Installation</a>
                 <a class="nav-item" onclick="switchTab('user', 'support', this)"><i class="fa-solid fa-headset"></i> Support Desk</a>
                 <a class="nav-item" onclick="switchTab('user', 'profile', this)"><i class="fa-solid fa-user"></i> Profile</a>
@@ -247,7 +281,7 @@
                 <div style="flex-grow: 1;"></div>
                 <div class="user-profile-mini">
                     <div style="text-align: right;" class="desktop-only">
-                        <div style="font-weight: 600; font-size: 0.85rem; color: #fff;" id="top-gamertag">Player</div>
+                        <div style="font-weight: 600; font-size: 0.85rem; color: #fff; line-height: 1.2;" id="top-gamertag">Player</div>
                         <div style="font-size: 0.7rem; color: var(--accent-success); font-weight: 500;"><i class="fa-solid fa-circle-check" style="font-size: 0.6rem;"></i> Pro Member</div>
                     </div>
                     <div class="avatar-mini" id="top-avatar">P</div>
@@ -262,21 +296,21 @@
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa-solid fa-crown"></i></div>
                             <div>
-                                <h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;">1 Active</h3>
+                                <h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1; letter-spacing: -0.02em;">1 Active</h3>
                                 <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">Pro Licenses</p>
                             </div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--accent-success);"><i class="fa-solid fa-clock-rotate-left"></i></div>
                             <div>
-                                <h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1;" id="latest-ver-text">v?.?</h3>
+                                <h3 style="font-size: 1.5rem; color: #fff; font-family: 'Outfit'; font-weight: 700; line-height: 1; letter-spacing: -0.02em;" id="latest-ver-text">v?.?</h3>
                                 <p style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.2rem;">Latest Release</p>
                             </div>
                         </div>
                     </div>
-                    <div class="list-box" style="padding: 1.5rem; border-left: 4px solid var(--accent-primary);">
+                    <div class="list-box" style="padding: 1.5rem; border-left: 3px solid var(--accent-primary);">
                         <h3 class="font-outfit" style="margin-bottom: 0.5rem; font-size: 1.1rem; color: #fff;"><i class="fa-solid fa-bullhorn text-gradient" style="margin-right: 0.4rem;"></i> System Notice</h3>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Your Admin Suite Pro is fully active. Silakan menuju tab <b>Installation</b> jika Anda belum mengerti cara memasang Add-on ini ke dalam game.</p>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0;">Your Admin Suite Pro is fully active. Please head to the <b>Installation</b> tab if you need help installing this Add-on into your game.</p>
                     </div>
                 </div>
 
@@ -291,13 +325,13 @@
                                     <span class="badge success"><i class="fa-solid fa-check" style="margin-right: 0.2rem;"></i> OWNED • PRO</span>
                                     <span class="badge" id="addon-badge-version" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">v?.?</span>
                                 </div>
-                                <h3 style="font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; font-family: 'Outfit';">Admin Suite Pro</h3>
-                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem; flex-grow: 1;">Download the latest updated file directly from our secure server.</p>
+                                <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.4rem; font-family: 'Outfit'; letter-spacing: -0.01em;">Admin Suite Pro</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.25rem; flex-grow: 1;">Download the latest updated file directly from our secure server.</p>
                                 <button id="btn-download" class="btn btn-gradient w-full"><i class="fa-solid fa-download"></i> Download Latest (.mcpack)</button>
                             </div>
                         </div>
                     </div>
-                    <h3 class="font-outfit" style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.15rem; color: #fff;">Version History</h3>
+                    <h3 class="font-outfit" style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.15rem; color: #fff; letter-spacing: -0.01em;">Version History</h3>
                     <div class="list-box">
                         <div style="overflow-x: auto;">
                             <table class="history-table" id="user-history-table">
@@ -314,13 +348,13 @@
                     <div class="list-box">
                         <div class="list-item" style="align-items: center;">
                             <div style="flex: 1;">
-                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
-                                    <h4 style="color: #fff; font-size: 1.1rem; font-family: 'Outfit'; margin: 0;">Admin Suite Pro</h4>
-                                    <span style="display: inline-flex; align-items: center; gap: 0.3rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; color: var(--accent-success); text-transform: uppercase; font-weight: 700;"><i class="fa-solid fa-circle" style="font-size: 0.4rem;"></i> Active</span>
+                                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.2rem;">
+                                    <h4 style="color: #fff; font-size: 1.05rem; font-family: 'Outfit'; margin: 0; letter-spacing: -0.01em;">Admin Suite Pro</h4>
+                                    <span style="display: inline-flex; align-items: center; gap: 0.2rem; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2); padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.6rem; color: var(--accent-success); text-transform: uppercase; font-weight: 700;"><i class="fa-solid fa-circle" style="font-size: 0.3rem;"></i> Active</span>
                                 </div>
                                 <p style="color: var(--text-muted); font-size: 0.8rem; margin: 0;">Permanent Binding</p>
                             </div>
-                            <div style="display: flex; gap: 0.5rem; align-items: stretch; width: 100%; max-width: 280px; margin-top: 0.5rem;">
+                            <div style="display: flex; gap: 0.4rem; align-items: stretch; width: 100%; max-width: 280px; margin-top: 0.5rem;">
                                 <div class="key-text" id="display-key" style="margin: 0; width: 100%;">Loading...</div>
                                 <button onclick="copyLicenseKey()" class="btn-icon" title="Copy License Key" style="height: auto; width: 3rem;"><i class="fa-regular fa-copy"></i></button>
                             </div>
@@ -332,43 +366,50 @@
                 <!-- GUIDE -->
                 <div id="tab-user-guide" class="tab-content">
                     <h2 class="section-title font-outfit">Installation Guide</h2>
-                    <div class="profile-field" style="max-width: 48rem; background: var(--bg-card); padding: 2rem;">
+                    <div class="profile-field" style="max-width: 48rem;">
                         <div class="guide-step">
                             <div class="guide-number">1</div>
-                            <div class="guide-content"><h4>Download File</h4><p>Buka tab <b>My Add-ons</b> dan klik tombol <b>Download Latest</b>. Tunggu hingga file <code>.mcpack</code> selesai diunduh ke perangkat Anda.</p></div>
+                            <div class="guide-content"><h4>Download File</h4><p>Open the <b>My Add-ons</b> tab and click the <b>Download Latest</b> button. Wait for the <code>.mcpack</code> file to finish downloading to your device.</p></div>
                         </div>
                         <div class="guide-step">
                             <div class="guide-number">2</div>
-                            <div class="guide-content"><h4>Install ke Minecraft</h4><p>Klik ganda (double-click) file <code>.mcpack</code> yang baru saja diunduh. Minecraft akan otomatis terbuka dan memunculkan tulisan "Import Started" di bagian atas layar.</p></div>
+                            <div class="guide-content"><h4>Install to Minecraft</h4><p>Double-click the newly downloaded <code>.mcpack</code> file. Minecraft will open automatically and display "Import Started" at the top of the screen.</p></div>
                         </div>
                         <div class="guide-step">
                             <div class="guide-number">3</div>
-                            <div class="guide-content"><h4>Pasang di World</h4><p>Masuk ke menu Edit World. Pastikan Anda memasang <b>Behavior Pack</b> dan <b>Resource Pack</b> Admin Suite. Aktifkan juga opsi <b>Beta APIs</b> di bagian Experiments.</p></div>
+                            <div class="guide-content"><h4>Apply to World</h4><p>Go to your World Edit menu. Make sure to apply both the <b>Behavior Pack</b> and <b>Resource Pack</b> of Admin Suite. Also enable the <b>Beta APIs</b> toggle in the Experiments section.</p></div>
                         </div>
                         <div class="guide-step" style="margin-bottom: 0;">
                             <div class="guide-number" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);">4</div>
-                            <div class="guide-content"><h4>Verifikasi In-Game</h4><p>Masuk ke dalam world Anda. Gunakan item Admin atau ketik command <code>/as:info</code>. Sistem akan meminta Anda memasukkan <b>16-Digit License Key</b> dari tab Licenses. Selesai!</p></div>
+                            <div class="guide-content"><h4>In-Game Verification</h4><p>Enter your world. Use the Admin item or type the <code>/as:info</code> command. The system will prompt you to enter your <b>16-Digit License Key</b> found in the Licenses tab. You're done!</p></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- SUPPORT -->
+                <!-- SUPPORT & CHAT -->
                 <div id="tab-user-support" class="tab-content">
                     <h2 class="section-title font-outfit">Support & Help Desk</h2>
-                    <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));">
-                        <div class="stat-card" style="align-items: center; text-align: center; padding: 2.5rem 2rem;">
-                            <i class="fa-brands fa-discord" style="font-size: 3.5rem; color: #5865F2; margin-bottom: 0.5rem;"></i>
-                            <h3 style="color: #fff; font-family: 'Outfit'; font-size: 1.35rem;">Join VIP Community</h3>
-                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">Dapatkan role khusus VIP Pro Member dan akses prioritas bantuan teknis langsung dari developer.</p>
-                            <a href="https://discord.gg/xQStZUvukS" target="_blank" class="btn btn-outline" style="border-color: rgba(88, 101, 242, 0.5); color: #fff; background: rgba(88, 101, 242, 0.1);">Connect to Discord</a>
+                    
+                    <div class="list-box" style="padding: 1.25rem; margin-bottom: 1.5rem;">
+                        <h3 class="font-outfit" style="color: #fff; margin-bottom: 0.3rem; font-size: 1.15rem; letter-spacing: -0.01em;"><i class="fa-solid fa-headset" style="color: var(--accent-primary); margin-right: 0.4rem;"></i> Live Support Ticket</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1rem;">Facing issues or found a bug? Chat directly with our developer team here.</p>
+                        
+                        <div class="chat-container" id="user-chat-box">
+                            <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading chat history...</div>
                         </div>
-                        <div class="list-box" style="padding: 2rem; display: flex; flex-direction: column; justify-content: center;">
-                            <h3 class="font-outfit" style="color: #fff; margin-bottom: 0.75rem; font-size: 1.2rem;"><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-admin); margin-right: 0.4rem;"></i> Lupa Password?</h3>
-                            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Jika Anda lupa Portal Key dan tidak bisa login, silakan buka tiket bantuan (Ticket) di server Discord kami. Admin akan mereset password Anda secara manual.</p>
-                            <div style="padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed var(--border-light);">
-                                <span style="display: block; font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.2rem;">Server Email Support</span>
-                                <span style="color: #fff; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.5px;">admin@heradigital.my.id</span>
-                            </div>
+                        
+                        <form class="chat-input-area" onsubmit="userSendChat(event)" style="display: flex; align-items: center; width: 100%;">
+                            <input type="text" id="user-chat-input" required placeholder="Type your message here..." autocomplete="off">
+                            <button type="submit" id="btn-user-chat"><i class="fa-solid fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+
+                    <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+                        <div class="stat-card" style="align-items: center; text-align: center; padding: 2rem 1.5rem;">
+                            <i class="fa-brands fa-discord" style="font-size: 3rem; color: #5865F2; margin-bottom: 0.5rem;"></i>
+                            <h3 style="color: #fff; font-family: 'Outfit'; font-size: 1.25rem; letter-spacing: -0.01em;">Join VIP Community</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">Get the exclusive VIP Pro Member role and priority technical support directly from our developers.</p>
+                            <a href="https://discord.gg/xQStZUvukS" target="_blank" class="btn btn-outline" style="border-color: rgba(88, 101, 242, 0.5); color: #fff; background: rgba(88, 101, 242, 0.1);">Connect to Discord</a>
                         </div>
                     </div>
                 </div>
@@ -381,12 +422,13 @@
                         <div class="profile-field"><label>Account Email</label><div class="value" id="profile-email" style="font-family: monospace;">Loading...</div></div>
                         <div class="profile-field"><label>Account Status</label><div class="value" style="color: var(--accent-success); display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-circle-check"></i> Verified Pro Member</div></div>
                     </div>
-                    <h3 class="font-outfit" style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.25rem; color: #fff; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; max-width: 36rem;">Security</h3>
+                    
+                    <h3 class="font-outfit" style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.25rem; color: #fff; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; max-width: 36rem; letter-spacing: -0.01em;">Security</h3>
                     <div class="profile-field" style="max-width: 36rem;">
-                        <form id="change-pwd-form">
+                        <form id="change-pwd-form" style="display: flex; flex-direction: column; align-items: stretch; width: 100%;">
                             <div class="form-group"><label>Current Portal Password</label><div class="pwd-wrapper"><input type="password" id="cp-old" required placeholder="HRC-XXXXX"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-old', this)"></i></div></div>
                             <div class="form-group"><label>New Portal Password</label><div class="pwd-wrapper"><input type="password" id="cp-new" required placeholder="Enter new password" minlength="5"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-new', this)"></i></div></div>
-                            <button type="submit" class="btn btn-outline w-full" id="btn-change-pwd">Update Password</button>
+                            <button type="submit" class="btn btn-outline w-full" id="btn-change-pwd" style="margin-top: 0.5rem;">Update Password</button>
                             <div id="cp-msg" class="msg-box"></div>
                         </form>
                     </div>
@@ -400,12 +442,13 @@
         <div class="sidebar-overlay" onclick="toggleSidebar('admin-sidebar')"></div>
         <aside class="sidebar" id="admin-sidebar" style="border-right-color: rgba(245, 158, 11, 0.2);">
             <div class="sidebar-header">
-                <span class="font-outfit text-admin" style="font-size: 1.2rem; font-weight: 800;"><i class="fa-solid fa-shield-halved mr-1"></i> Master Panel</span>
+                <span class="font-outfit text-admin" style="font-size: 1.15rem; font-weight: 800; letter-spacing: -0.01em;"><i class="fa-solid fa-shield-halved mr-1"></i> Master Panel</span>
                 <button class="mobile-toggle" onclick="toggleSidebar('admin-sidebar')"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <nav class="sidebar-nav">
                 <a class="nav-item admin-active" onclick="switchTab('admin', 'publish', this)"><i class="fa-solid fa-cloud-arrow-up"></i> Publish Release</a>
                 <a class="nav-item" onclick="switchTab('admin', 'database', this)"><i class="fa-solid fa-database"></i> Release Database</a>
+                <a class="nav-item" onclick="switchTab('admin', 'tickets', this)"><i class="fa-solid fa-headset"></i> Support Tickets</a>
             </nav>
             <div class="sidebar-footer"><a class="nav-item logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Lock Console</a></div>
         </aside>
@@ -427,18 +470,18 @@
                 <!-- ADMIN: PUBLISH -->
                 <div id="tab-admin-publish" class="tab-content active">
                     <h2 class="section-title font-outfit">Publish Global Release</h2>
-                    <div class="profile-field" style="max-width: 48rem; background: var(--bg-card); padding: 2rem;">
-                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Fill the details below to push an update to all members and the public changelog.</p>
+                    <div class="profile-field" style="max-width: 48rem;">
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Fill the details below to push an update to all members and the public changelog.</p>
                         <form id="admin-publish-form">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                                 <div><label>Version Name</label><input type="text" id="p-version" required placeholder="e.g. v6.2.0"></div>
                                 <div><label>Release Date</label><input type="date" id="p-date" required></div>
                             </div>
                             <div class="form-group"><label>Google Drive Link</label><input type="url" id="p-link" required placeholder="https://drive.google.com/file/d/XXXXX/view"></div>
-                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket mr-1"></i> New Features</label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
-                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug mr-1"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
-                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can mr-1"></i> Removed</label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
-                            <button type="submit" class="btn btn-master w-full" id="btn-publish-release"><i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All</button>
+                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> New Features</label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> Removed</label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <button type="submit" class="btn btn-master w-full" id="btn-publish-release" style="margin-top: 0.5rem;"><i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All</button>
                             <div id="publish-msg" class="msg-box"></div>
                         </form>
                     </div>
@@ -456,6 +499,31 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- ADMIN: TICKETS (NEW) -->
+                <div id="tab-admin-tickets" class="tab-content">
+                    <h2 class="section-title font-outfit">Support Tickets</h2>
+                    <div class="ticket-layout">
+                        <!-- User List -->
+                        <div class="ticket-list" id="admin-ticket-list">
+                            <div style="padding: 1rem; color: var(--text-muted); font-size: 0.8rem; text-align: center;">Loading tickets...</div>
+                        </div>
+                        <!-- Chat Area -->
+                        <div class="list-box" style="display: flex; flex-direction: column; padding: 1.25rem; background: var(--bg-card);">
+                            <div id="admin-chat-header" style="margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border-light); display: none;">
+                                <h3 style="color: #fff; font-size: 1rem; font-family: 'Outfit'; margin: 0;" id="ac-gamertag">Select User</h3>
+                                <p style="color: var(--text-muted); font-size: 0.75rem; margin: 0;" id="ac-email">-</p>
+                            </div>
+                            <div class="chat-container" id="admin-chat-box" style="flex-grow: 1; height: auto;">
+                                <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;">Select a ticket from the left to start replying.</div>
+                            </div>
+                            <form class="chat-input-area" onsubmit="adminSendChat(event)" style="display: none; align-items: center; width: 100%;" id="admin-chat-form">
+                                <input type="text" id="admin-chat-input" required placeholder="Type reply as Admin..." autocomplete="off">
+                                <button type="submit" id="btn-admin-chat"><i class="fa-solid fa-paper-plane"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
@@ -464,6 +532,9 @@
 
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
+        
+        let pollingInterval = null;
+        let activeAdminTicketEmail = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             const session = sessionStorage.getItem("heraclaus_session");
@@ -489,11 +560,11 @@
 
         function copyLicenseKey() {
             const keyText = document.getElementById("display-key").innerText;
-            if(keyText && keyText !== "Loading..." && keyText !== "Code not generated.") {
+            if(keyText && keyText !== "Loading..." && keyText !== "License pending generation...") {
                 const el = document.createElement('textarea');
                 el.value = keyText; document.body.appendChild(el); el.select();
                 document.execCommand('copy'); document.body.removeChild(el);
-                showToast('License Key copied!');
+                showToast('License Key copied to clipboard!');
             }
         }
 
@@ -508,6 +579,7 @@
             document.getElementById('admin-login-box').classList.toggle('active', mode === 'admin');
         }
 
+        // --- LOGIN LOGIC ---
         document.getElementById("login-form").addEventListener("submit", function(e) {
             e.preventDefault();
             const btn = document.getElementById("btn-login"), msgBox = document.getElementById("login-msg");
@@ -539,76 +611,17 @@
             .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Authenticate'; });
         });
 
-        document.getElementById("change-pwd-form").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-            if(!session) return logout();
-
-            const btn = document.getElementById("btn-change-pwd"), msgBox = document.getElementById("cp-msg");
-            const oldKey = document.getElementById("cp-old").value.trim(), newKey = document.getElementById("cp-new").value.trim();
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...'; msgBox.style.display = "none";
-
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "change_password", email: session.email, oldKey: oldKey, newKey: newKey }) })
-            .then(res => res.json()).then(data => {
-                if(data.status === "success") {
-                    session.licenseKey = newKey; sessionStorage.setItem("heraclaus_session", JSON.stringify(session));
-                    document.getElementById("change-pwd-form").reset(); showToast('Security updated!');
-                } else throw new Error(data.message);
-            }).catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
-            .finally(() => { btn.disabled = false; btn.innerHTML = 'Update Password'; });
-        });
-
-        function convertDriveLink(url) { const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/); return (match && match[1]) ? `https://drive.google.com/uc?export=download&id=${match[1]}` : url; }
-
-        document.getElementById("admin-publish-form").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-            if(!session || session.role !== 'admin') return logout();
-
-            const btn = document.getElementById("btn-publish-release"), msgBox = document.getElementById("publish-msg");
-            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...'; msgBox.style.display = "none";
-
-            fetch(GOOGLE_SCRIPT_URL, {
-                method: "POST", body: JSON.stringify({
-                    action: "admin_publish_release", adminPassword: session.adminPassword, versionName: document.getElementById("p-version").value.trim(),
-                    date: document.getElementById("p-date").value, link: convertDriveLink(document.getElementById("p-link").value.trim()),
-                    added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), removed: document.getElementById("p-removed").value.trim()
-                })
-            }).then(res => res.json()).then(data => {
-                if(data.status === "success") {
-                    document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date();
-                    session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Published to all users!');
-                } else throw new Error(data.message);
-            }).catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
-            .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All'; });
-        });
-
-        function deleteRelease(id) {
-            if(!confirm("Hapus rilis ini secara permanen?")) return;
-            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) })
-            .then(res => res.json()).then(data => {
-                if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Release deleted.'); } 
-                else alert(data.message);
-            });
-        }
-
+        // --- DASHBOARD RENDERERS ---
         function showUserDashboard(data) {
             document.getElementById("main-navbar").style.display = "none"; document.getElementById("auth-section").style.display = "none"; document.getElementById("user-dashboard").classList.add("active");
-            
             const cleanGamertag = data.gamertag ? data.gamertag.trim() : "Player";
             document.getElementById("top-gamertag").innerText = cleanGamertag; document.getElementById("top-avatar").innerText = cleanGamertag.charAt(0).toUpperCase();
             document.getElementById("welcome-name").innerText = cleanGamertag; document.getElementById("profile-email").innerText = data.email || "-";
             document.getElementById("profile-gamertag").innerText = cleanGamertag;
             
             const keyEl = document.getElementById("display-key");
-            if (data.addonLicense) {
-                keyEl.innerText = data.addonLicense;
-                keyEl.classList.remove("empty");
-            } else {
-                keyEl.innerText = "License pending generation...";
-                keyEl.classList.add("empty");
-            }
+            if (data.addonLicense) { keyEl.innerText = data.addonLicense; keyEl.classList.remove("empty"); } 
+            else { keyEl.innerText = "License pending generation..."; keyEl.classList.add("empty"); }
             
             const history = data.addonHistory || [];
             if(history.length > 0) {
@@ -617,12 +630,12 @@
                 history.forEach((h, index) => {
                     const noteStr = h.added ? h.added.split('\n')[0].substring(0, 50) + "..." : "System patch.";
                     tbody.innerHTML += `<tr>
-                        <td><span class="version-badge">${h.versionName}</span> ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.7rem; margin-left:0.4rem; font-weight:700;">LATEST</span>' : ''}</td>
-                        <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.85rem;"><span style="opacity:0.8">${noteStr}</span></td>
+                        <td><span class="version-badge">${h.versionName}</span> ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.65rem; margin-left:0.3rem; font-weight:700;">LATEST</span>' : ''}</td>
+                        <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.8rem;"><span style="opacity:0.8">${noteStr}</span></td>
                         <td style="text-align:right;"><button onclick="triggerDownload('${h.link}')" class="btn btn-sm btn-outline"><i class="fa-solid fa-download"></i></button></td>
                     </tr>`;
                 });
-            } else { document.querySelector("#user-history-table tbody").innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-highlight); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted);'>No releases available yet.</span></td></tr>"; }
+            } else { document.querySelector("#user-history-table tbody").innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>No releases available yet.</span></td></tr>"; }
         }
 
         function showAdminDashboard(data) {
@@ -632,7 +645,7 @@
 
         function renderAdminDatabase(history) {
             const tbody = document.querySelector("#admin-history-table tbody"); tbody.innerHTML = "";
-            if(history.length === 0) return tbody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><span style='color: var(--text-muted);'>Database is empty.</span></td></tr>";
+            if(history.length === 0) return tbody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><span style='color: var(--text-muted); font-size: 0.85rem;'>Database is empty.</span></td></tr>";
             history.forEach(h => {
                 tbody.innerHTML += `<tr>
                     <td><span class="version-badge" style="border-color: rgba(245, 158, 11, 0.4); color: #fcd34d;">${h.versionName}</span></td>
@@ -643,8 +656,98 @@
             });
         }
 
-        function triggerDownload(url) { document.getElementById('hidden-download-frame').src = url; showToast('Download started.'); }
+        // --- 2-WAY CHAT SYSTEM ---
+        function renderChatBox(boxId, messages, isUserView) {
+            const box = document.getElementById(boxId);
+            box.innerHTML = "";
+            if(!messages || messages.length === 0) {
+                box.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;">No messages yet. Start a conversation now.</div>`;
+                return;
+            }
+            messages.forEach(m => {
+                const isMe = (isUserView && m.sender === 'user') || (!isUserView && m.sender === 'admin');
+                const bubbleClass = isMe ? 'chat-user' : 'chat-admin';
+                const senderName = m.sender === 'admin' ? 'Heraclaus Support' : 'You';
+                const timeStr = new Date(m.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                box.innerHTML += `<div class="chat-bubble ${bubbleClass}">${m.text}<span class="chat-time">${senderName} • ${timeStr}</span></div>`;
+            });
+            box.scrollTop = box.scrollHeight;
+        }
 
+        // User Chat
+        function fetchUserTicket() {
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "user_get_ticket", email: session.email }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('user-chat-box', data.ticket ? data.ticket.messages : [], true); });
+        }
+
+        function userSendChat(e) {
+            e.preventDefault();
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session")), input = document.getElementById('user-chat-input'), text = input.value.trim(), btn = document.getElementById('btn-user-chat');
+            if(!text) return;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; input.value = "";
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "user_send_msg", email: session.email, gamertag: session.gamertag, msg: text }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('user-chat-box', data.ticket.messages, true); })
+            .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
+        }
+
+        // Admin Chat
+        function fetchAdminTickets() {
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_get_tickets", adminPassword: session.adminPassword }) })
+            .then(res => res.json()).then(data => {
+                if(data.status === "success") {
+                    const list = document.getElementById('admin-ticket-list'); list.innerHTML = "";
+                    if(!data.tickets || data.tickets.length === 0) return list.innerHTML = `<div style="padding: 1rem; color: var(--text-muted); text-align: center; font-size: 0.8rem;">No active tickets.</div>`;
+                    
+                    data.tickets.forEach(t => {
+                        const lastMsg = t.messages.length > 0 ? t.messages[t.messages.length-1].text : "No message";
+                        const activeCls = (t.email === activeAdminTicketEmail) ? "active" : "";
+                        list.innerHTML += `<div class="ticket-item ${activeCls}" onclick="openAdminTicket('${t.email}', '${t.gamertag}')">
+                            <div class="ticket-name">${t.gamertag}</div><div class="ticket-email">${t.email}</div>
+                            <div class="ticket-preview">${lastMsg}</div>
+                        </div>`;
+                        if(t.email === activeAdminTicketEmail) renderChatBox('admin-chat-box', t.messages, false);
+                    });
+                }
+            });
+        }
+
+        window.openAdminTicket = function(email, gamertag) {
+            activeAdminTicketEmail = email;
+            document.getElementById('admin-chat-header').style.display = "block";
+            document.getElementById('admin-chat-form').style.display = "flex";
+            document.getElementById('ac-gamertag').innerText = gamertag;
+            document.getElementById('ac-email').innerText = email;
+            fetchAdminTickets(); // trigger immediate refresh
+        }
+
+        function adminSendChat(e) {
+            e.preventDefault();
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session")), input = document.getElementById('admin-chat-input'), text = input.value.trim(), btn = document.getElementById('btn-admin-chat');
+            if(!text || !activeAdminTicketEmail) return;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; input.value = "";
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_send_msg", adminPassword: session.adminPassword, targetEmail: activeAdminTicketEmail, msg: text }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") fetchAdminTickets(); })
+            .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
+        }
+
+        // --- TAB & POLLING MANAGEMENT ---
+        function switchTab(role, tabId, element) {
+            const dash = document.getElementById(`${role}-dashboard`);
+            dash.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            dash.querySelectorAll('.sidebar-nav .nav-item').forEach(item => { item.classList.remove('active'); item.classList.remove('admin-active'); });
+            document.getElementById(`tab-${role}-${tabId}`).classList.add('active');
+            element.classList.add(role === 'admin' ? 'admin-active' : 'active');
+            if (window.innerWidth <= 768) toggleSidebar(`${role}-sidebar`);
+
+            // Handle Chat Polling
+            if(pollingInterval) clearInterval(pollingInterval);
+            if(role === 'user' && tabId === 'support') { fetchUserTicket(); pollingInterval = setInterval(fetchUserTicket, 8000); }
+            if(role === 'admin' && tabId === 'tickets') { fetchAdminTickets(); pollingInterval = setInterval(fetchAdminTickets, 8000); }
+        }
+
+        function triggerDownload(url) { document.getElementById('hidden-download-frame').src = url; showToast('Download started in the background.'); }
         document.getElementById("btn-download").addEventListener("click", function() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
@@ -653,15 +756,30 @@
             triggerDownload(session.addonHistory[0].link); setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 3000);
         });
 
-        function switchTab(role, tabId, element) {
-            const dash = document.getElementById(`${role}-dashboard`);
-            dash.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            dash.querySelectorAll('.sidebar-nav .nav-item').forEach(item => { item.classList.remove('active'); item.classList.remove('admin-active'); });
-            document.getElementById(`tab-${role}-${tabId}`).classList.add('active');
-            element.classList.add(role === 'admin' ? 'admin-active' : 'active');
-            if (window.innerWidth <= 768) toggleSidebar(`${role}-sidebar`);
-        }
+        document.getElementById("admin-publish-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            if(!session || session.role !== 'admin') return logout();
+            const btn = document.getElementById("btn-publish-release"), msgBox = document.getElementById("publish-msg");
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...'; msgBox.style.display = "none";
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_publish_release", adminPassword: session.adminPassword, versionName: document.getElementById("p-version").value.trim(), date: document.getElementById("p-date").value, link: convertDriveLink(document.getElementById("p-link").value.trim()), added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), removed: document.getElementById("p-removed").value.trim() }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") { document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date(); session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Published to all users!'); } else throw new Error(data.message); })
+            .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+            .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All'; });
+        });
 
+        document.getElementById("change-pwd-form").addEventListener("submit", function(e) {
+            e.preventDefault(); const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); if(!session) return logout();
+            const btn = document.getElementById("btn-change-pwd"), msgBox = document.getElementById("cp-msg"), oldKey = document.getElementById("cp-old").value.trim(), newKey = document.getElementById("cp-new").value.trim();
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...'; msgBox.style.display = "none";
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "change_password", email: session.email, oldKey: oldKey, newKey: newKey }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") { session.licenseKey = newKey; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); document.getElementById("change-pwd-form").reset(); showToast('Security updated!'); } else throw new Error(data.message); })
+            .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+            .finally(() => { btn.disabled = false; btn.innerHTML = 'Update Password'; });
+        });
+
+        function convertDriveLink(url) { const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/); return (match && match[1]) ? `https://drive.google.com/uc?export=download&id=${match[1]}` : url; }
+        function deleteRelease(id) { if(!confirm("Delete this release permanently?")) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) }).then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Release deleted.'); } else alert(data.message); }); }
         function toggleSidebar(sidebarId) { const sidebar = document.getElementById(sidebarId), overlay = sidebar.previousElementSibling; sidebar.classList.toggle('show'); overlay.classList.toggle('show'); }
         function logout() { sessionStorage.removeItem("heraclaus_session"); location.reload(); }
     </script>
