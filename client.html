@@ -472,6 +472,7 @@
             <nav class="sidebar-nav">
                 <a class="nav-item admin-active" onclick="switchTab('admin', 'publish', this)"><i class="fa-solid fa-cloud-arrow-up"></i> Publish Release</a>
                 <a class="nav-item" onclick="switchTab('admin', 'database', this)"><i class="fa-solid fa-database"></i> Release Database</a>
+                <a class="nav-item" onclick="switchTab('admin', 'members', this)"><i class="fa-solid fa-users"></i> Manage Members</a>
                 <a class="nav-item" onclick="switchTab('admin', 'tickets', this)"><i class="fa-solid fa-headset"></i> Support Tickets</a>
             </nav>
             <div class="sidebar-footer"><a class="nav-item logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Lock Console</a></div>
@@ -524,7 +525,29 @@
                     </div>
                 </div>
 
-                <!-- ADMIN: TICKETS (NEW) -->
+                <!-- ADMIN: MEMBERS (NEW) -->
+                <div id="tab-admin-members" class="tab-content">
+                    <h2 class="section-title font-outfit">Member Management</h2>
+                    <div class="list-box">
+                        <div style="overflow-x: auto;">
+                            <table class="history-table" id="admin-members-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 15%;">Date</th>
+                                        <th>Gamertag</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>License Key</th>
+                                        <th style="text-align: right; width: 15%;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN: TICKETS -->
                 <div id="tab-admin-tickets" class="tab-content">
                     <h2 class="section-title font-outfit">Support Tickets</h2>
                     <div class="ticket-layout">
@@ -688,6 +711,54 @@
             });
         }
 
+        // --- NEW: ADMIN MEMBER MANAGEMENT ---
+        function fetchAdminMembers() {
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_get_members", adminPassword: session.adminPassword }) })
+            .then(res => res.json()).then(data => {
+                if(data.status === "success") renderAdminMembers(data.members);
+            });
+        }
+
+        function renderAdminMembers(members) {
+            const tbody = document.querySelector("#admin-members-table tbody"); tbody.innerHTML = "";
+            if(!members || members.length === 0) return tbody.innerHTML = "<tr><td colspan='6' style='text-align:center; padding: 2rem;'><span style='color: var(--text-muted); font-size: 0.85rem;'>No members found in database.</span></td></tr>";
+            
+            members.forEach(m => {
+                let statusBadge = '';
+                if(m.status === 'APPROVED') statusBadge = `<span class="badge success">ACTIVE</span>`;
+                else if(m.status === 'PENDING') statusBadge = `<span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #fcd34d; border-color: rgba(245, 158, 11, 0.25);">PENDING</span>`;
+                else statusBadge = `<span class="badge" style="background: rgba(244, 63, 94, 0.15); color: #fda4af; border-color: rgba(244, 63, 94, 0.25);">${m.status}</span>`;
+
+                tbody.innerHTML += `<tr>
+                    <td>${new Date(m.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td>
+                    <td style="font-weight: 600; color: #fff;">${m.gamertag}</td>
+                    <td style="font-size: 0.8rem;">${m.email}</td>
+                    <td>${statusBadge}</td>
+                    <td style="font-family: monospace; color: var(--accent-primary); font-size: 0.8rem;">${m.license || '-'}</td>
+                    <td style="text-align:right; display: flex; gap: 0.4rem; justify-content: flex-end;">
+                        <button onclick="adminToggleMemberStatus(${m.row}, '${m.status}')" class="btn-icon" title="Toggle Status (Approve/Suspend)" style="width: 2rem; height: 2rem;"><i class="fa-solid fa-power-off" style="font-size: 0.8rem;"></i></button>
+                        <button onclick="adminDeleteMember(${m.row})" class="btn-icon danger" title="Delete Member" style="width: 2rem; height: 2rem;"><i class="fa-solid fa-trash-can" style="font-size: 0.8rem;"></i></button>
+                    </td>
+                </tr>`;
+            });
+        }
+
+        window.adminToggleMemberStatus = function(row, currentStatus) {
+            const newStatus = currentStatus === 'APPROVED' ? 'SUSPENDED' : 'APPROVED';
+            if(!confirm(`Change member status to ${newStatus}?`)) return;
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_toggle_member", adminPassword: session.adminPassword, targetRow: row, newStatus: newStatus }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") { showToast(`Member updated to ${newStatus}`); fetchAdminMembers(); } });
+        }
+
+        window.adminDeleteMember = function(row) {
+            if(!confirm("Warning: This will permanently delete this member's account and license from the database! Proceed?")) return;
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_member", adminPassword: session.adminPassword, targetRow: row }) })
+            .then(res => res.json()).then(data => { if(data.status === "success") { showToast('Member deleted.'); fetchAdminMembers(); } });
+        }
+
         // --- 2-WAY CHAT SYSTEM LOGIC ---
         function renderChatBox(boxId, messages, isUserView) {
             const box = document.getElementById(boxId);
@@ -762,19 +833,12 @@
             fetchAdminTickets(); // trigger immediate refresh
         }
 
-        function adminDeleteTicket() {
+        window.adminDeleteTicket = function() {
             if(!activeAdminTicketEmail) return;
             if(!confirm("Resolve and delete this ticket? Chat history will be permanently lost, allowing the user to create a new ticket later.")) return;
             
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-            fetch(GOOGLE_SCRIPT_URL, { 
-                method: "POST", 
-                body: JSON.stringify({ 
-                    action: "admin_delete_ticket", 
-                    adminPassword: session.adminPassword, 
-                    targetEmail: activeAdminTicketEmail 
-                }) 
-            })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_ticket", adminPassword: session.adminPassword, targetEmail: activeAdminTicketEmail }) })
             .then(res => res.json()).then(data => { 
                 if(data.status === "success") { 
                     activeAdminTicketEmail = null;
@@ -809,10 +873,12 @@
             element.classList.add(role === 'admin' ? 'admin-active' : 'active');
             if (window.innerWidth <= 768) toggleSidebar(`${role}-sidebar`);
 
-            // Handle Chat Polling (Refresh every 8 seconds when tab is open)
+            // Intervals
             if(pollingInterval) clearInterval(pollingInterval);
             if(role === 'user' && tabId === 'support') { fetchUserTicket(); pollingInterval = setInterval(fetchUserTicket, 8000); }
             if(role === 'admin' && tabId === 'tickets') { fetchAdminTickets(); pollingInterval = setInterval(fetchAdminTickets, 8000); }
+            // Auto fetch members if Member tab is clicked
+            if(role === 'admin' && tabId === 'members') { fetchAdminMembers(); pollingInterval = setInterval(fetchAdminMembers, 10000); }
         }
 
         function triggerDownload(url) { document.getElementById('hidden-download-frame').src = url; showToast('Download started in the background.'); }
