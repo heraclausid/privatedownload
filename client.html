@@ -355,7 +355,11 @@
                                 </div>
                                 <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.4rem; font-family: 'Outfit'; letter-spacing: -0.01em;">Admin Suite Pro</h3>
                                 <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.25rem; flex-grow: 1;">Download the latest updated file directly from our secure server.</p>
-                                <button id="btn-download" class="btn btn-gradient w-full"><i class="fa-solid fa-download"></i> Download Latest</button>
+                                
+                                <div style="display: flex; gap: 0.75rem; width: 100%;">
+                                    <button id="btn-download-realms" class="btn btn-gradient" style="flex: 1;"><i class="fa-solid fa-cube"></i> Realms (.mcpack)</button>
+                                    <button id="btn-download-bds" class="btn btn-outline" style="flex: 1; border-color: rgba(16, 185, 129, 0.3); color: #10b981;"><i class="fa-solid fa-server"></i> BDS (.zip)</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -363,7 +367,7 @@
                     <div class="list-box">
                         <div style="overflow-x: auto;">
                             <table class="history-table" id="user-history-table">
-                                <thead><tr><th style="width: 25%;">Version</th><th style="width: 25%;">Release Date</th><th>Update Notes</th><th style="text-align: right; width: 10%;">Download</th></tr></thead>
+                                <thead><tr><th style="width: 25%;">Version</th><th style="width: 25%;">Release Date</th><th>Update Notes</th><th style="text-align: right; width: 15%;">Download</th></tr></thead>
                                 <tbody></tbody>
                             </table>
                         </div>
@@ -397,11 +401,11 @@
                     <div class="profile-field" style="max-width: 48rem;">
                         <div class="guide-step">
                             <div class="guide-number">1</div>
-                            <div class="guide-content"><h4>Download File</h4><p>Open the <b>My Add-ons</b> tab and click the <b>Download Latest</b> button. Wait for the <code>.mcpack</code> file to finish downloading to your device.</p></div>
+                            <div class="guide-content"><h4>Download File</h4><p>Open the <b>My Add-ons</b> tab and click the <b>Download Latest</b> button. Wait for the file to finish downloading to your device.</p></div>
                         </div>
                         <div class="guide-step">
                             <div class="guide-number">2</div>
-                            <div class="guide-content"><h4>Install to Minecraft</h4><p>Double-click the newly downloaded <code>.mcpack</code> file. Minecraft will open automatically and display "Import Started" at the top of the screen.</p></div>
+                            <div class="guide-content"><h4>Install to Minecraft</h4><p>If you downloaded `.mcpack`, simply double-click it. If you downloaded `.zip` for servers, extract it into your `behavior_packs` and `resource_packs` folders respectively.</p></div>
                         </div>
                         <div class="guide-step">
                             <div class="guide-number">3</div>
@@ -517,7 +521,19 @@
                                 <div><label>Version Name</label><input type="text" id="p-version" required placeholder="e.g. v6.2.0"></div>
                                 <div><label>Release Date</label><input type="date" id="p-date" required></div>
                             </div>
-                            <div class="form-group"><label>Direct Download Link</label><input type="url" id="p-link" required placeholder="Discord CDN link or Google Drive link"></div>
+                            
+                            <!-- NEW DUAL LINK INPUTS -->
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>Realms Link <span class="badge" style="margin-left: 0.3rem; background: rgba(139,92,246,0.15); color: var(--accent-primary);">.mcpack</span></label>
+                                    <input type="url" id="p-link-realms" required placeholder="Direct Link (Discord CDN)">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>BDS Link <span class="badge success" style="margin-left: 0.3rem;">.zip</span></label>
+                                    <input type="url" id="p-link-bds" required placeholder="Direct Link (Discord CDN)">
+                                </div>
+                            </div>
+
                             <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> New Features</label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
                             <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
                             <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> Removed</label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
@@ -694,13 +710,23 @@
             const history = data.addonHistory || [];
             if(history.length > 0) {
                 document.getElementById("latest-ver-text").innerText = history[0].versionName; document.getElementById("addon-badge-version").innerText = history[0].versionName;
-                const tbody = document.querySelector("#user-history-table tbody"); tbody.innerHTML = "";
+                const tbody = document.querySelector("#user-history-table"); tbody.innerHTML = `<thead><tr><th style="width: 25%;">Version</th><th style="width: 25%;">Release Date</th><th>Update Notes</th><th style="text-align: right; width: 15%;">Download</th></tr></thead><tbody></tbody>`;
+                const tbodyEl = tbody.querySelector("tbody");
+                
                 history.forEach((h, index) => {
                     const noteStr = h.added ? h.added.split('\n')[0].substring(0, 50) + "..." : "System patch.";
-                    tbody.innerHTML += `<tr>
+                    
+                    // Parse Link to support Dual Link system (Backward Compatibility)
+                    let linkData = { realms: '#', bds: '#' };
+                    try { linkData = JSON.parse(h.link); } catch(e) { linkData = { realms: h.link, bds: h.link }; }
+                    
+                    tbodyEl.innerHTML += `<tr>
                         <td><span class="version-badge">${h.versionName}</span> ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.65rem; margin-left:0.3rem; font-weight:700;">LATEST</span>' : ''}</td>
                         <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.8rem;"><span style="opacity:0.8">${noteStr}</span></td>
-                        <td style="text-align:right;"><button onclick="triggerDownload('${h.link}')" class="btn btn-sm btn-outline"><i class="fa-solid fa-download"></i></button></td>
+                        <td style="text-align:right; display: flex; gap: 0.4rem; justify-content: flex-end; align-items: center;">
+                            <button onclick="triggerDownload('${linkData.realms}')" class="btn btn-sm btn-outline" title="Download Realms" style="padding: 0 0.5rem;"><i class="fa-solid fa-cube"></i></button>
+                            <button onclick="triggerDownload('${linkData.bds}')" class="btn btn-sm btn-outline" style="color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);" title="Download BDS" style="padding: 0 0.5rem;"><i class="fa-solid fa-server"></i></button>
+                        </td>
                     </tr>`;
                 });
             } else { document.querySelector("#user-history-table tbody").innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>No releases available yet.</span></td></tr>"; }
@@ -715,10 +741,17 @@
             const tbody = document.querySelector("#admin-history-table tbody"); tbody.innerHTML = "";
             if(history.length === 0) return tbody.innerHTML = "<tr><td colspan='4' style='text-align:center; padding: 2rem;'><span style='color: var(--text-muted); font-size: 0.85rem;'>Database is empty.</span></td></tr>";
             history.forEach(h => {
+                
+                let linkDisplay = h.link;
+                try { 
+                    let parsed = JSON.parse(h.link); 
+                    linkDisplay = `R: ${parsed.realms}\nB: ${parsed.bds}`; 
+                } catch(e) {}
+                
                 tbody.innerHTML += `<tr>
                     <td><span class="version-badge" style="border-color: rgba(245, 158, 11, 0.4); color: #fcd34d;">${h.versionName}</span></td>
                     <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td>
-                    <td><input type="text" value="${h.link}" readonly style="background:transparent; border:none; color:var(--text-muted); width:100%; font-size:0.8rem; font-family: monospace;" onclick="this.select()"></td>
+                    <td><textarea readonly style="background:transparent; border:none; color:var(--text-muted); width:100%; font-size:0.75rem; font-family: monospace; resize:none;" rows="2" onclick="this.select()">${linkDisplay}</textarea></td>
                     <td style="text-align:right;"><button onclick="deleteRelease(${h.id})" class="btn-icon danger"><i class="fa-solid fa-trash-can"></i></button></td>
                 </tr>`;
             });
@@ -930,12 +963,25 @@
             }, 4500);
         }
 
-        document.getElementById("btn-download").addEventListener("click", function() {
+        // Assign Dual Buttons Download Actions
+        document.getElementById("btn-download-realms").addEventListener("click", function() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
             
-            // Panggil animasi overlay download
-            triggerDownload(session.addonHistory[0].link); 
+            let link = session.addonHistory[0].link;
+            try { link = JSON.parse(link).realms; } catch(e) {} // Backward compatible
+            
+            triggerDownload(link); 
+        });
+
+        document.getElementById("btn-download-bds").addEventListener("click", function() {
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
+            
+            let link = session.addonHistory[0].link;
+            try { link = JSON.parse(link).bds; } catch(e) {} // Backward compatible
+            
+            triggerDownload(link); 
         });
 
         document.getElementById("admin-publish-form").addEventListener("submit", function(e) {
@@ -944,7 +990,15 @@
             if(!session || session.role !== 'admin') return logout();
             const btn = document.getElementById("btn-publish-release"), msgBox = document.getElementById("publish-msg");
             btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...'; msgBox.style.display = "none";
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_publish_release", adminPassword: session.adminPassword, versionName: document.getElementById("p-version").value.trim(), date: document.getElementById("p-date").value, link: convertDriveLink(document.getElementById("p-link").value.trim()), added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), removed: document.getElementById("p-removed").value.trim() }) })
+            
+            // Susun link ganda dalam format JSON untuk backend Google Scripts
+            const linkObj = {
+                realms: convertDriveLink(document.getElementById("p-link-realms").value.trim()),
+                bds: convertDriveLink(document.getElementById("p-link-bds").value.trim())
+            };
+            const finalLink = JSON.stringify(linkObj);
+
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_publish_release", adminPassword: session.adminPassword, versionName: document.getElementById("p-version").value.trim(), date: document.getElementById("p-date").value, link: finalLink, added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), removed: document.getElementById("p-removed").value.trim() }) })
             .then(res => res.json()).then(data => { if(data.status === "success") { document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date(); session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Published to all users!'); } else throw new Error(data.message); })
             .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
             .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All'; });
