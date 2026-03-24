@@ -559,6 +559,12 @@
                             <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> New Features</label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
                             <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
                             <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> Removed</label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
+                            
+                            <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.1); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2);">
+                                <input type="checkbox" id="p-send-email" style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
+                                <label for="p-send-email" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.85rem; color: #fff; cursor: pointer;">Kirim notifikasi email ke semua member Pro</label>
+                            </div>
+
                             <button type="submit" class="btn btn-master w-full" id="btn-publish-release" style="margin-top: 0.5rem;"><i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All</button>
                             <div id="publish-msg" class="msg-box"></div>
                         </form>
@@ -1137,7 +1143,10 @@
             };
             const finalLink = JSON.stringify(linkObj);
 
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_publish_release", adminPassword: session.adminPassword, versionName: document.getElementById("p-version").value.trim(), date: document.getElementById("p-date").value, link: finalLink, added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), removed: document.getElementById("p-removed").value.trim() }) })
+            // AMBIL DATA DARI CHECKBOX SEND EMAIL
+            const isSendEmail = document.getElementById("p-send-email").checked;
+
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_publish_release", adminPassword: session.adminPassword, versionName: document.getElementById("p-version").value.trim(), date: document.getElementById("p-date").value, link: finalLink, added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), removed: document.getElementById("p-removed").value.trim(), sendEmail: isSendEmail }) })
             .then(res => res.json()).then(data => { if(data.status === "success") { document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date(); session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Published to all users!'); } else throw new Error(data.message); })
             .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
             .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All'; });
