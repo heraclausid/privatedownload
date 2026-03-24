@@ -909,8 +909,17 @@
             // Eksekusi Download & Tutup Overlay
             setTimeout(() => {
                 overlay.classList.remove('show');
-                window.open(url, '_blank'); // Tab baru diperlukan untuk melewati Google Drive Virus Scan UI
-                showToast('Download request sent to browser.');
+                
+                // TRIK BARU: Murni eksekusi di latar belakang tanpa tab baru
+                // Browser akan otomatis membatalkan navigasi dan memulai unduhan lokal
+                const tempLink = document.createElement('a');
+                tempLink.href = url;
+                // Kita TIDAK menyertakan target="_blank" di sini
+                document.body.appendChild(tempLink);
+                tempLink.click();
+                document.body.removeChild(tempLink);
+                
+                showToast('Download started securely.');
             }, 4500);
         }
 
