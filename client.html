@@ -138,7 +138,6 @@
         .avatar-mini { width: 2rem; height: 2rem; border-radius: 50%; background: var(--gradient-admin); display: flex; align-items: center; justify-content: center; font-weight: 700; font-family: 'Outfit'; font-size: 0.85rem; box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2); }
         .avatar-mini.admin { background: var(--gradient-master); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2); }
 
-        /* --- CENTERED CANVAS CONTENT --- */
         .content-body { padding: 2rem; overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; }
         .tab-content { display: none; animation: fadeIn 0.3s ease; flex-shrink: 0; max-width: 60rem; width: 100%; margin: 0 auto; }
         .tab-content.active { display: block; }
@@ -189,16 +188,14 @@
         
         .chat-bubble { max-width: 75%; padding: 0.75rem 1rem; font-size: 0.85rem; line-height: 1.4; position: relative; word-wrap: break-word; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         
-        /* Incoming Message (Left) */
         .chat-them { background: var(--bg-card); border: 1px solid var(--border-light); color: var(--text-primary); align-self: flex-start; border-radius: 14px 14px 14px 4px; }
-        /* Outgoing Message (Right) */
         .chat-me { background: var(--accent-primary); border: 1px solid rgba(255,255,255,0.1); color: #fff; align-self: flex-end; border-radius: 14px 14px 4px 14px; }
         
         .chat-time { display: block; font-size: 0.65rem; margin-top: 0.3rem; opacity: 0.7; }
         .chat-me .chat-time { text-align: right; color: rgba(255,255,255,0.9); }
         .chat-them .chat-time { text-align: left; color: var(--text-muted); }
         
-        /* LIVE CHAT INDICATOR (NEW) */
+        /* LIVE CHAT INDICATOR */
         .live-chat-badge {
             color: var(--accent-danger);
             font-size: 0.7rem;
@@ -229,7 +226,6 @@
         .chat-input-area button { background: var(--accent-primary); color: #fff; border: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1rem; box-shadow: 0 4px 10px rgba(139, 92, 246, 0.3); flex-shrink: 0; }
         .chat-input-area button:hover { background: #7c3aed; transform: scale(1.05); }
 
-        /* Admin Ticket List Layout */
         .ticket-layout { display: grid; grid-template-columns: 280px 1fr; gap: 1.25rem; height: 500px; }
         .ticket-list { border: 1px solid var(--border-light); border-radius: 12px; background: var(--bg-card); overflow-y: auto; display: flex; flex-direction: column; }
         .ticket-item { padding: 1rem; border-bottom: 1px solid var(--border-light); cursor: pointer; transition: background 0.2s; }
@@ -258,7 +254,6 @@
     <div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
     <div id="toast-container"></div>
     
-    <!-- OVERLAY LOADING SAAT DOWNLOAD -->
     <div class="download-overlay" id="download-overlay">
         <i class="fa-solid fa-circle-notch dl-spinner"></i>
         <div class="dl-title">Processing Download</div>
@@ -318,10 +313,7 @@
         </div>
     </nav>
 
-    <!-- LOGIN USER & ADMIN -->
     <main class="auth-wrapper" id="auth-section">
-        
-        <!-- User Login Box -->
         <div class="auth-container active" id="user-login-box">
             <h1 class="font-outfit">Client Portal</h1>
             <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">Login using your Email and Portal Key.</p>
@@ -340,7 +332,6 @@
             <div style="text-align: center;"><span class="admin-link" onclick="toggleAuthMode('admin')"><i class="fa-solid fa-shield-halved"></i> Admin Console</span></div>
         </div>
 
-        <!-- Admin Login Box -->
         <div class="auth-container" id="admin-login-box" style="border-top: 3px solid var(--accent-admin);">
             <h1 class="font-outfit text-admin">Master Panel</h1>
             <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">Restricted access. Authentication required.</p>
@@ -361,7 +352,6 @@
         <div class="login-footer"><p>© 2026 Heraclaus. Secure Access.</p></div>
     </main>
 
-    <!-- USER DASHBOARD -->
     <div class="dashboard-wrapper" id="user-dashboard">
         <div class="sidebar-overlay" onclick="toggleSidebar('user-sidebar')"></div>
         <aside class="sidebar" id="user-sidebar">
@@ -400,7 +390,6 @@
             </header>
 
             <div class="content-body">
-                <!-- OVERVIEW -->
                 <div id="tab-user-overview" class="tab-content active">
                     <h2 class="section-title font-outfit">Welcome back, <span id="welcome-name" class="text-gradient">Player</span>!</h2>
                     <div class="grid-cards">
@@ -425,7 +414,6 @@
                     </div>
                 </div>
 
-                <!-- ADDONS -->
                 <div id="tab-user-addons" class="tab-content">
                     <h2 class="section-title font-outfit">My Add-ons</h2>
                     <div class="grid-cards" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
@@ -457,7 +445,6 @@
                     </div>
                 </div>
 
-                <!-- LICENSES -->
                 <div id="tab-user-licenses" class="tab-content">
                     <h2 class="section-title font-outfit">My Licenses</h2>
                     <div class="list-box">
@@ -478,7 +465,6 @@
                     <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;"><i class="fa-solid fa-circle-info" style="margin-right: 0.3rem;"></i> Enter this unique 16-digit code in-game to activate your Add-on features.</p>
                 </div>
 
-                <!-- GUIDE -->
                 <div id="tab-user-guide" class="tab-content">
                     <h2 class="section-title font-outfit">Installation Guide</h2>
                     <div class="profile-field" style="max-width: 48rem;">
@@ -501,13 +487,10 @@
                     </div>
                 </div>
 
-                <!-- SUPPORT & CHAT -->
                 <div id="tab-user-support" class="tab-content">
                     <h2 class="section-title font-outfit">Support & Help Desk</h2>
                     
-                    <!-- NEW SAAS CHAT LAYOUT -->
                     <div class="chat-box-wrapper">
-                        <!-- Chat Header -->
                         <div class="chat-header">
                             <div class="chat-header-info">
                                 <div class="chat-header-icon"><i class="fa-solid fa-headset"></i></div>
@@ -518,12 +501,10 @@
                             </div>
                         </div>
                         
-                        <!-- Chat Body -->
                         <div class="chat-container" id="user-chat-box">
                             <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading chat history...</div>
                         </div>
                         
-                        <!-- Chat Input -->
                         <form class="chat-input-area" id="user-chat-form">
                             <input type="text" id="user-chat-input" required placeholder="Type your message here..." autocomplete="off">
                             <button type="submit" id="btn-user-chat"><i class="fa-solid fa-paper-plane"></i></button>
@@ -540,7 +521,6 @@
                     </div>
                 </div>
 
-                <!-- PROFILE -->
                 <div id="tab-user-profile" class="tab-content">
                     <h2 class="section-title font-outfit">Profile Settings</h2>
                     <div class="profile-grid">
@@ -597,7 +577,6 @@
             </header>
 
             <div class="content-body">
-                <!-- ADMIN: PUBLISH -->
                 <div id="tab-admin-publish" class="tab-content active">
                     <h2 class="section-title font-outfit">Publish Global Release</h2>
                     <div class="profile-field" style="max-width: 48rem;">
@@ -608,10 +587,18 @@
                                 <div><label>MC Version</label><input type="text" id="p-mcversion" required placeholder="e.g. 1.20.70+"></div>
                                 <div><label>Release Date</label><input type="date" id="p-date" required></div>
                             </div>
+                            
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                                <div class="form-group" style="margin-bottom: 0;"><label>Realms Link</label><input type="url" id="p-link-realms" required placeholder="Direct Link (Discord CDN)"></div>
-                                <div class="form-group" style="margin-bottom: 0;"><label>BDS Link</label><input type="url" id="p-link-bds" required placeholder="Direct Link (Discord CDN)"></div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>Realms Link</label>
+                                    <input type="url" id="p-link-realms" required placeholder="Direct Link (Discord CDN)">
+                                </div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label>BDS Link</label>
+                                    <input type="url" id="p-link-bds" required placeholder="Direct Link (Discord CDN)">
+                                </div>
                             </div>
+
                             <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> New Features</label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
                             <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> Bug Fixes</label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
                             <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> Removed</label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
@@ -627,7 +614,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN: DATABASE -->
                 <div id="tab-admin-database" class="tab-content">
                     <h2 class="section-title font-outfit">Release Management</h2>
                     <div class="list-box">
@@ -640,7 +626,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN: MEMBERS -->
                 <div id="tab-admin-members" class="tab-content">
                     <h2 class="section-title font-outfit">Member Management</h2>
                     <div class="list-box">
@@ -660,15 +645,12 @@
                     </div>
                 </div>
 
-                <!-- ADMIN: TICKETS -->
                 <div id="tab-admin-tickets" class="tab-content">
                     <h2 class="section-title font-outfit">Support Tickets</h2>
                     <div class="ticket-layout">
-                        <!-- User List -->
                         <div class="ticket-list" id="admin-ticket-list">
                             <div style="padding: 1rem; color: var(--text-muted); font-size: 0.8rem; text-align: center;">Loading tickets...</div>
                         </div>
-                        <!-- Chat Area (Admin View) -->
                         <div class="chat-box-wrapper" style="margin: 0;">
                             <div class="chat-header">
                                 <div class="chat-header-info">
@@ -735,8 +717,17 @@
         
         let pollingInterval = null;
         let activeAdminTicketEmail = null;
-        window.adminMembersData = []; // Untuk preview modal
+        window.adminMembersData = []; 
 
+        // Fungsi Helper untuk Mencegah Error Null Event Listener
+        function safelyAttachListener(elementId, eventType, callback) {
+            const el = document.getElementById(elementId);
+            if (el) {
+                el.addEventListener(eventType, callback);
+            }
+        }
+
+        // MEMBUNGKUS SEMUA LISTENER DENGAN AMAN
         document.addEventListener("DOMContentLoaded", () => {
             const session = sessionStorage.getItem("heraclaus_session");
             if (session) {
@@ -746,8 +737,171 @@
             }
             const pDate = document.getElementById('p-date');
             if(pDate) pDate.valueAsDate = new Date();
+
+            // Form Login
+            safelyAttachListener("login-form", "submit", function(e) {
+                e.preventDefault();
+                const btn = document.getElementById("btn-login"), msgBox = document.getElementById("login-msg");
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Checking...';
+                msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
+
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", email: document.getElementById("login-email").value.trim(), licenseKey: document.getElementById("login-key").value.trim() }) })
+                .then(res => res.json()).then(data => {
+                    if(data.status === "success") {
+                        data.role = "user"; sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showUserDashboard(data); showToast('Welcome back, ' + data.gamertag + '!');
+                    } else throw new Error(data.message);
+                }).catch(err => { msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard'; });
+            });
+
+            // Form Login Admin
+            safelyAttachListener("admin-login-form", "submit", function(e) {
+                e.preventDefault();
+                const btn = document.getElementById("btn-admin-login"), msgBox = document.getElementById("admin-login-msg");
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...';
+                msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
+
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_login", adminPassword: document.getElementById("admin-key").value.trim() }) })
+                .then(res => res.json()).then(data => {
+                    if(data.status === "success") {
+                        data.role = "admin"; data.adminPassword = document.getElementById("admin-key").value.trim();
+                        sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showAdminDashboard(data); showToast('Access Granted');
+                    } else throw new Error(data.message);
+                }).catch(err => { msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Authenticate'; });
+            });
+
+            // Form Chat User
+            safelyAttachListener("user-chat-form", "submit", function(e) {
+                e.preventDefault();
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session")), input = document.getElementById('user-chat-input'), text = input.value.trim(), btn = document.getElementById('btn-user-chat');
+                if(!text) return;
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; input.value = "";
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "user_send_msg", email: session.email, gamertag: session.gamertag, msg: text }) })
+                .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('user-chat-box', data.ticket.messages, true); })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
+            });
+
+            // Form Chat Admin
+            safelyAttachListener("admin-chat-form", "submit", function(e) {
+                e.preventDefault();
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session")), input = document.getElementById('admin-chat-input'), text = input.value.trim(), btn = document.getElementById('btn-admin-chat');
+                if(!text || !activeAdminTicketEmail) return;
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; input.value = "";
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_send_msg", adminPassword: session.adminPassword, targetEmail: activeAdminTicketEmail, msg: text }) })
+                .then(res => res.json()).then(data => { if(data.status === "success") fetchAdminTickets(); })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
+            });
+
+            // Tombol Download Realms
+            safelyAttachListener("btn-download-realms", "click", function() {
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+                if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
+                
+                let link = session.addonHistory[0].link;
+                try { link = JSON.parse(link).realms; } catch(e) {} 
+                triggerDownload(link); 
+                recordDownloadStat(); 
+            });
+
+            // Tombol Download BDS
+            safelyAttachListener("btn-download-bds", "click", function() {
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+                if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
+                
+                let link = session.addonHistory[0].link;
+                try { link = JSON.parse(link).bds; } catch(e) {} 
+                triggerDownload(link); 
+                recordDownloadStat(); 
+            });
+
+            // Form Publish Release
+            safelyAttachListener("admin-publish-form", "submit", function(e) {
+                e.preventDefault();
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+                if(!session || session.role !== 'admin') return logout();
+                const btn = document.getElementById("btn-publish-release"), msgBox = document.getElementById("publish-msg");
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...'; msgBox.style.display = "none";
+                
+                const linkObj = {
+                    realms: convertDriveLink(document.getElementById("p-link-realms").value.trim()),
+                    bds: convertDriveLink(document.getElementById("p-link-bds").value.trim())
+                };
+                const finalLink = JSON.stringify(linkObj);
+                const isSendEmail = document.getElementById("p-send-email").checked;
+
+                fetch(GOOGLE_SCRIPT_URL, { 
+                    method: "POST", 
+                    body: JSON.stringify({ 
+                        action: "admin_publish_release", 
+                        adminPassword: session.adminPassword, 
+                        versionName: document.getElementById("p-version").value.trim(), 
+                        mcVersion: document.getElementById("p-mcversion").value.trim(),
+                        date: document.getElementById("p-date").value, 
+                        link: finalLink, 
+                        added: document.getElementById("p-added").value.trim(), 
+                        fixed: document.getElementById("p-fixed").value.trim(), 
+                        removed: document.getElementById("p-removed").value.trim(), 
+                        sendEmail: isSendEmail 
+                    }) 
+                })
+                .then(res => res.json()).then(data => { if(data.status === "success") { document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date(); session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Published to all users!'); } else throw new Error(data.message); })
+                .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All'; });
+            });
+
+            // Form Edit Release
+            safelyAttachListener("edit-release-form", "submit", function(e) {
+                e.preventDefault();
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+                if(!session || session.role !== 'admin') return;
+
+                const btn = document.getElementById("btn-save-edit"), msgBox = document.getElementById("edit-msg");
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...'; msgBox.style.display = "none";
+
+                const linkObj = {
+                    realms: convertDriveLink(document.getElementById("e-link-realms").value.trim()),
+                    bds: convertDriveLink(document.getElementById("e-link-bds").value.trim())
+                };
+
+                fetch(GOOGLE_SCRIPT_URL, { 
+                    method: "POST", 
+                    body: JSON.stringify({
+                        action: "admin_edit_release",
+                        adminPassword: session.adminPassword,
+                        logId: document.getElementById("e-logid").value,
+                        versionName: document.getElementById("e-version").value.trim(),
+                        mcVersion: document.getElementById("e-mcversion").value.trim(),
+                        date: document.getElementById("e-date").value,
+                        link: JSON.stringify(linkObj),
+                        added: document.getElementById("e-added").value.trim(),
+                        fixed: document.getElementById("e-fixed").value.trim(),
+                        removed: document.getElementById("e-removed").value.trim()
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if(data.status === "success") {
+                        session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); closeEditReleaseModal(); showToast('Release updated successfully!');
+                    } else throw new Error(data.message);
+                })
+                .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Changes'; });
+            });
+
+            // Form Ganti Password
+            safelyAttachListener("change-pwd-form", "submit", function(e) {
+                e.preventDefault(); const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); if(!session) return logout();
+                const btn = document.getElementById("btn-change-pwd"), msgBox = document.getElementById("cp-msg"), oldKey = document.getElementById("cp-old").value.trim(), newKey = document.getElementById("cp-new").value.trim();
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...'; msgBox.style.display = "none";
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "change_password", email: session.email, oldKey: oldKey, newKey: newKey }) })
+                .then(res => res.json()).then(data => { if(data.status === "success") { session.licenseKey = newKey; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); document.getElementById("change-pwd-form").reset(); showToast('Security updated!'); } else throw new Error(data.message); })
+                .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
+                .finally(() => { btn.disabled = false; btn.innerHTML = 'Update Password'; });
+            });
         });
 
+        // ======================= FUNGSI GLOBAL =======================
         function showToast(message, isError = false) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -778,44 +932,6 @@
         function toggleAuthMode(mode) {
             document.getElementById('user-login-box').classList.toggle('active', mode === 'user');
             document.getElementById('admin-login-box').classList.toggle('active', mode === 'admin');
-        }
-
-        // --- LOGIN LOGIC ---
-        const loginForm = document.getElementById("login-form");
-        if(loginForm) {
-            loginForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const btn = document.getElementById("btn-login"), msgBox = document.getElementById("login-msg");
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Checking...';
-                msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
-
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", email: document.getElementById("login-email").value.trim(), licenseKey: document.getElementById("login-key").value.trim() }) })
-                .then(res => res.json()).then(data => {
-                    if(data.status === "success") {
-                        data.role = "user"; sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showUserDashboard(data); showToast('Welcome back, ' + data.gamertag + '!');
-                    } else throw new Error(data.message);
-                }).catch(err => { msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
-                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Login to Dashboard'; });
-            });
-        }
-
-        const adminLoginForm = document.getElementById("admin-login-form");
-        if(adminLoginForm) {
-            adminLoginForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const btn = document.getElementById("btn-admin-login"), msgBox = document.getElementById("admin-login-msg");
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...';
-                msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
-
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_login", adminPassword: document.getElementById("admin-key").value.trim() }) })
-                .then(res => res.json()).then(data => {
-                    if(data.status === "success") {
-                        data.role = "admin"; data.adminPassword = document.getElementById("admin-key").value.trim();
-                        sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showAdminDashboard(data); showToast('Access Granted');
-                    } else throw new Error(data.message);
-                }).catch(err => { msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
-                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Authenticate'; });
-            });
         }
 
         // --- DASHBOARD RENDERERS ---
@@ -857,8 +973,9 @@
         function showAdminDashboard(data) {
             document.getElementById("main-navbar").style.display = "none"; document.getElementById("auth-section").style.display = "none"; document.getElementById("admin-dashboard").classList.add("active");
             
+            // Render dari data sementara lalu panggil pembaruan live
             renderAdminDatabase(data.history || []);
-            fetchAdminDatabase(); 
+            fetchAdminDatabase(); // Tarik data paling segar dari API
         }
 
         function fetchAdminDatabase() {
@@ -887,7 +1004,7 @@
                     linkDisplay = `R: ${parsed.realms}\nB: ${parsed.bds}`; 
                 } catch(e) {}
 
-                let dlCount = h.downloads || 0; 
+                let dlCount = h.downloads || 0; // MENAMPILKAN DLS DATA
                 const mcBadge = h.mcVersion ? `<div style="font-size:0.65rem; color: var(--text-muted); margin-top: 0.2rem;">MC: ${h.mcVersion}</div>` : '';
                 
                 tbody.innerHTML += `<tr>
@@ -903,7 +1020,6 @@
             });
         }
 
-        // --- NEW: EDIT RELEASE LOGIC ---
         window.openEditReleaseModal = function(id) {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             const release = session.history.find(h => h.id === id);
@@ -930,60 +1046,7 @@
             document.getElementById("edit-release-modal").classList.remove("show");
         }
 
-        const editReleaseForm = document.getElementById("edit-release-form");
-        if(editReleaseForm) {
-            editReleaseForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-                if(!session || session.role !== 'admin') return;
-
-                const btn = document.getElementById("btn-save-edit");
-                const msgBox = document.getElementById("edit-msg");
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
-                msgBox.style.display = "none";
-
-                const linkObj = {
-                    realms: convertDriveLink(document.getElementById("e-link-realms").value.trim()),
-                    bds: convertDriveLink(document.getElementById("e-link-bds").value.trim())
-                };
-
-                const payload = {
-                    action: "admin_edit_release",
-                    adminPassword: session.adminPassword,
-                    logId: document.getElementById("e-logid").value,
-                    versionName: document.getElementById("e-version").value.trim(),
-                    mcVersion: document.getElementById("e-mcversion").value.trim(),
-                    date: document.getElementById("e-date").value,
-                    link: JSON.stringify(linkObj),
-                    added: document.getElementById("e-added").value.trim(),
-                    fixed: document.getElementById("e-fixed").value.trim(),
-                    removed: document.getElementById("e-removed").value.trim()
-                };
-
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
-                .then(res => res.json())
-                .then(data => {
-                    if(data.status === "success") {
-                        session.history = data.history;
-                        sessionStorage.setItem("heraclaus_session", JSON.stringify(session));
-                        renderAdminDatabase(data.history);
-                        closeEditReleaseModal();
-                        showToast('Release updated successfully!');
-                    } else throw new Error(data.message);
-                })
-                .catch(err => {
-                    msgBox.className = "msg-box msg-error";
-                    msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message;
-                    msgBox.style.display = "block";
-                })
-                .finally(() => {
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Changes';
-                });
-            });
-        }
-
-        // --- NEW: ADMIN MEMBER MANAGEMENT ---
+        // --- ADMIN MEMBER MANAGEMENT ---
         function fetchAdminMembers() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_get_members", adminPassword: session.adminPassword }) })
@@ -1064,7 +1127,6 @@
                 receiptHtml = `<p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; padding: 1rem; background: rgba(255,255,255,0.02); border-radius: 8px; border: 1px dashed var(--border-light);">No payment receipt provided.</p>`;
             }
 
-            // Tombol Aksi Bawah (Export & Link Eksternal)
             let actionButtonsHtml = `
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem;">
                     <a href="${m.receipt}" target="_blank" class="btn btn-outline w-full" style="font-size: 0.8rem;"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Full Image</a>
@@ -1100,21 +1162,16 @@
                 ${receiptHtml}
                 ${actionButtonsHtml}
             `;
-            
             document.getElementById('invoice-modal').classList.add('show');
         }
 
-        // --- FUNGSI EXPORT INVOICE KE GAMBAR ---
         window.exportInvoiceImage = function(index, btnEl) {
             const m = window.adminMembersData[index];
             if (!m) return;
-
-            // Efek loading pada tombol
             const originalText = btnEl.innerHTML;
             btnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Rendering...';
             btnEl.disabled = true;
 
-            // Masukkan data ke Hidden Template
             document.getElementById('ex-gamertag').innerText = m.gamertag;
             document.getElementById('ex-email').innerText = m.email;
             document.getElementById('ex-date').innerText = new Date(m.date).toLocaleString();
@@ -1125,8 +1182,6 @@
 
             const imgEl = document.getElementById('ex-image');
             let imgSrc = m.receipt;
-            
-            // Bypass CORS Google Drive via Public Image Proxy agar bisa dirender HTML2Canvas
             const match = m.receipt ? m.receipt.match(/\/d\/([a-zA-Z0-9_-]+)/) : null;
             if(match && match[1]) {
                 imgSrc = `https://api.allorigins.win/raw?url=${encodeURIComponent('https://drive.google.com/uc?id=' + match[1])}`;
@@ -1134,38 +1189,24 @@
 
             const renderAndDownload = () => {
                 const template = document.getElementById('export-template');
-                html2canvas(template, {
-                    useCORS: true,
-                    allowTaint: true,
-                    backgroundColor: '#050505',
-                    scale: 2 // High Resolution
-                }).then(canvas => {
+                html2canvas(template, { useCORS: true, allowTaint: true, backgroundColor: '#050505', scale: 2 }).then(canvas => {
                     const link = document.createElement('a');
                     link.download = `Invoice_Heraclaus_${m.gamertag.replace(/[^a-zA-Z0-9]/g, '')}.png`;
                     link.href = canvas.toDataURL('image/png');
                     link.click();
-                    
-                    // Kembalikan status tombol
-                    btnEl.innerHTML = originalText;
-                    btnEl.disabled = false;
+                    btnEl.innerHTML = originalText; btnEl.disabled = false;
                     showToast('Invoice exported securely!');
                 }).catch(e => {
                     console.error("Canvas Error: ", e);
                     showToast('Failed to render image. Check console.', true);
-                    btnEl.innerHTML = originalText;
-                    btnEl.disabled = false;
+                    btnEl.innerHTML = originalText; btnEl.disabled = false;
                 });
             };
 
-            // Tunggu gambar beres diload (kalau ada) sebelum dirender
             if (imgSrc && imgSrc !== "-" && imgSrc !== "") {
                 imgEl.style.display = "block";
                 imgEl.onload = renderAndDownload;
-                imgEl.onerror = () => {
-                    console.warn("Failed to load receipt through proxy. Rendering without receipt image.");
-                    imgEl.style.display = "none";
-                    renderAndDownload();
-                };
+                imgEl.onerror = () => { imgEl.style.display = "none"; renderAndDownload(); };
                 imgEl.src = imgSrc;
             } else {
                 imgEl.style.display = "none";
@@ -1173,9 +1214,7 @@
             }
         }
 
-        window.closeInvoiceModal = function() {
-            document.getElementById('invoice-modal').classList.remove('show');
-        }
+        window.closeInvoiceModal = function() { document.getElementById('invoice-modal').classList.remove('show'); }
 
         window.adminToggleMemberStatus = function(row, currentStatus) {
             const newStatus = currentStatus === 'APPROVED' ? 'SUSPENDED' : 'APPROVED';
@@ -1214,43 +1253,23 @@
             box.scrollTop = box.scrollHeight;
         }
 
-        // User Chat Functions
         function fetchUserTicket() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "user_get_ticket", email: session.email }) })
             .then(res => res.json()).then(data => { 
                 if(data.status === "success") {
                     renderChatBox('user-chat-box', data.ticket ? data.ticket.messages : [], true); 
-                    
-                    // Lógica Unread Badge (Pesan belum dibaca oleh User)
                     const badge = document.getElementById('user-ticket-badge');
                     if (data.ticket && data.ticket.messages.length > 0) {
                         const lastMsg = data.ticket.messages[data.ticket.messages.length - 1];
-                        // Jika pengirim terakhir admin dan user sedang tidak di tab support
                         if (lastMsg.sender === 'admin' && !document.getElementById('tab-user-support').classList.contains('active')) {
                             badge.style.display = 'inline-flex';
-                        } else {
-                            badge.style.display = 'none';
-                        }
+                        } else { badge.style.display = 'none'; }
                     }
                 }
             });
         }
 
-        const userChatForm = document.getElementById("user-chat-form");
-        if(userChatForm) {
-            userChatForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const session = JSON.parse(sessionStorage.getItem("heraclaus_session")), input = document.getElementById('user-chat-input'), text = input.value.trim(), btn = document.getElementById('btn-user-chat');
-                if(!text) return;
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; input.value = "";
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "user_send_msg", email: session.email, gamertag: session.gamertag, msg: text }) })
-                .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('user-chat-box', data.ticket.messages, true); })
-                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
-            });
-        }
-
-        // Admin Chat Functions
         function fetchAdminTickets() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_get_tickets", adminPassword: session.adminPassword }) })
@@ -1260,7 +1279,6 @@
                     if(!data.tickets || data.tickets.length === 0) return list.innerHTML = `<div style="padding: 1rem; color: var(--text-muted); text-align: center; font-size: 0.8rem;">No active tickets.</div>`;
                     
                     let unreadCount = 0;
-
                     data.tickets.forEach(t => {
                         const lastMsg = t.messages.length > 0 ? t.messages[t.messages.length-1] : null;
                         const lastMsgText = lastMsg ? lastMsg.text : "No message";
@@ -1268,7 +1286,6 @@
                         if (isUnread) unreadCount++;
 
                         const activeCls = (t.email === activeAdminTicketEmail) ? "active" : "";
-                        // Menambahkan titik merah untuk pesan yang belum terbaca (Unread Message)
                         const unreadDot = isUnread ? `<span style="width:8px;height:8px;background:var(--accent-danger);border-radius:50%;display:inline-block;margin-left:6px;box-shadow:0 0 5px var(--accent-danger);"></span>` : "";
 
                         list.innerHTML += `<div class="ticket-item ${activeCls}" onclick="openAdminTicket('${t.email}', '${t.gamertag}')">
@@ -1279,66 +1296,38 @@
                         if(t.email === activeAdminTicketEmail) renderChatBox('admin-chat-box', t.messages, false);
                     });
 
-                    // Lógica Unread Badge (Pesan belum dibaca oleh Admin)
                     const badge = document.getElementById('admin-ticket-badge');
-                    if(unreadCount > 0) {
-                        badge.style.display = 'inline-flex';
-                        badge.innerText = unreadCount;
-                    } else {
-                        badge.style.display = 'none';
-                    }
+                    if(unreadCount > 0) { badge.style.display = 'inline-flex'; badge.innerText = unreadCount; } 
+                    else { badge.style.display = 'none'; }
                 }
             });
         }
 
         window.openAdminTicket = function(email, gamertag) {
             activeAdminTicketEmail = email;
-            document.getElementById('ac-gamertag').innerText = gamertag;
-            document.getElementById('ac-email').innerText = email;
-            
-            // Enable inputs & delete button
-            document.getElementById('admin-chat-input').disabled = false;
-            document.getElementById('btn-admin-chat').disabled = false;
+            document.getElementById('ac-gamertag').innerText = gamertag; document.getElementById('ac-email').innerText = email;
+            document.getElementById('admin-chat-input').disabled = false; document.getElementById('btn-admin-chat').disabled = false;
             document.getElementById('btn-resolve-ticket').style.display = 'inline-flex';
-            
-            fetchAdminTickets(); // trigger immediate refresh
+            fetchAdminTickets(); 
         }
 
         window.adminDeleteTicket = function() {
             if(!activeAdminTicketEmail) return;
             if(!confirm("Resolve and delete this ticket? Chat history will be permanently lost, allowing the user to create a new ticket later.")) return;
-            
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_ticket", adminPassword: session.adminPassword, targetEmail: activeAdminTicketEmail }) })
             .then(res => res.json()).then(data => { 
                 if(data.status === "success") { 
                     activeAdminTicketEmail = null;
-                    document.getElementById('ac-gamertag').innerText = "Select User";
-                    document.getElementById('ac-email').innerText = "No active selection";
-                    document.getElementById('admin-chat-input').disabled = true;
-                    document.getElementById('btn-admin-chat').disabled = true;
+                    document.getElementById('ac-gamertag').innerText = "Select User"; document.getElementById('ac-email').innerText = "No active selection";
+                    document.getElementById('admin-chat-input').disabled = true; document.getElementById('btn-admin-chat').disabled = true;
                     document.getElementById('btn-resolve-ticket').style.display = 'none';
                     document.getElementById('admin-chat-box').innerHTML = '<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;">Select a ticket from the left to start replying.</div>';
-                    showToast('Ticket marked as resolved and deleted.');
-                    fetchAdminTickets(); 
+                    showToast('Ticket marked as resolved and deleted.'); fetchAdminTickets(); 
                 } 
             });
         }
 
-        const adminChatForm = document.getElementById("admin-chat-form");
-        if(adminChatForm) {
-            adminChatForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const session = JSON.parse(sessionStorage.getItem("heraclaus_session")), input = document.getElementById('admin-chat-input'), text = input.value.trim(), btn = document.getElementById('btn-admin-chat');
-                if(!text || !activeAdminTicketEmail) return;
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; input.value = "";
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_send_msg", adminPassword: session.adminPassword, targetEmail: activeAdminTicketEmail, msg: text }) })
-                .then(res => res.json()).then(data => { if(data.status === "success") fetchAdminTickets(); })
-                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
-            });
-        }
-
-        // --- TAB & POLLING MANAGEMENT ---
         function switchTab(role, tabId, element) {
             const dash = document.getElementById(`${role}-dashboard`);
             dash.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -1347,160 +1336,44 @@
             element.classList.add(role === 'admin' ? 'admin-active' : 'active');
             if (window.innerWidth <= 768) toggleSidebar(`${role}-sidebar`);
 
-            // Intervals
             if(pollingInterval) clearInterval(pollingInterval);
             
-            // Logika membersihkan badge notifikasi saat tab chat dibuka
-            if(role === 'user' && tabId === 'support') { 
-                document.getElementById('user-ticket-badge').style.display = 'none';
-                fetchUserTicket(); 
-                pollingInterval = setInterval(fetchUserTicket, 8000); 
-            }
+            if(role === 'user' && tabId === 'support') { document.getElementById('user-ticket-badge').style.display = 'none'; fetchUserTicket(); pollingInterval = setInterval(fetchUserTicket, 8000); }
             if(role === 'admin' && tabId === 'tickets') { fetchAdminTickets(); pollingInterval = setInterval(fetchAdminTickets, 8000); }
             if(role === 'admin' && tabId === 'members') { fetchAdminMembers(); pollingInterval = setInterval(fetchAdminMembers, 10000); }
-            
-            // JADIKAN DATA RELEASE TERSINKRON LIVE 
             if(role === 'admin' && tabId === 'database') { fetchAdminDatabase(); pollingInterval = setInterval(fetchAdminDatabase, 10000); }
         }
 
-        // --- SECURE DOWNLOAD WITH ANIMATED OVERLAY ---
         function triggerDownload(url) { 
-            const overlay = document.getElementById('download-overlay');
-            const statusText = document.getElementById('dl-status-text');
-            
-            // Tampilkan Overlay Loading Animasi
-            overlay.classList.add('show');
-            statusText.innerText = "Connecting to secure server...";
-
-            // Simulasi proses sekuriti agar terlihat profesional
+            const overlay = document.getElementById('download-overlay'); const statusText = document.getElementById('dl-status-text');
+            overlay.classList.add('show'); statusText.innerText = "Connecting to secure server...";
             setTimeout(() => { statusText.innerText = "Authenticating license key..."; }, 1500);
             setTimeout(() => { statusText.innerText = "Requesting file from database..."; }, 3000);
-            
-            // Eksekusi Download & Tutup Overlay
             setTimeout(() => {
                 overlay.classList.remove('show');
-                
-                // Cek apakah link dari Google Drive
-                if (url.includes('drive.google.com')) {
-                    // Google Drive akan tetap membuka tab baru untuk melewati blokir iframe/virus scan
-                    window.open(url, '_blank');
-                    showToast('Download request sent to browser.');
-                } else {
-                    // TRIK DOWNLOAD LATAR BELAKANG: Untuk Hosting Sendiri / Discord CDN / Github
-                    const tempLink = document.createElement('a');
-                    tempLink.style.display = 'none';
-                    tempLink.href = url;
-                    tempLink.setAttribute('download', '');
-                    document.body.appendChild(tempLink);
-                    tempLink.click();
-                    document.body.removeChild(tempLink);
-                    showToast('Download started securely.');
+                if (url.includes('drive.google.com')) { window.open(url, '_blank'); showToast('Download request sent to browser.'); } 
+                else {
+                    const tempLink = document.createElement('a'); tempLink.style.display = 'none'; tempLink.href = url; tempLink.setAttribute('download', '');
+                    document.body.appendChild(tempLink); tempLink.click(); document.body.removeChild(tempLink); showToast('Download started securely.');
                 }
             }, 4500);
         }
 
-        // FUNGSI PEREKAM STATISTIK DI LATAR BELAKANG
         function recordDownloadStat() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
-            fetch(GOOGLE_SCRIPT_URL, { 
-                method: "POST", 
-                body: JSON.stringify({ action: "record_download", email: session.email, versionName: session.addonHistory[0].versionName }) 
-            });
-        }
-
-        // Assign Dual Buttons Download Actions
-        const btnDlRealms = document.getElementById("btn-download-realms");
-        if(btnDlRealms) {
-            btnDlRealms.addEventListener("click", function() {
-                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-                if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
-                
-                let link = session.addonHistory[0].link;
-                try { link = JSON.parse(link).realms; } catch(e) {} // Backward compatible
-                
-                triggerDownload(link); 
-                recordDownloadStat(); // PANGGIL REKAM HISTORI
-            });
-        }
-
-        const btnDlBds = document.getElementById("btn-download-bds");
-        if(btnDlBds) {
-            btnDlBds.addEventListener("click", function() {
-                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-                if (!session || !session.addonHistory || session.addonHistory.length === 0) return;
-                
-                let link = session.addonHistory[0].link;
-                try { link = JSON.parse(link).bds; } catch(e) {} // Backward compatible
-                
-                triggerDownload(link); 
-                recordDownloadStat(); // PANGGIL REKAM HISTORI
-            });
-        }
-
-        const adminPublishForm = document.getElementById("admin-publish-form");
-        if(adminPublishForm) {
-            adminPublishForm.addEventListener("submit", function(e) {
-                e.preventDefault();
-                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-                if(!session || session.role !== 'admin') return logout();
-                const btn = document.getElementById("btn-publish-release"), msgBox = document.getElementById("publish-msg");
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Publishing...'; msgBox.style.display = "none";
-                
-                // Susun link ganda dalam format JSON untuk backend Google Scripts
-                const linkObj = {
-                    realms: convertDriveLink(document.getElementById("p-link-realms").value.trim()),
-                    bds: convertDriveLink(document.getElementById("p-link-bds").value.trim())
-                };
-                const finalLink = JSON.stringify(linkObj);
-
-                // AMBIL DATA DARI CHECKBOX SEND EMAIL
-                const isSendEmail = document.getElementById("p-send-email").checked;
-
-                // UPDATED: Include mcVersion from form
-                fetch(GOOGLE_SCRIPT_URL, { 
-                    method: "POST", 
-                    body: JSON.stringify({ 
-                        action: "admin_publish_release", 
-                        adminPassword: session.adminPassword, 
-                        versionName: document.getElementById("p-version").value.trim(), 
-                        mcVersion: document.getElementById("p-mcversion").value.trim(),
-                        date: document.getElementById("p-date").value, 
-                        link: finalLink, 
-                        added: document.getElementById("p-added").value.trim(), 
-                        fixed: document.getElementById("p-fixed").value.trim(), 
-                        removed: document.getElementById("p-removed").value.trim(), 
-                        sendEmail: isSendEmail 
-                    }) 
-                })
-                .then(res => res.json()).then(data => { if(data.status === "success") { document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date(); session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Published to all users!'); } else throw new Error(data.message); })
-                .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
-                .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All'; });
-            });
-        }
-
-        const changePwdForm = document.getElementById("change-pwd-form");
-        if(changePwdForm) {
-            changePwdForm.addEventListener("submit", function(e) {
-                e.preventDefault(); const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); if(!session) return logout();
-                const btn = document.getElementById("btn-change-pwd"), msgBox = document.getElementById("cp-msg"), oldKey = document.getElementById("cp-old").value.trim(), newKey = document.getElementById("cp-new").value.trim();
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Processing...'; msgBox.style.display = "none";
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "change_password", email: session.email, oldKey: oldKey, newKey: newKey }) })
-                .then(res => res.json()).then(data => { if(data.status === "success") { session.licenseKey = newKey; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); document.getElementById("change-pwd-form").reset(); showToast('Security updated!'); } else throw new Error(data.message); })
-                .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
-                .finally(() => { btn.disabled = false; btn.innerHTML = 'Update Password'; });
-            });
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "record_download", email: session.email, versionName: session.addonHistory[0].versionName }) });
         }
 
         function convertDriveLink(url) { 
             const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/); 
-            // Menambahkan &confirm=t ke URL Google Drive agar melewati scan virus
             return (match && match[1]) ? `https://drive.google.com/uc?export=download&confirm=t&id=${match[1]}` : url; 
         }
         
-        function deleteRelease(id) { if(!confirm("Delete this release permanently?")) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) }).then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Release deleted.'); } else alert(data.message); }); }
-        function toggleSidebar(sidebarId) { const sidebar = document.getElementById(sidebarId), overlay = sidebar.previousElementSibling; sidebar.classList.toggle('show'); overlay.classList.toggle('show'); }
-        function logout() { sessionStorage.removeItem("heraclaus_session"); location.reload(); }
+        window.deleteRelease = function(id) { if(!confirm("Delete this release permanently?")) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) }).then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Release deleted.'); } else alert(data.message); }); }
+        window.toggleSidebar = function(sidebarId) { const sidebar = document.getElementById(sidebarId), overlay = sidebar.previousElementSibling; sidebar.classList.toggle('show'); overlay.classList.toggle('show'); }
+        window.logout = function() { sessionStorage.removeItem("heraclaus_session"); location.reload(); }
+        window.switchTab = switchTab;
     </script>
 </body>
 </html>
