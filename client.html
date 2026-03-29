@@ -1352,8 +1352,8 @@
             overlay.classList.add('show'); 
             statusText.innerText = "Connecting to secure server...";
             
-            // Deteksi jika ini adalah link pesan Discord
-            if (url.includes('discord.com/channels/')) {
+            // Deteksi jika ini adalah link pesan Discord (Mencakup discord.com maupun discordapp.com)
+            if (url.match(/discord(?:app)?\.com\/channels\//i)) {
                 setTimeout(() => { statusText.innerText = "Extracting fresh file from secure vault..."; }, 1000);
                 
                 fetch(GOOGLE_SCRIPT_URL, { 
@@ -1369,14 +1369,9 @@
                         statusText.innerText = "Starting direct download...";
                         setTimeout(() => {
                             overlay.classList.remove('show');
-                            // Buat elemen <a> sementara untuk force download di background
-                            const tempLink = document.createElement('a'); 
-                            tempLink.style.display = 'none'; 
-                            tempLink.href = data.directUrl; 
-                            tempLink.setAttribute('download', '');
-                            document.body.appendChild(tempLink); 
-                            tempLink.click(); 
-                            document.body.removeChild(tempLink); 
+                            // Gunakan window.location.href agar browser langsung memulai stream unduhan 
+                            // tanpa pop-up blocker atau intercept aplikasi
+                            window.location.href = data.directUrl;
                             showToast('Download started securely.');
                         }, 1000);
                     } else {
@@ -1398,13 +1393,8 @@
                         window.open(url, '_blank'); 
                         showToast('Directed to secure download page.'); 
                     } else {
-                        const tempLink = document.createElement('a'); 
-                        tempLink.style.display = 'none'; 
-                        tempLink.href = url; 
-                        tempLink.setAttribute('download', '');
-                        document.body.appendChild(tempLink); 
-                        tempLink.click(); 
-                        document.body.removeChild(tempLink); 
+                        // Gunakan metode navigasi yang sama untuk fallback
+                        window.location.href = url;
                         showToast('Download started securely.');
                     }
                 }, 3000);
