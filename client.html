@@ -289,8 +289,8 @@
                         <div><label>Release Date</label><input type="date" id="e-date" required></div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        <div class="form-group" style="margin-bottom: 0;"><label>Realms Link</label><input type="url" id="e-link-realms" required placeholder="https://discord.com/channels/..."></div>
-                        <div class="form-group" style="margin-bottom: 0;"><label>BDS Link</label><input type="url" id="e-link-bds" required placeholder="https://discord.com/channels/..."></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>Realms Link</label><input type="url" id="e-link-realms" required></div>
+                        <div class="form-group" style="margin-bottom: 0;"><label>BDS Link</label><input type="url" id="e-link-bds" required></div>
                     </div>
                     <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> New Features</label><textarea id="e-added" class="focus-emerald"></textarea></div>
                     <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> Bug Fixes</label><textarea id="e-fixed" class="focus-blue"></textarea></div>
@@ -591,11 +591,11 @@
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                                 <div class="form-group" style="margin-bottom: 0;">
                                     <label>Realms Link</label>
-                                    <input type="url" id="p-link-realms" required placeholder="https://discord.com/channels/...">
+                                    <input type="url" id="p-link-realms" required placeholder="Direct Link (Discord CDN)">
                                 </div>
                                 <div class="form-group" style="margin-bottom: 0;">
                                     <label>BDS Link</label>
-                                    <input type="url" id="p-link-bds" required placeholder="https://discord.com/channels/...">
+                                    <input type="url" id="p-link-bds" required placeholder="Direct Link (Discord CDN)">
                                 </div>
                             </div>
 
@@ -1344,61 +1344,19 @@
             if(role === 'admin' && tabId === 'database') { fetchAdminDatabase(); pollingInterval = setInterval(fetchAdminDatabase, 10000); }
         }
 
-        // FUNGSI DOWNLOAD BARU YANG DIPERBARUI
         function triggerDownload(url) { 
-            const overlay = document.getElementById('download-overlay'); 
-            const statusText = document.getElementById('dl-status-text');
-            
-            overlay.classList.add('show'); 
-            statusText.innerText = "Connecting to secure server...";
-            
-            // Deteksi jika ini adalah link pesan Discord (Mencakup discord.com maupun discordapp.com)
-            if (url.match(/discord(?:app)?\.com\/channels\//i)) {
-                setTimeout(() => { statusText.innerText = "Extracting fresh file from secure vault..."; }, 1000);
-                
-                fetch(GOOGLE_SCRIPT_URL, { 
-                    method: "POST", 
-                    body: JSON.stringify({ 
-                        action: "get_fresh_download", 
-                        url: url 
-                    }) 
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.status === "success") {
-                        statusText.innerText = "Starting direct download...";
-                        setTimeout(() => {
-                            overlay.classList.remove('show');
-                            // Gunakan window.location.href agar browser langsung memulai stream unduhan 
-                            // tanpa pop-up blocker atau intercept aplikasi
-                            window.location.href = data.directUrl;
-                            showToast('Download started securely.');
-                        }, 1000);
-                    } else {
-                        overlay.classList.remove('show');
-                        showToast(data.message, true);
-                    }
-                })
-                .catch(err => {
-                    overlay.classList.remove('show');
-                    showToast('Connection error. Please try again.', true);
-                });
-            } 
-            // Fallback untuk link lama (Google Drive atau lainnya)
-            else {
-                setTimeout(() => { statusText.innerText = "Requesting file from database..."; }, 1500);
-                setTimeout(() => {
-                    overlay.classList.remove('show');
-                    if (url.includes('drive.google.com')) { 
-                        window.open(url, '_blank'); 
-                        showToast('Directed to secure download page.'); 
-                    } else {
-                        // Gunakan metode navigasi yang sama untuk fallback
-                        window.location.href = url;
-                        showToast('Download started securely.');
-                    }
-                }, 3000);
-            }
+            const overlay = document.getElementById('download-overlay'); const statusText = document.getElementById('dl-status-text');
+            overlay.classList.add('show'); statusText.innerText = "Connecting to secure server...";
+            setTimeout(() => { statusText.innerText = "Authenticating license key..."; }, 1500);
+            setTimeout(() => { statusText.innerText = "Requesting file from database..."; }, 3000);
+            setTimeout(() => {
+                overlay.classList.remove('show');
+                if (url.includes('drive.google.com')) { window.open(url, '_blank'); showToast('Download request sent to browser.'); } 
+                else {
+                    const tempLink = document.createElement('a'); tempLink.style.display = 'none'; tempLink.href = url; tempLink.setAttribute('download', '');
+                    document.body.appendChild(tempLink); tempLink.click(); document.body.removeChild(tempLink); showToast('Download started securely.');
+                }
+            }, 4500);
         }
 
         function recordDownloadStat() {
