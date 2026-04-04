@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Client Portal | Heraclaus Admin Suite</title>
     
+    <!-- Updated Fonts for Better Readability -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
+    <!-- Library untuk Convert HTML ke Gambar (Invoice Export) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
@@ -214,6 +216,7 @@
         <div class="dl-desc" id="dl-status-text">Connecting to secure server...</div>
     </div>
 
+    <!-- INVOICE MODAL -->
     <div class="modal-overlay" id="invoice-modal">
         <div class="modal-card">
             <div class="modal-header">
@@ -224,6 +227,7 @@
         </div>
     </div>
 
+    <!-- EDIT RELEASE MODAL -->
     <div class="modal-overlay" id="edit-release-modal">
         <div class="modal-card" style="max-width: 48rem;">
             <div class="modal-header">
@@ -302,6 +306,7 @@
         <div class="login-footer"><p>© 2026 Heraclaus. Secure Access.</p></div>
     </main>
 
+    <!-- USER DASHBOARD -->
     <div class="dashboard-wrapper" id="user-dashboard">
         <div class="sidebar-overlay" onclick="toggleSidebar('user-sidebar')"></div>
         <aside class="sidebar" id="user-sidebar">
@@ -434,6 +439,7 @@
                     </div>
                 </div>
 
+                <!-- USER SOCIAL TAB -->
                 <div id="tab-user-social" class="tab-content">
                     <h2 class="section-title font-display">Global Community Chat</h2>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">Connect with other users. You can delete your own messages.</p>
@@ -482,6 +488,7 @@
         </main>
     </div>
 
+    <!-- ADMIN DASHBOARD -->
     <div class="dashboard-wrapper" id="admin-dashboard">
         <div class="sidebar-overlay" onclick="toggleSidebar('admin-sidebar')"></div>
         <aside class="sidebar" id="admin-sidebar" style="border-right-color: rgba(245, 158, 11, 0.2);">
@@ -574,6 +581,7 @@
                     </div>
                 </div>
 
+                <!-- ADMIN SOCIAL MODERATION -->
                 <div id="tab-admin-social" class="tab-content">
                     <h2 class="section-title font-display">Global Chat Moderation</h2>
                     <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">As an admin, you can delete any inappropriate messages from the global chat.</p>
@@ -603,6 +611,7 @@
         </main>
     </div>
     
+    <!-- HIDDEN TEMPLATE UNTUK EXPORT INVOICE IMAGE -->
     <div style="position: absolute; left: -9999px; top: 0; z-index: -100;">
         <div id="export-template" style="width: 480px; background: #050505; padding: 40px; font-family: 'Plus Jakarta Sans', sans-serif; color: #fff; box-sizing: border-box; position: relative;">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);"></div>
