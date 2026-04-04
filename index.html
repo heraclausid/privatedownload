@@ -420,6 +420,31 @@
             loadPublicServers();
         });
 
+        function checkServerStatus(ip, port, elementId) {
+            const apiPort = port ? port : '19132'; // Selalu butuh port untuk API
+            
+            fetch(`https://api.mcsrvstat.us/bedrock/2/${ip}:${apiPort}`)
+                .then(res => res.json())
+                .then(data => {
+                    const el = document.getElementById(`status-${elementId}`);
+                    if (!el) return;
+                    
+                    if (data.online) {
+                        el.innerHTML = `<i class="fa-solid fa-circle" style="color: #10b981; font-size: 0.5rem; vertical-align: middle; margin-right: 0.3rem;"></i><span style="color: #fff; font-weight: 600;">${data.players.online}</span><span style="color: var(--text-muted);">/${data.players.max}</span>`;
+                        el.style.borderColor = 'rgba(16, 185, 129, 0.3)';
+                        el.style.background = 'rgba(16, 185, 129, 0.1)';
+                    } else {
+                        el.innerHTML = `<i class="fa-solid fa-circle" style="color: #f43f5e; font-size: 0.5rem; vertical-align: middle; margin-right: 0.3rem;"></i><span style="color: var(--text-muted);">Offline</span>`;
+                        el.style.borderColor = 'rgba(244, 63, 94, 0.3)';
+                        el.style.background = 'rgba(244, 63, 94, 0.1)';
+                    }
+                })
+                .catch(err => {
+                    const el = document.getElementById(`status-${elementId}`);
+                    if (el) el.innerHTML = `<i class="fa-solid fa-circle-question" style="color: var(--text-muted);"></i> Unknown`;
+                });
+        }
+
         function loadPublicServers() {
             fetch(GOOGLE_SCRIPT_URL + "?action=get_servers")
             .then(res => res.json())
@@ -433,14 +458,10 @@
                     }
                     
                     data.servers.forEach(s => {
-                        // Cek visibilitas port
                         const isPortPublic = s.isPortPublic !== false;
                         const portVal = isPortPublic ? s.port : '';
-                        
-                        // Tampilkan port secara publik jika ada, bahkan jika itu 19132
                         const portText = portVal ? `<span style="color: var(--text-muted);">:${portVal}</span>` : '';
                         
-                        // Setel tombol sesuai Link Type
                         let btnIcon = '<i class="fa-solid fa-arrow-up-right-from-square"></i>';
                         let btnText = 'Join Server / Group';
                         
@@ -454,7 +475,6 @@
                             btnIcon = '<i class="fa-solid fa-globe"></i>';
                             btnText = 'Visit Website';
                         } else {
-                            // Untuk data server legacy (sebelum ada fitur opsi link)
                             if (s.link && s.link.includes('discord')) { btnIcon = '<i class="fa-brands fa-discord"></i>'; btnText = 'Join Discord'; }
                             else if (s.link && (s.link.includes('whatsapp') || s.link.includes('wa.me'))) { btnIcon = '<i class="fa-brands fa-whatsapp"></i>'; btnText = 'Join WhatsApp'; }
                         }
@@ -462,7 +482,10 @@
                         grid.innerHTML += `
                             <div class="product-box" style="margin-bottom: 0; display: flex; flex-direction: column;">
                                 <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-light); flex-grow: 1;">
-                                    <h3 style="font-family: 'Outfit'; font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; line-height: 1.2;">${s.name}</h3>
+                                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; gap: 0.5rem;">
+                                        <h3 style="font-family: 'Outfit'; font-size: 1.25rem; color: #fff; line-height: 1.2; margin: 0; word-break: break-word;">${s.name}</h3>
+                                        <div id="status-${s.id}" style="font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 0.2rem 0.5rem; border-radius: 4px; border: 1px solid var(--border-light); color: var(--text-muted); flex-shrink: 0; display: flex; align-items: center;"><i class="fa-solid fa-spinner fa-spin" style="margin-right: 0.3rem;"></i> Pinging...</div>
+                                    </div>
                                     <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0;">${s.desc}</p>
                                 </div>
                                 <div style="padding: 1rem 1.5rem; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 0.75rem;">
@@ -474,13 +497,15 @@
                                 </div>
                             </div>
                         `;
+
+                        // Trigger API ping setelah elemen dibuat
+                        checkServerStatus(s.ip, s.port, s.id);
                     });
                 }
             }).catch(e => console.log(e));
         }
         
         window.copyIp = function(ip, port, btn) {
-            // Port selalu disalin jika valuenya tidak kosong
             const text = ip + (port ? ":" + port : "");
             const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
             const oldHtml = btn.innerHTML;
