@@ -289,11 +289,11 @@
             <div class="text-center animate-on-scroll">
                 <span class="badge" style="margin-bottom: 1rem;"><i class="fa-solid fa-network-wired"></i> Partner Servers</span>
                 <h2>Community Servers</h2>
-                <p style="margin-top: 0.5rem; max-width: 40rem; margin-inline: auto;">Bergabung dan bermain di server-server luar biasa yang dikelola oleh komunitas Pro Member Heraclaus secara langsung.</p>
+                <p style="margin-top: 0.5rem; max-width: 40rem; margin-inline: auto;">Join and play on incredible servers hosted directly by the Heraclaus Pro Member community.</p>
             </div>
             
             <div class="grid-cards animate-on-scroll" id="public-server-grid" style="margin-top: 2.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
-                <div style="text-align:center; padding: 2rem; color: var(--text-muted); grid-column: 1 / -1;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat daftar server...</div>
+                <div style="text-align:center; padding: 2rem; color: var(--text-muted); grid-column: 1 / -1;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading server list...</div>
             </div>
         </div>
     </section>
@@ -428,7 +428,7 @@
                 if(data.status === "success") {
                     grid.innerHTML = "";
                     if(!data.servers || data.servers.length === 0) {
-                        grid.innerHTML = `<div style="text-align:center; color: var(--text-muted); grid-column: 1 / -1;">Belum ada server yang didaftarkan. Jadilah yang pertama!</div>`;
+                        grid.innerHTML = `<div style="text-align:center; color: var(--text-muted); grid-column: 1 / -1;">No servers registered yet. Be the first!</div>`;
                         return;
                     }
                     
