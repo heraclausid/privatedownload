@@ -9,12 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Library untuk Convert HTML ke Gambar (Invoice Export) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
     <style>
-        /* * PURE VANILLA CSS - COMPACT SAAS THEME * */
         :root {
             --bg-base: #050505; --bg-surface: #0a0a0a; --bg-card: rgba(255, 255, 255, 0.03);
             --border-light: rgba(255, 255, 255, 0.08); --border-highlight: rgba(255, 255, 255, 0.15);
@@ -39,7 +36,6 @@
         .blob-1 { top: -10%; left: -10%; width: 50vw; height: 50vw; background: rgba(139, 92, 246, 0.15); }
         .blob-2 { bottom: -10%; right: -10%; width: 40vw; height: 40vw; background: rgba(59, 130, 246, 0.15); }
 
-        /* --- PRECISE BUTTONS --- */
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0 1rem; min-height: 2.25rem; border-radius: 8px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s ease; border: none; cursor: pointer; font-family: inherit; }
         .btn-gradient { background: var(--gradient-admin); color: #fff; border: 1px solid rgba(255,255,255,0.1); }
         .btn-gradient:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3); filter: brightness(1.1); }
@@ -58,7 +54,6 @@
         .badge { display: inline-flex; align-items: center; justify-content: center; padding: 0.2rem 0.5rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); gap: 0.3rem; }
         .badge.success { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.25); }
 
-        /* --- COMPACT FORMS --- */
         .form-group { margin-bottom: 1rem; position: relative; }
         label { display: block; font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.3rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
         input[type="text"], input[type="email"], input[type="password"], input[type="date"], input[type="url"], textarea { width: 100%; padding: 0.6rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; outline: none; transition: all 0.3s; font-family: inherit; }
@@ -74,18 +69,15 @@
         .msg-error { background: rgba(244, 63, 94, 0.1); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.3); }
         .msg-success { background: rgba(16, 185, 129, 0.1); color: var(--accent-success); border: 1px solid rgba(16, 185, 129, 0.3); }
 
-        /* --- GLOBAL SCROLLBAR (TEMA GELAP MENYATU) --- */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-thumb { background: var(--border-highlight); border-radius: 10px; }
         ::-webkit-scrollbar-track { background: transparent; }
         textarea::-webkit-scrollbar { width: 4px; height: 4px; }
 
-        /* --- TOAST --- */
         #toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 1000; display: flex; flex-direction: column; gap: 0.5rem; }
         .toast { background: rgba(16, 185, 129, 0.95); color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 15px rgba(0,0,0,0.2); backdrop-filter: blur(10px); transform: translateY(50px); opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; gap: 0.6rem; border: 1px solid rgba(255,255,255,0.2); }
         .toast.show { transform: translateY(0); opacity: 1; }
 
-        /* --- OVERLAYS --- */
         .download-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(5, 5, 5, 0.85); z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; backdrop-filter: blur(8px); }
         .download-overlay.show { opacity: 1; pointer-events: auto; }
         .dl-spinner { font-size: 3.5rem; color: var(--accent-primary); animation: spin 1s linear infinite; margin-bottom: 1.5rem; }
@@ -100,11 +92,9 @@
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; flex-shrink: 0; }
         .modal-body { overflow-y: auto; padding-right: 0.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
 
-        /* --- COMPACT HEADERS --- */
         .navbar { position: fixed; top: 0; width: 100%; height: 3.5rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; }
         .nav-container { max-width: 64rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; display: flex; justify-content: space-between; align-items: center; }
 
-        /* --- CENTERED LOGIN --- */
         .auth-wrapper { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 5rem 1.25rem 2rem 1.25rem; min-height: 100vh; }
         .auth-container { max-width: 24rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 12px; padding: 2rem 1.75rem; box-shadow: 0 10px 30px rgba(0,0,0,0.2); backdrop-filter: blur(10px); display: none; flex-direction: column; align-items: stretch; margin: 0 auto; }
         .auth-container.active { display: flex; animation: fadeIn 0.4s ease; }
@@ -115,7 +105,6 @@
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- DASHBOARD LAYOUT --- */
         .dashboard-wrapper { display: none; height: 100vh; width: 100vw; overflow: hidden; }
         .dashboard-wrapper.active { display: flex; animation: fadeIn 0.4s ease; }
         
@@ -179,7 +168,6 @@
         .guide-content h4 { font-family: 'Outfit'; font-size: 1.05rem; color: #fff; margin-bottom: 0.3rem; line-height: 1.2; }
         .guide-content p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0; line-height: 1.5; }
 
-        /* --- GLOBAL SOCIAL CHAT DESIGN --- */
         .chat-box-wrapper { display: flex; flex-direction: column; height: 500px; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; background: var(--bg-card); max-width: 100%; }
         .chat-header { padding: 1.25rem; background: var(--bg-input); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
         .chat-header-info { display: flex; align-items: center; gap: 0.75rem; }
@@ -323,6 +311,7 @@
                 
                 <p style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 1rem 0 0.2rem 0.5rem; letter-spacing: 0.05em;">Community</p>
                 <a class="nav-item" onclick="switchTab('user', 'guide', this)"><i class="fa-solid fa-book"></i> Installation</a>
+                <a class="nav-item" onclick="switchTab('user', 'server', this)"><i class="fa-solid fa-server"></i> Promote Server</a>
                 <a class="nav-item" onclick="switchTab('user', 'social', this)"><i class="fa-solid fa-earth-americas"></i> Global Chat</a>
                 <a class="nav-item" onclick="switchTab('user', 'profile', this)"><i class="fa-solid fa-user"></i> Profile</a>
             </nav>
@@ -440,6 +429,32 @@
                     </div>
                 </div>
 
+                <!-- USER PROMOTE SERVER TAB -->
+                <div id="tab-user-server" class="tab-content">
+                    <h2 class="section-title font-outfit">Promote Server</h2>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Daftarkan server Minecraft Bedrock Anda agar tampil langsung di halaman utama website Heraclaus secara publik!</p>
+                    
+                    <div class="profile-field" style="max-width: 48rem; margin-bottom: 2rem;">
+                        <form id="add-server-form">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group"><label>Nama Server</label><input type="text" id="srv-name" required placeholder="Contoh: Heraclaus SMP"></div>
+                                <div class="form-group"><label>Link (Discord/WA/Website)</label><input type="url" id="srv-link" required placeholder="https://discord.gg/..."></div>
+                            </div>
+                            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+                                <div class="form-group"><label>IP Server</label><input type="text" id="srv-ip" required placeholder="play.server-kamu.com"></div>
+                                <div class="form-group"><label>Port</label><input type="text" id="srv-port" required placeholder="19132"></div>
+                            </div>
+                            <div class="form-group"><label>Deskripsi Singkat</label><textarea id="srv-desc" required placeholder="Deskripsikan keseruan atau fitur di dalam server Anda..."></textarea></div>
+                            <button type="submit" class="btn btn-gradient w-full" id="btn-add-server" style="margin-top: 0.5rem;"><i class="fa-solid fa-paper-plane"></i> Daftarkan Server</button>
+                        </form>
+                    </div>
+                    
+                    <h3 class="font-outfit" style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem;">Server Saya</h3>
+                    <div class="list-box" id="user-server-list">
+                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat data server Anda...</div>
+                    </div>
+                </div>
+
                 <!-- USER SOCIAL TAB -->
                 <div id="tab-user-social" class="tab-content">
                     <h2 class="section-title font-outfit">Global Community Chat</h2>
@@ -501,6 +516,7 @@
                 <a class="nav-item admin-active" onclick="switchTab('admin', 'publish', this)"><i class="fa-solid fa-cloud-arrow-up"></i> Publish Release</a>
                 <a class="nav-item" onclick="switchTab('admin', 'database', this)"><i class="fa-solid fa-database"></i> Release Database</a>
                 <a class="nav-item" onclick="switchTab('admin', 'members', this)"><i class="fa-solid fa-users"></i> Manage Members</a>
+                <a class="nav-item" onclick="switchTab('admin', 'servers', this)"><i class="fa-solid fa-network-wired"></i> Manage Servers</a>
                 <a class="nav-item" onclick="switchTab('admin', 'social', this)"><i class="fa-solid fa-comments"></i> Global Chat Moderation</a>
             </nav>
             <div class="sidebar-footer"><a class="nav-item logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Lock Console</a></div>
@@ -585,6 +601,14 @@
                                 <tbody></tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- ADMIN SERVER MANAGEMENT TAB -->
+                <div id="tab-admin-servers" class="tab-content">
+                    <h2 class="section-title font-outfit">Manage Community Servers</h2>
+                    <div class="list-box" id="admin-server-list">
+                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat data server...</div>
                     </div>
                 </div>
 
@@ -704,6 +728,34 @@
                     } else throw new Error(data.message);
                 }).catch(err => { msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> Authenticate'; });
+            });
+
+            // --- USER ADD SERVER FORM ---
+            safelyAttachListener("add-server-form", "submit", function(e) {
+                e.preventDefault();
+                const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+                if(!session || session.role !== 'user') return;
+                
+                const btn = document.getElementById("btn-add-server");
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+                
+                const payload = {
+                    action: "add_server", role: "user", email: session.email, gamertag: session.gamertag,
+                    name: document.getElementById("srv-name").value.trim(),
+                    desc: document.getElementById("srv-desc").value.trim(),
+                    ip: document.getElementById("srv-ip").value.trim(),
+                    port: document.getElementById("srv-port").value.trim(),
+                    link: document.getElementById("srv-link").value.trim()
+                };
+                
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+                .then(res => res.json()).then(data => {
+                    if(data.status === "success") {
+                        document.getElementById("add-server-form").reset();
+                        showToast("Server berhasil ditambahkan!");
+                        fetchMemberServers();
+                    } else { showToast(data.message, true); }
+                }).finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Daftarkan Server'; });
             });
 
             // Social Chat Form (User)
@@ -867,6 +919,76 @@
             renderAdminDatabase(data.history || []);
             fetchAdminDatabase(); 
         }
+
+        // --- MEMBER SERVERS LOGIC ---
+        function fetchMemberServers() {
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "get_servers" }) })
+            .then(res => res.json()).then(data => {
+                if(data.status === "success") {
+                    const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+                    if(session.role === 'user') renderUserServers(data.servers, session.email);
+                    if(session.role === 'admin') renderAdminServers(data.servers);
+                }
+            });
+        }
+
+        function renderUserServers(servers, email) {
+            const list = document.getElementById("user-server-list");
+            list.innerHTML = "";
+            const myServers = servers.filter(s => s.ownerEmail === email);
+            if(myServers.length === 0) {
+                list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">Anda belum mendaftarkan server apapun.</div>`;
+                return;
+            }
+            myServers.forEach(s => {
+                list.innerHTML += `
+                <div class="list-item" style="flex-direction: column; align-items: stretch; gap: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="color:#fff; font-size:1.05rem; font-family: 'Outfit'; margin:0;">${s.name}</h4>
+                        <button onclick="deleteMemberServer('${s.id}')" class="btn-icon danger" style="width: 2rem; height: 2rem;"><i class="fa-solid fa-trash-can" style="font-size: 0.8rem;"></i></button>
+                    </div>
+                    <p style="color:var(--text-secondary); font-size:0.85rem; margin:0;">${s.ip}:${s.port}</p>
+                    <p style="color:var(--text-muted); font-size:0.8rem; margin:0; font-style:italic; display:inline-block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${s.desc}</p>
+                </div>`;
+            });
+        }
+
+        function renderAdminServers(servers) {
+            const list = document.getElementById("admin-server-list");
+            list.innerHTML = "";
+            if(servers.length === 0) {
+                list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">Belum ada server komunitas yang didaftarkan.</div>`;
+                return;
+            }
+            servers.forEach(s => {
+                list.innerHTML += `
+                <div class="list-item" style="flex-direction: column; align-items: stretch; gap: 0.5rem;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h4 style="color:#fff; font-size:1.05rem; font-family: 'Outfit'; margin:0;">${s.name} <span style="font-size: 0.7rem; color: var(--accent-primary); background: rgba(139, 92, 246, 0.1); padding: 0.2rem 0.4rem; border-radius: 4px; font-family: 'Inter'; margin-left: 0.5rem;">By ${s.ownerGamertag}</span></h4>
+                        <button onclick="deleteMemberServer('${s.id}')" class="btn-icon danger" style="width: 2rem; height: 2rem;"><i class="fa-solid fa-trash-can" style="font-size: 0.8rem;"></i></button>
+                    </div>
+                    <p style="color:var(--text-secondary); font-size:0.85rem; margin:0;">${s.ip}:${s.port}</p>
+                </div>`;
+            });
+        }
+
+        window.deleteMemberServer = function(id) {
+            if(!confirm("Apakah Anda yakin ingin menghapus server ini dari daftar publik?")) return;
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
+            const payload = { action: "delete_server", serverId: id, role: session.role };
+            if (session.role === 'user') payload.email = session.email;
+            if (session.role === 'admin') payload.adminPassword = session.adminPassword;
+            
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+            .then(res => res.json()).then(data => {
+                if(data.status === "success") {
+                    showToast("Server berhasil dihapus");
+                    if(session.role === 'user') renderUserServers(data.servers, session.email);
+                    if(session.role === 'admin') renderAdminServers(data.servers);
+                } else { showToast(data.message, true); }
+            });
+        }
+
 
         // --- GLOBAL CHAT SYSTEM LOGIC ---
         function fetchGlobalChat() {
@@ -1093,6 +1215,11 @@
             
             if(role === 'user' && tabId === 'social') { fetchGlobalChat(); pollingInterval = setInterval(fetchGlobalChat, 5000); }
             if(role === 'admin' && tabId === 'social') { fetchGlobalChat(); pollingInterval = setInterval(fetchGlobalChat, 5000); }
+            
+            // Server tabs
+            if(role === 'user' && tabId === 'server') fetchMemberServers();
+            if(role === 'admin' && tabId === 'servers') fetchMemberServers();
+
             if(role === 'admin' && tabId === 'members') { fetchAdminMembers(); pollingInterval = setInterval(fetchAdminMembers, 10000); }
             if(role === 'admin' && tabId === 'database') { fetchAdminDatabase(); pollingInterval = setInterval(fetchAdminDatabase, 10000); }
         }

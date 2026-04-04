@@ -52,6 +52,8 @@
         .nav-divider { width: 1px; height: 0.8rem; background: var(--border-light); margin: 0 0.5rem; }
         .login-nav-btn { background: rgba(255,255,255,0.04); color: #fff; padding: 0.35rem 0.85rem; border-radius: 6px; border: 1px solid var(--border-light); text-decoration: none; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s; }
         .login-nav-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-highlight); }
+        .btn-icon { width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; border-radius: 6px; border: 1px solid var(--border-highlight); color: var(--text-secondary); cursor: pointer; transition: all 0.2s; background: rgba(255,255,255,0.05); }
+        .btn-icon:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: var(--border-highlight); }
 
         .menu-btn { display: flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; font-size: 1.1rem; color: var(--text-primary); background: transparent; border: none; cursor: pointer; border-radius: 6px; margin-right: -0.5rem; }
         
@@ -134,6 +136,7 @@
         .feature-cell:hover { background: rgba(255,255,255,0.04); border-color: var(--border-highlight); }
         .feature-cell i { font-size: 1.25rem; margin-bottom: 0.75rem; display: block; }
         .feature-cell p { font-size: 0.85rem; margin-top: 0.2rem; }
+        .grid-cards { display: grid; gap: 1rem; }
 
         @media (min-width: 768px) {
             .product-header { padding: 2rem; flex-direction: row; align-items: center; justify-content: space-between; gap: 1.5rem; }
@@ -199,6 +202,7 @@
             <button class="menu-btn" id="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
             <div class="nav-links">
                 <a href="#admin-suite" class="reg-link">Admin Suite</a>
+                <a href="#community-servers" class="reg-link">Servers</a>
                 <a href="#pricing" class="reg-link">Pricing</a>
                 <div class="nav-divider"></div>
                 <a href="https://discord.gg/xQStZUvukS" target="_blank" class="nav-icon-btn" title="Discord"><i class="fa-brands fa-discord"></i></a>
@@ -209,6 +213,7 @@
 
     <div class="mobile-menu" id="mobile-menu">
         <a href="#admin-suite" onclick="toggleMenu()"><i class="fa-solid fa-server"></i> Admin Suite</a>
+        <a href="#community-servers" onclick="toggleMenu()"><i class="fa-solid fa-network-wired"></i> Community Servers</a>
         <a href="#cinemato" onclick="toggleMenu()"><i class="fa-solid fa-film"></i> Cinemato Studio</a>
         <a href="#pricing" onclick="toggleMenu()"><i class="fa-solid fa-tag"></i> Pricing</a>
         <a href="#faq" onclick="toggleMenu()"><i class="fa-solid fa-circle-question"></i> FAQ & ToS</a>
@@ -228,7 +233,6 @@
                 Premium, all-in-one Minecraft Bedrock add-ons that eliminate lag, fix conflicts, and give you absolute control over your world's economy and progression.
             </p>
             
-            <!-- NEW GLOSSY BADGE -->
             <div class="stats-badge" id="stats-badge">
                 <div class="pulse-dot"></div>
                 <span>Trusted by <strong id="pro-user-count">0</strong> Pro Servers</span>
@@ -279,6 +283,21 @@
         </div>
     </section>
 
+    <!-- SECTION BARU: COMMUNITY SERVERS -->
+    <section id="community-servers" class="section" style="border-top: 1px solid var(--border-light); background: radial-gradient(circle at left, rgba(139, 92, 246, 0.05), transparent 50%);">
+        <div class="container">
+            <div class="text-center animate-on-scroll">
+                <span class="badge" style="margin-bottom: 1rem;"><i class="fa-solid fa-network-wired"></i> Partner Servers</span>
+                <h2>Community Servers</h2>
+                <p style="margin-top: 0.5rem; max-width: 40rem; margin-inline: auto;">Bergabung dan bermain di server-server luar biasa yang dikelola oleh komunitas Pro Member Heraclaus secara langsung.</p>
+            </div>
+            
+            <div class="grid-cards animate-on-scroll" id="public-server-grid" style="margin-top: 2.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+                <div style="text-align:center; padding: 2rem; color: var(--text-muted); grid-column: 1 / -1;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat daftar server...</div>
+            </div>
+        </div>
+    </section>
+
     <section id="pricing" class="section" style="border-top: 1px solid var(--border-light); background: rgba(0,0,0,0.4);">
         <div class="container text-center animate-on-scroll">
             <h2>Simple Pricing. No Subscriptions.</h2>
@@ -306,8 +325,8 @@
                     <ul class="check-list">
                         <li><i class="fa-solid fa-check"></i> <strong style="color: white;">Everything in Starter, plus:</strong></li>
                         <li><i class="fa-solid fa-check"></i> Native UI & High-Speed Database (No Scoreboard Lag)</li>
-                        <li><i class="fa-solid fa-check"></i> VIP Discord Role & Direct Developer Support</li>
-                        <li><i class="fa-solid fa-check"></i> Live Ticket System via Client Portal</li>
+                        <li><i class="fa-solid fa-check"></i> Server Promotion in Community Section</li>
+                        <li><i class="fa-solid fa-check"></i> Global Chat Community Access via Portal</li>
                         <li><i class="fa-solid fa-check"></i> Permanent Binding (Pay Once, Yours Forever)</li>
                         <li><i class="fa-solid fa-check"></i> Early Access to Beta Features & Fast Updates</li>
                     </ul>
@@ -380,7 +399,7 @@
             }, observerOptions);
             document.querySelectorAll('.animate-on-scroll').forEach(el => { observer.observe(el); });
 
-            // Fetch Active User Stats
+            // Ambil Statistik
             fetch(GOOGLE_SCRIPT_URL + "?action=get_stats")
                 .then(res => res.json())
                 .then(data => {
@@ -388,11 +407,7 @@
                         const badge = document.getElementById('stats-badge');
                         badge.style.opacity = '1';
                         badge.style.transform = 'translateY(0)';
-                        
-                        // Animasi counting angka
-                        let count = 0;
-                        const target = data.activeUsers;
-                        const el = document.getElementById('pro-user-count');
+                        let count = 0; const target = data.activeUsers; const el = document.getElementById('pro-user-count');
                         const interval = setInterval(() => {
                             count += Math.ceil(target / 15);
                             if(count >= target) { count = target; clearInterval(interval); }
@@ -400,7 +415,53 @@
                         }, 50);
                     }
                 }).catch(err => console.log("Stats error:", err));
+
+            // LOAD DAFTAR SERVER
+            loadPublicServers();
         });
+
+        function loadPublicServers() {
+            fetch(GOOGLE_SCRIPT_URL + "?action=get_servers")
+            .then(res => res.json())
+            .then(data => {
+                const grid = document.getElementById("public-server-grid");
+                if(data.status === "success") {
+                    grid.innerHTML = "";
+                    if(!data.servers || data.servers.length === 0) {
+                        grid.innerHTML = `<div style="text-align:center; color: var(--text-muted); grid-column: 1 / -1;">Belum ada server yang didaftarkan. Jadilah yang pertama!</div>`;
+                        return;
+                    }
+                    
+                    data.servers.forEach(s => {
+                        const portText = (s.port && s.port !== "19132") ? `<span style="color: var(--text-muted);">:${s.port}</span>` : '';
+                        
+                        grid.innerHTML += `
+                            <div class="product-box" style="margin-bottom: 0; display: flex; flex-direction: column;">
+                                <div style="padding: 1.5rem; border-bottom: 1px solid var(--border-light); flex-grow: 1;">
+                                    <h3 style="font-family: 'Outfit'; font-size: 1.25rem; color: #fff; margin-bottom: 0.5rem; line-height: 1.2;">${s.name}</h3>
+                                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0;">${s.desc}</p>
+                                </div>
+                                <div style="padding: 1rem 1.5rem; background: rgba(0,0,0,0.3); display: flex; flex-direction: column; gap: 0.75rem;">
+                                    <div style="background: rgba(255,255,255,0.05); padding: 0.75rem; border-radius: 8px; border: 1px dashed var(--border-highlight); display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="font-family: monospace; color: var(--accent-primary); font-size: 0.9rem;">${s.ip}${portText}</div>
+                                        <button class="btn-icon" style="width: 2rem; height: 2rem; background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.3); color: var(--accent-primary);" onclick="copyIp('${s.ip}', '${s.port}', this)" title="Copy IP"><i class="fa-regular fa-copy"></i></button>
+                                    </div>
+                                    <a href="${s.link}" target="_blank" class="btn btn-outline w-full"><i class="fa-solid fa-arrow-up-right-from-square"></i> Join Server / Group</a>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            }).catch(e => console.log(e));
+        }
+        
+        window.copyIp = function(ip, port, btn) {
+            const text = ip + (port !== "19132" && port ? ":" + port : "");
+            const el = document.createElement('textarea'); el.value = text; document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+            const oldHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check" style="color: #10b981;"></i>';
+            setTimeout(() => btn.innerHTML = oldHtml, 2000);
+        }
 
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('navbar');
