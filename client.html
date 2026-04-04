@@ -432,38 +432,38 @@
                 <!-- USER PROMOTE SERVER TAB -->
                 <div id="tab-user-server" class="tab-content">
                     <h2 class="section-title font-outfit">Promote Server</h2>
-                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Daftarkan server Minecraft Bedrock Anda agar tampil langsung di halaman utama website Heraclaus secara publik!</p>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">Register your Minecraft Bedrock server to be displayed publicly on the Heraclaus homepage!</p>
                     
                     <div class="profile-field" style="max-width: 48rem; margin-bottom: 2rem;">
                         <form id="add-server-form">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                                <div class="form-group"><label>Nama Server</label><input type="text" id="srv-name" required placeholder="Contoh: Heraclaus SMP"></div>
+                                <div class="form-group"><label>Server Name</label><input type="text" id="srv-name" required placeholder="e.g., Heraclaus SMP"></div>
                                 <div class="form-group">
-                                    <label>Jenis Link</label>
+                                    <label>Link Type</label>
                                     <select id="srv-link-type" required style="width: 100%; padding: 0.6rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; outline: none;">
                                         <option value="discord" style="color:#000;">Discord Server</option>
                                         <option value="whatsapp" style="color:#000;">WhatsApp Group</option>
-                                        <option value="website" style="color:#000;">Website / Lainnya</option>
+                                        <option value="website" style="color:#000;">Website / Other</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" style="margin-bottom: 1rem;"><label>Link Tujuan</label><input type="url" id="srv-link" required placeholder="https://..."></div>
+                            <div class="form-group" style="margin-bottom: 1rem;"><label>Target Link</label><input type="url" id="srv-link" required placeholder="https://..."></div>
                             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 0.5rem;">
-                                <div class="form-group"><label>IP Server</label><input type="text" id="srv-ip" required placeholder="play.server-kamu.com"></div>
+                                <div class="form-group"><label>Server IP</label><input type="text" id="srv-ip" required placeholder="play.your-server.com"></div>
                                 <div class="form-group"><label>Port</label><input type="text" id="srv-port" required placeholder="19132"></div>
                             </div>
                             <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                                 <input type="checkbox" id="srv-port-public" checked style="width: 1.1rem; height: 1.1rem; cursor: pointer;">
-                                <label for="srv-port-public" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer;">Tampilkan Port di Publik (Hapus centang jika ingin menyembunyikan)</label>
+                                <label for="srv-port-public" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer;">Show Port Publicly (Uncheck to hide)</label>
                             </div>
-                            <div class="form-group"><label>Deskripsi Singkat</label><textarea id="srv-desc" required placeholder="Deskripsikan keseruan atau fitur di dalam server Anda..."></textarea></div>
-                            <button type="submit" class="btn btn-gradient w-full" id="btn-add-server" style="margin-top: 0.5rem;"><i class="fa-solid fa-paper-plane"></i> Daftarkan Server</button>
+                            <div class="form-group"><label>Short Description</label><textarea id="srv-desc" required placeholder="Describe the gameplay or features of your server..."></textarea></div>
+                            <button type="submit" class="btn btn-gradient w-full" id="btn-add-server" style="margin-top: 0.5rem;"><i class="fa-solid fa-paper-plane"></i> Register Server</button>
                         </form>
                     </div>
                     
-                    <h3 class="font-outfit" style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem;">Server Saya</h3>
+                    <h3 class="font-outfit" style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem;">My Servers</h3>
                     <div class="list-box" id="user-server-list">
-                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat data server Anda...</div>
+                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading your server data...</div>
                     </div>
                 </div>
 
@@ -576,7 +576,7 @@
                             
                             <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.1); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2);">
                                 <input type="checkbox" id="p-send-email" style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
-                                <label for="p-send-email" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.85rem; color: #fff; cursor: pointer;">Kirim notifikasi email ke semua member Pro</label>
+                                <label for="p-send-email" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.85rem; color: #fff; cursor: pointer;">Send email notification to all Pro members</label>
                             </div>
 
                             <button type="submit" class="btn btn-master w-full" id="btn-publish-release" style="margin-top: 0.5rem;"><i class="fa-solid fa-cloud-arrow-up"></i> Publish & Update All</button>
@@ -620,7 +620,7 @@
                 <div id="tab-admin-servers" class="tab-content">
                     <h2 class="section-title font-outfit">Manage Community Servers</h2>
                     <div class="list-box" id="admin-server-list">
-                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Memuat data server...</div>
+                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading server data...</div>
                     </div>
                 </div>
 
@@ -749,7 +749,7 @@
                 if(!session || session.role !== 'user') return;
                 
                 const btn = document.getElementById("btn-add-server");
-                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memproses...';
+                btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
                 
                 const payload = {
                     action: "add_server", role: "user", email: session.email, gamertag: session.gamertag,
@@ -766,10 +766,10 @@
                 .then(res => res.json()).then(data => {
                     if(data.status === "success") {
                         document.getElementById("add-server-form").reset();
-                        showToast("Server berhasil ditambahkan!");
+                        showToast("Server added successfully!");
                         fetchMemberServers();
                     } else { showToast(data.message, true); }
-                }).finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Daftarkan Server'; });
+                }).finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Register Server'; });
             });
 
             // Social Chat Form (User)
@@ -951,7 +951,7 @@
             list.innerHTML = "";
             const myServers = servers.filter(s => s.ownerEmail === email);
             if(myServers.length === 0) {
-                list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">Anda belum mendaftarkan server apapun.</div>`;
+                list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">You haven't registered any servers yet.</div>`;
                 return;
             }
             myServers.forEach(s => {
@@ -971,7 +971,7 @@
             const list = document.getElementById("admin-server-list");
             list.innerHTML = "";
             if(servers.length === 0) {
-                list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">Belum ada server komunitas yang didaftarkan.</div>`;
+                list.innerHTML = `<div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;">No community servers registered yet.</div>`;
                 return;
             }
             servers.forEach(s => {
@@ -987,7 +987,7 @@
         }
 
         window.deleteMemberServer = function(id) {
-            if(!confirm("Apakah Anda yakin ingin menghapus server ini dari daftar publik?")) return;
+            if(!confirm("Are you sure you want to delete this server from the public list?")) return;
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
             const payload = { action: "delete_server", serverId: id, role: session.role };
             if (session.role === 'user') payload.email = session.email;
@@ -996,7 +996,7 @@
             fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
-                    showToast("Server berhasil dihapus");
+                    showToast("Server deleted successfully.");
                     if(session.role === 'user') renderUserServers(data.servers, session.email);
                     if(session.role === 'admin') renderAdminServers(data.servers);
                 } else { showToast(data.message, true); }
