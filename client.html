@@ -820,9 +820,21 @@
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
             });
 
-            // Tombol Download
-            safelyAttachListener("btn-download-realms", "click", function() { const s = JSON.parse(sessionStorage.getItem("heraclaus_session")); if(!s || !s.addonHistory || s.addonHistory.length === 0) return; let l = s.addonHistory[0].link; try { l = JSON.parse(l).realms; } catch(e){} triggerDownload(l); recordDownloadStat(); });
-            safelyAttachListener("btn-download-bds", "click", function() { const s = JSON.parse(sessionStorage.getItem("heraclaus_session")); if(!s || !s.addonHistory || s.addonHistory.length === 0) return; let l = s.addonHistory[0].link; try { l = JSON.parse(l).bds; } catch(e){} triggerDownload(l); recordDownloadStat(); });
+            // Tombol Download - DIPERBARUI DENGAN versionName
+            safelyAttachListener("btn-download-realms", "click", function() { 
+                const s = JSON.parse(sessionStorage.getItem("heraclaus_session")); 
+                if(!s || !s.addonHistory || s.addonHistory.length === 0) return; 
+                let l = s.addonHistory[0].link; 
+                try { l = JSON.parse(l).realms; } catch(e){} 
+                triggerDownload(l, s.addonHistory[0].versionName); 
+            });
+            safelyAttachListener("btn-download-bds", "click", function() { 
+                const s = JSON.parse(sessionStorage.getItem("heraclaus_session")); 
+                if(!s || !s.addonHistory || s.addonHistory.length === 0) return; 
+                let l = s.addonHistory[0].link; 
+                try { l = JSON.parse(l).bds; } catch(e){} 
+                triggerDownload(l, s.addonHistory[0].versionName); 
+            });
 
             // Form Publish Release
             safelyAttachListener("admin-publish-form", "submit", function(e) {
@@ -936,13 +948,14 @@
                     const mcBadge = h.mcVersion ? `<span style="font-size: 0.6rem; color: var(--accent-secondary); background: rgba(59, 130, 246, 0.1); padding: 0.1rem 0.3rem; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.2); margin-left: 0.3rem;">MC ${h.mcVersion}</span>` : '';
                     let linkData = { realms: '#', bds: '#' }; try { linkData = JSON.parse(h.link); } catch(e) { linkData = { realms: h.link, bds: h.link }; }
                     
+                    // TOMBOL UNDUH DIPERBARUI UNTUK MELEMPARKAN VERSI (h.versionName)
                     tbody.innerHTML += `<tr>
                         <td><span class="version-badge">${h.versionName}</span> ${mcBadge} ${index === 0 ? '<span style="color:var(--accent-success); font-size:0.65rem; margin-left:0.3rem; font-weight:700;">LATEST</span>' : ''}</td>
                         <td>${new Date(h.date).toLocaleDateString('en-US', {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.8rem;"><span style="opacity:0.8">${noteStr}</span></td>
                         <td style="text-align:right;">
-                            <div style="display: flex; gap: 0.5rem; justify-content: flex-end; align-items: center; height: 100%;">
-                                <button onclick="triggerDownload('${linkData.realms}')" class="btn btn-sm btn-outline" title="Download Realms" style="padding: 0 0.5rem;"><i class="fa-solid fa-cube"></i></button>
-                                <button onclick="triggerDownload('${linkData.bds}')" class="btn btn-sm btn-outline" style="color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);" title="Download BDS" style="padding: 0 0.5rem;"><i class="fa-solid fa-server"></i></button>
+                            <div style="display: flex; gap: 0.4rem; justify-content: flex-end; align-items: center; height: 100%;">
+                                <button onclick="triggerDownload('${linkData.realms}', '${h.versionName}')" class="btn btn-sm btn-outline" title="Download Realms" style="padding: 0 0.5rem;"><i class="fa-solid fa-cube"></i></button>
+                                <button onclick="triggerDownload('${linkData.bds}', '${h.versionName}')" class="btn btn-sm btn-outline" style="color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);" title="Download BDS" style="padding: 0 0.5rem;"><i class="fa-solid fa-server"></i></button>
                             </div>
                         </td>
                     </tr>`;
@@ -1307,10 +1320,16 @@
             if(role === 'admin' && tabId === 'database') { fetchAdminDatabase(); pollingInterval = setInterval(fetchAdminDatabase, 10000); }
         }
 
-        function triggerDownload(url) { 
-            const overlay = document.getElementById('download-overlay'); const statusText = document.getElementById('dl-status-text');
+        // --- PEMBARUAN PENCATATAN DOWNLOAD (TRIGGER) ---
+        function triggerDownload(url, versionName) { 
+            const overlay = document.getElementById('download-overlay'); 
+            const statusText = document.getElementById('dl-status-text');
             overlay.classList.add('show'); statusText.innerText = "Connecting to secure server...";
-            setTimeout(() => { statusText.innerText = "Authenticating license key..."; }, 1500); setTimeout(() => { statusText.innerText = "Requesting file from database..."; }, 3000);
+            
+            if (versionName) recordDownloadStat(versionName);
+
+            setTimeout(() => { statusText.innerText = "Authenticating license key..."; }, 1500); 
+            setTimeout(() => { statusText.innerText = "Requesting file from database..."; }, 3000);
             setTimeout(() => {
                 overlay.classList.remove('show');
                 if (url.includes('drive.google.com')) { window.open(url, '_blank'); showToast('Download request sent to browser.'); } 
@@ -1318,7 +1337,12 @@
             }, 4500);
         }
 
-        function recordDownloadStat() { const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); if (!session || !session.addonHistory || session.addonHistory.length === 0) return; fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "record_download", email: session.email, versionName: session.addonHistory[0].versionName }) }); }
+        function recordDownloadStat(versionName) { 
+            const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); 
+            if (!session || !versionName) return; 
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "record_download", email: session.email, versionName: versionName }) }); 
+        }
+        
         function convertDriveLink(url) { const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/); return (match && match[1]) ? `https://drive.google.com/uc?export=download&confirm=t&id=${match[1]}` : url; }
         
         window.deleteRelease = function(id) { if(!confirm("Delete this release permanently?")) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) }).then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast('Release deleted.'); } else alert(data.message); }); }
