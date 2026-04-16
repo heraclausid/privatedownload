@@ -34,7 +34,15 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--bg-base); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
         
+        /* --- MULTILANGUAGE CSS --- */
+        body.lang-en .lang-id { display: none !important; }
+        body.lang-id .lang-en { display: none !important; }
+
         .container { max-width: 64rem; margin: 0 auto; padding: 0 1.25rem; width: 100%; }
+        .flex { display: flex; } .items-center { align-items: center; } .justify-between { justify-content: space-between; } .w-full { width: 100%; }
+        .desktop-only { display: inline-block; }
+        @media (max-width: 640px) { .desktop-only { display: none !important; } }
+
         h1, h2, .font-display { font-family: 'Space Grotesk', sans-serif; }
         
         h1 { font-size: 1.75rem; font-weight: 700; text-align: center; margin-bottom: 0.25rem; letter-spacing: -0.02em; }
@@ -42,6 +50,10 @@
         .text-gradient { background: var(--gradient-hero); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .navbar { position: fixed; top: 0; width: 100%; height: 4rem; z-index: 100; background: var(--bg-base); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; }
+
+        /* Language Toggle Style */
+        .lang-toggle { background: var(--bg-input); color: var(--text-secondary); padding: 0.4rem 0.8rem; border-radius: 6px; border: 1px solid var(--border-light); cursor: pointer; transition: all 0.2s; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .lang-toggle:hover { background: rgba(255,255,255,0.05); color: var(--text-primary); border-color: var(--border-highlight); }
 
         .main-content { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 6rem 1rem 3rem 1rem; }
         .checkout-container { max-width: 32rem; width: 100%; background: var(--bg-card); border: 1px solid var(--border-light); border-radius: 16px; padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8); position: relative; }
@@ -110,14 +122,22 @@
         footer { padding: 1.5rem 0; border-top: 1px solid var(--border-light); text-align: center; color: var(--text-muted); font-size: 0.8rem; margin-top: auto; background: var(--bg-base); }
     </style>
 </head>
-<body>
+<body class="lang-en">
 
     <nav class="navbar">
         <div class="container flex justify-between items-center w-full">
             <a href="index.html" class="font-display" style="font-size: 1.2rem; font-weight: 800; color: #fff; text-decoration: none;">
                 <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus 
-                <span style="color: var(--text-muted); font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; margin-left: 0.25rem;">| Secure Checkout</span>
+                <span class="desktop-only" style="color: var(--text-muted); font-weight: 600; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; margin-left: 0.25rem;">
+                    | <span class="lang-en">Secure Checkout</span><span class="lang-id">Checkout Aman</span>
+                </span>
             </a>
+            
+            <button onclick="toggleLang()" class="lang-toggle" title="Change Language">
+                <i class="fa-solid fa-globe"></i>
+                <span class="lang-en">ID</span>
+                <span class="lang-id">EN</span>
+            </button>
         </div>
     </nav>
 
@@ -126,23 +146,34 @@
             
             <div id="form-section">
                 <a href="index.html" class="back-link">
-                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                    <i class="fa-solid fa-arrow-left"></i> 
+                    <span class="lang-en">Back to Home</span><span class="lang-id">Kembali ke Beranda</span>
                 </a>
                 
                 <h1>Admin Suite Pro</h1>
-                <p class="desc">Complete the steps below to claim your license.</p>
+                <p class="desc">
+                    <span class="lang-en">Complete the steps below to claim your license.</span>
+                    <span class="lang-id">Selesaikan langkah di bawah untuk klaim lisensi Anda.</span>
+                </p>
                 
                 <div class="alert-warning">
                     <i class="fa-solid fa-triangle-exclamation"></i>
                     <div class="alert-text">
-                        <h4>IMPORTANT INFORMATION</h4>
-                        <p>Making a payment alone will not activate your license. <b>You MUST submit your payment receipt in the form (Step 2)</b> after transferring the funds.</p>
+                        <h4>
+                            <span class="lang-en">IMPORTANT INFORMATION</span>
+                            <span class="lang-id">INFORMASI PENTING</span>
+                        </h4>
+                        <p>
+                            <span class="lang-en">Making a payment alone will not activate your license. <b>You MUST submit your payment receipt in the form (Step 2)</b> after transferring the funds.</span>
+                            <span class="lang-id">Melakukan pembayaran saja tidak akan mengaktifkan lisensi Anda. <b>Anda WAJIB mengirimkan bukti pembayaran pada formulir (Langkah 2)</b> setelah mentransfer dana.</span>
+                        </p>
                     </div>
                 </div>
 
                 <div class="step-header">
                     <div class="step-badge">1</div>
-                    Select Payment Method
+                    <span class="lang-en">Select Payment Method</span>
+                    <span class="lang-id">Pilih Metode Pembayaran</span>
                 </div>
 
                 <div class="region-grid">
@@ -153,7 +184,7 @@
                     </div>
                     <div class="region-card" id="btn-intl" onclick="selectRegion('intl')">
                         <span>🌍</span>
-                        <h3>International</h3>
+                        <h3><span class="lang-en">International</span><span class="lang-id">Internasional</span></h3>
                         <p>Sociabuzz ($6.00)</p>
                     </div>
                 </div>
@@ -165,25 +196,37 @@
                             <img src="https://image2url.com/r2/default/images/1772880891631-13f0dca4-0a81-4537-871e-d152e7940604.jpg" alt="Heraclaus QRIS Code">
                         </div>
                         <div class="price-tag">Rp 99.000</div>
-                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">Scan the QR code above using your e-wallet or mobile banking app. <b>Please save your receipt!</b></p>
+                        <p style="text-align: center; color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                            <span class="lang-en">Scan the QR code above using your e-wallet or mobile banking app. <b>Please save your receipt!</b></span>
+                            <span class="lang-id">Pindai kode QR di atas menggunakan aplikasi e-wallet atau m-banking Anda. <b>Harap simpan bukti transfer!</b></span>
+                        </p>
                     </div>
 
                     <div id="sociabuzz-content" class="payment-method-box" style="display: none; text-align: center;">
                         <i class="fa-solid fa-earth-americas" style="font-size: 2.5rem; color: var(--accent-primary); margin-bottom: 0.75rem;"></i>
                         <div class="price-tag">$6.00</div>
-                        <p style="color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 0.85rem;">Complete your payment via our Sociabuzz Tribe page using PayPal, Credit Card, or other international methods.</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 1.25rem; font-size: 0.85rem;">
+                            <span class="lang-en">Complete your payment via our Sociabuzz Tribe page using PayPal, Credit Card, or other international methods.</span>
+                            <span class="lang-id">Selesaikan pembayaran melalui halaman Sociabuzz Tribe kami menggunakan PayPal, Kartu Kredit, atau metode internasional lainnya.</span>
+                        </p>
                         
                         <a href="https://sociabuzz.com/heraclausid/tribe" target="_blank" class="btn-submit" style="background: var(--bg-card); border: 1px solid var(--border-highlight); margin-bottom: 0.75rem; color: #fff; text-decoration: none;">
-                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Pay via Sociabuzz
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+                            <span class="lang-en">Pay via Sociabuzz</span><span class="lang-id">Bayar via Sociabuzz</span>
                         </a>
-                        <p style="font-size: 0.8rem; color: var(--accent-danger); font-weight: 600;"><i class="fa-solid fa-camera"></i> Take a screenshot of your receipt!</p>
+                        <p style="font-size: 0.8rem; color: var(--accent-danger); font-weight: 600;">
+                            <i class="fa-solid fa-camera"></i> 
+                            <span class="lang-en">Take a screenshot of your receipt!</span>
+                            <span class="lang-id">Ambil tangkapan layar (screenshot) bukti pembayaran!</span>
+                        </p>
                     </div>
                     
                     <div class="step-divider"></div>
 
                     <div class="step-header">
                         <div class="step-badge" style="background: var(--accent-danger);">2</div>
-                        Confirm Payment
+                        <span class="lang-en">Confirm Payment</span>
+                        <span class="lang-id">Konfirmasi Pembayaran</span>
                     </div>
 
                     <form id="payment-form">
@@ -193,17 +236,26 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Delivery Email Address <span style="color:var(--accent-danger)">*</span></label>
+                            <label>
+                                <span class="lang-en">Delivery Email Address</span><span class="lang-id">Alamat Email Pengiriman</span> 
+                                <span style="color:var(--accent-danger)">*</span>
+                            </label>
                             <input type="email" id="email" required placeholder="your@email.com">
                         </div>
 
                         <div class="form-group">
-                            <label>Discord Username <span style="color:var(--text-muted); font-weight: 400;">(Optional)</span></label>
+                            <label>
+                                <span class="lang-en">Discord Username</span><span class="lang-id">Username Discord</span> 
+                                <span style="color:var(--text-muted); font-weight: 400;">(<span class="lang-en">Optional</span><span class="lang-id">Opsional</span>)</span>
+                            </label>
                             <input type="text" id="discord" placeholder="For VIP Role (e.g. username#1234)">
                         </div>
                         
                         <div class="form-group">
-                            <label>Upload Payment Receipt <span style="color:var(--accent-danger)">*</span></label>
+                            <label>
+                                <span class="lang-en">Upload Payment Receipt</span><span class="lang-id">Unggah Bukti Pembayaran</span> 
+                                <span style="color:var(--accent-danger)">*</span>
+                            </label>
                             <div class="file-upload">
                                 <i class="fa-solid fa-cloud-arrow-up"></i>
                                 <span id="file-name-text">Click to browse or drag image here</span>
@@ -212,7 +264,10 @@
                         </div>
                         
                         <button type="submit" class="btn-submit" id="submit-btn">
-                            <span id="btn-text"><i class="fa-solid fa-paper-plane"></i> Submit Verification</span>
+                            <span id="btn-text">
+                                <i class="fa-solid fa-paper-plane"></i> 
+                                <span class="lang-en">Submit Verification</span><span class="lang-id">Kirim Verifikasi</span>
+                            </span>
                             <div class="loading-spinner" id="spinner"></div>
                         </button>
                         
@@ -223,12 +278,17 @@
 
             <div id="success-section">
                 <i class="fa-solid fa-circle-check success-icon"></i>
-                <h2 class="font-display" style="font-size: 1.75rem; margin-bottom: 0.75rem; color: #fff;">Submission Received!</h2>
+                <h2 class="font-display" style="font-size: 1.75rem; margin-bottom: 0.75rem; color: #fff;">
+                    <span class="lang-en">Submission Received!</span>
+                    <span class="lang-id">Data Berhasil Dikirim!</span>
+                </h2>
                 <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.9rem; line-height: 1.6;">
-                    Thank you for your purchase. We are currently verifying your payment receipt. Your License Key and access link will be sent to your email shortly.
+                    <span class="lang-en">Thank you for your purchase. We are currently verifying your payment receipt. Your License Key and access link will be sent to your email shortly.</span>
+                    <span class="lang-id">Terima kasih atas pembelian Anda. Kami sedang memverifikasi bukti pembayaran Anda. Kunci Lisensi dan tautan akses akan segera dikirimkan ke email Anda.</span>
                 </p>
                 <a href="index.html" class="btn-submit" style="text-decoration: none; max-width: 200px; margin: 0 auto;">
-                    <i class="fa-solid fa-arrow-left"></i> Back to Home
+                    <i class="fa-solid fa-arrow-left"></i> 
+                    <span class="lang-en">Back to Home</span><span class="lang-id">Kembali ke Beranda</span>
                 </a>
             </div>
 
@@ -237,7 +297,10 @@
 
     <footer>
         <div class="container">
-            <p>© 2026 Heraclaus. All transactions are securely processed.</p>
+            <p>© 2026 Heraclaus. 
+                <span class="lang-en">All transactions are securely processed.</span>
+                <span class="lang-id">Semua transaksi diproses secara aman.</span>
+            </p>
         </div>
     </footer>
 
@@ -245,6 +308,44 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
 
         let base64File = null;
+
+        // Language Helper function for JavaScript strings
+        function t(en, id) {
+            return document.body.classList.contains('lang-en') ? en : id;
+        }
+
+        // Multi-language Toggle Logic
+        function toggleLang() {
+            const body = document.body;
+            if (body.classList.contains('lang-id')) {
+                body.classList.remove('lang-id');
+                body.classList.add('lang-en');
+                localStorage.setItem('heraclaus_lang', 'en');
+            } else {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-id');
+                localStorage.setItem('heraclaus_lang', 'id');
+            }
+            updateDynamicTexts();
+        }
+
+        // Update JavaScript text when language changes
+        function updateDynamicTexts() {
+            document.getElementById('gamertag').placeholder = t("e.g. HeraclausReal", "contoh: HeraclausReal");
+            document.getElementById('email').placeholder = t("your@email.com", "email@anda.com");
+            document.getElementById('discord').placeholder = t("For VIP Role (e.g. username#1234)", "Untuk Role VIP (contoh: username#1234)");
+            
+            if (!base64File) {
+                document.getElementById('file-name-text').innerText = t("Click to browse or drag image here", "Klik untuk memilih atau tarik gambar ke sini");
+            }
+        }
+
+        // Apply saved language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('heraclaus_lang') || 'en';
+            document.body.className = `lang-${savedLang}`;
+            updateDynamicTexts();
+        });
 
         function selectRegion(region) {
             document.getElementById('btn-id').classList.remove('active');
@@ -268,7 +369,7 @@
             if (file) {
                 // Maximum 2MB for security
                 if (file.size > 2 * 1024 * 1024) { 
-                    alert("File is too large! Maximum 2MB."); 
+                    alert(t("File is too large! Maximum 2MB.", "Ukuran file terlalu besar! Maksimal 2MB.")); 
                     this.value = ""; 
                     return; 
                 }
@@ -285,7 +386,7 @@
             e.preventDefault();
             
             if (!base64File) {
-                alert("Please upload your payment proof!");
+                alert(t("Please upload your payment proof!", "Harap unggah bukti pembayaran Anda!"));
                 return;
             }
 
@@ -295,7 +396,7 @@
             const statusMsg = document.getElementById('status-msg');
 
             btn.disabled = true;
-            btnText.innerText = "Uploading...";
+            btnText.innerText = t("Uploading...", "Mengunggah...");
             spinner.style.display = "block";
             statusMsg.style.display = "none";
 
@@ -322,11 +423,11 @@
             })
             .catch(error => {
                 statusMsg.className = "msg-box status-error";
-                statusMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Submission failed: ' + error.message;
+                statusMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + t('Submission failed: ', 'Pengiriman gagal: ') + error.message;
                 statusMsg.style.display = "block";
                 
                 btn.disabled = false;
-                btnText.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Verification';
+                btnText.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('Submit Verification', 'Kirim Verifikasi');
                 spinner.style.display = "none";
             });
         });
