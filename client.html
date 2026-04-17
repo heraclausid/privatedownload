@@ -24,7 +24,8 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; line-height: 1.5; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; line-height: 1.5; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+        input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; }
         
         /* --- MULTILANGUAGE CSS --- */
         body.lang-en .lang-id { display: none !important; }
@@ -55,9 +56,12 @@
         .btn-icon.danger { border-color: rgba(244,63,94,0.3); color: var(--accent-danger); background: transparent; }
         .btn-icon.danger:hover { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.5); }
         
-        /* Language Toggle Style */
-        .lang-toggle { background: rgba(255,255,255,0.04); color: var(--text-secondary); padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-light); cursor: pointer; transition: all 0.2s; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
-        .lang-toggle:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); border-color: var(--border-highlight); }
+        /* Navbar Actions & Language Toggle */
+        .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
+        .nav-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.2s; background: rgba(255,255,255,0.05); padding: 0.4rem 0.85rem; border-radius: 8px; border: 1px solid var(--border-light); cursor: pointer; }
+        .nav-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.1); border-color: var(--border-highlight); }
+        .lang-toggle { background: rgba(255,255,255,0.05); color: var(--text-secondary); padding: 0.4rem 0.75rem; border-radius: 8px; border: 1px solid var(--border-light); cursor: pointer; transition: all 0.2s; font-size: 0.85rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .lang-toggle:hover { background: rgba(255,255,255,0.1); color: var(--text-primary); border-color: var(--border-highlight); }
 
         .badge { display: inline-flex; align-items: center; justify-content: center; padding: 0.2rem 0.5rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 4px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid rgba(139, 92, 246, 0.25); gap: 0.3rem; }
         .badge.success { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.25); }
@@ -297,21 +301,24 @@
     <!-- NAVBAR LOGIN SCREEN -->
     <nav class="navbar" id="main-navbar">
         <div class="nav-container">
-            <div style="display: flex; gap: 1rem; align-items: center;">
+            <a href="index.html" class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
+                <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus <span class="desktop-only" style="color: var(--text-muted); font-weight: 500; font-family: 'Inter'; font-size: 0.85rem; margin-left: 0.25rem;">| Client Portal</span>
+            </a>
+            
+            <div class="nav-actions">
                 <button onclick="toggleLang()" class="lang-toggle" title="Change Language">
                     <i class="fa-solid fa-globe"></i>
                     <span class="lang-en">ID</span>
                     <span class="lang-id">EN</span>
                 </button>
+                <a href="index.html" class="nav-btn">
+                    <i class="fa-solid fa-arrow-left"></i> 
+                    <span class="desktop-only">
+                        <span class="lang-en">Back to Home</span>
+                        <span class="lang-id">Kembali ke Home</span>
+                    </span>
+                </a>
             </div>
-            
-            <a href="index.html" class="font-outfit desktop-only" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none;">
-                <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus <span style="color: var(--text-muted); font-weight: 500; font-family: 'Inter'; font-size: 0.85rem; margin-left: 0.25rem;">| Client Portal</span>
-            </a>
-            
-            <a href="index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 500; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--text-secondary)'">
-                <i class="fa-solid fa-arrow-left"></i> <span class="desktop-only"><span class="lang-en">Back to Home</span><span class="lang-id">Kembali ke Home</span></span>
-            </a>
         </div>
     </nav>
 
@@ -955,6 +962,12 @@
     </div>
 
     <script>
+        // Security & Clean URL Logic
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'c' || e.key.toLowerCase() === 'x')) e.preventDefault(); });
+        if (window.location.pathname.endsWith('.html')) window.history.replaceState(null, '', window.location.pathname.replace(/index\.html$/, '').replace(/\.html$/, '') + window.location.search + window.location.hash);
+        document.querySelectorAll('a').forEach(a => { let h = a.getAttribute('href'); if(h && h.includes('.html')) a.setAttribute('href', h.replace('index.html', '/').replace(/\.html$/, '')); });
+
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
         
         let pollingInterval = null;
