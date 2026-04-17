@@ -278,15 +278,24 @@
                     </div>
                     <div class="form-group">
                         <label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Baru</span></label>
-                        <textarea id="e-added"></textarea>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <textarea id="e-added-en" placeholder="English text..."></textarea>
+                            <textarea id="e-added-id" placeholder="Teks Indonesia..."></textarea>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label>
-                        <textarea id="e-fixed"></textarea>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <textarea id="e-fixed-en" placeholder="English text..."></textarea>
+                            <textarea id="e-fixed-id" placeholder="Teks Indonesia..."></textarea>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Dihapus</span></label>
-                        <textarea id="e-removed"></textarea>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                            <textarea id="e-removed-en" placeholder="English text..."></textarea>
+                            <textarea id="e-removed-id" placeholder="Teks Indonesia..."></textarea>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-master w-full" id="btn-save-edit" style="margin-top: 0.5rem;">
                         <i class="fa-solid fa-floppy-disk"></i> 
@@ -814,9 +823,27 @@
                                 </div>
                             </div>
 
-                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Baru</span></label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
-                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
-                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Dihapus</span></label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group">
+                                <label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Baru</span></label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                    <textarea id="p-added-en" class="focus-emerald" placeholder="English text..."></textarea>
+                                    <textarea id="p-added-id" class="focus-emerald" placeholder="Teks Indonesia..."></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                    <textarea id="p-fixed-en" class="focus-blue" placeholder="English text..."></textarea>
+                                    <textarea id="p-fixed-id" class="focus-blue" placeholder="Teks Indonesia..."></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Dihapus</span></label>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                                    <textarea id="p-removed-en" class="focus-rose" placeholder="English text..."></textarea>
+                                    <textarea id="p-removed-id" class="focus-rose" placeholder="Teks Indonesia..."></textarea>
+                                </div>
+                            </div>
                             
                             <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.1); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2);">
                                 <input type="checkbox" id="p-send-email" style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
@@ -977,6 +1004,15 @@
         function t(en, id) {
             return document.body.classList.contains('lang-en') ? en : id;
         }
+        
+        // Database Parsing Helper for Bilingual content
+        function parseLangDB(text) {
+            if (!text) return "";
+            let parts = text.split("|||");
+            let isEn = document.body.classList.contains('lang-en');
+            if (isEn) return parts[0] ? parts[0].trim() : "";
+            return (parts.length > 1 && parts[1].trim() !== "") ? parts[1].trim() : parts[0].trim();
+        }
 
         // Multi-language Toggle Logic
         function toggleLang() {
@@ -1005,10 +1041,9 @@
                         keyEl.innerText = t("License pending generation...", "Lisensi sedang menunggu dibuat...");
                     }
                     
-                    const historyTbody = document.querySelector("#user-history-table tbody");
-                    if(historyTbody && historyTbody.innerHTML.includes("folder-open")) {
-                        historyTbody.innerHTML = `<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>${t("No releases available yet.", "Belum ada rilis sistem yang tersedia.")}</span></td></tr>`;
-                    }
+                    // RE-RENDER HISTORY TABLE
+                    if(data.addonHistory) renderUserHistoryTable(data.addonHistory);
+                    
                 } else if (data.role === "admin") {
                     fetchAdminDatabase();
                     fetchAdminMembers();
@@ -1042,9 +1077,6 @@
             setPh('p-mcversion', 'e.g. 1.20.70+', 'contoh: 1.20.70+');
             setPh('p-link-realms', 'Direct Link (Discord CDN)', 'Tautan Langsung (Discord CDN)');
             setPh('p-link-bds', 'Direct Link (Discord CDN)', 'Tautan Langsung (Discord CDN)');
-            setPh('p-added', 'Separate points by pressing enter...', 'Pisahkan poin dengan menekan tombol enter...');
-            setPh('p-fixed', 'Separate points by pressing enter...', 'Pisahkan poin dengan menekan tombol enter...');
-            setPh('p-removed', 'Separate points by pressing enter...', 'Pisahkan poin dengan menekan tombol enter...');
             
             setPh('e-version', 'e.g. v6.2.0', 'contoh: v6.2.0');
             setPh('e-mcversion', 'e.g. 1.20.70+', 'contoh: 1.20.70+');
@@ -1199,7 +1231,7 @@
                 triggerDownload(l, s.addonHistory[0].versionName); 
             });
 
-            // Form Publish Release
+            // Form Publish Release - Menggabungkan String Bilingual
             safelyAttachListener("admin-publish-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1209,14 +1241,18 @@
                 
                 const linkObj = { realms: convertDriveLink(document.getElementById("p-link-realms").value.trim()), bds: convertDriveLink(document.getElementById("p-link-bds").value.trim()) };
 
+                const packedAdded = document.getElementById("p-added-en").value.trim() + "|||" + document.getElementById("p-added-id").value.trim();
+                const packedFixed = document.getElementById("p-fixed-en").value.trim() + "|||" + document.getElementById("p-fixed-id").value.trim();
+                const packedRemoved = document.getElementById("p-removed-en").value.trim() + "|||" + document.getElementById("p-removed-id").value.trim();
+
                 fetch(GOOGLE_SCRIPT_URL, { 
                     method: "POST", 
                     body: JSON.stringify({ 
                         action: "admin_publish_release", adminPassword: session.adminPassword, 
                         versionName: document.getElementById("p-version").value.trim(), mcVersion: document.getElementById("p-mcversion").value.trim(),
                         date: document.getElementById("p-date").value, link: JSON.stringify(linkObj), 
-                        added: document.getElementById("p-added").value.trim(), fixed: document.getElementById("p-fixed").value.trim(), 
-                        removed: document.getElementById("p-removed").value.trim(), sendEmail: document.getElementById("p-send-email").checked 
+                        added: packedAdded, fixed: packedFixed, 
+                        removed: packedRemoved, sendEmail: document.getElementById("p-send-email").checked 
                     }) 
                 })
                 .then(res => res.json()).then(data => { if(data.status === "success") { document.getElementById("admin-publish-form").reset(); document.getElementById('p-date').valueAsDate = new Date(); session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast(t('Published to all users!', 'Pembaruan berhasil dikirim ke semua Klien!')); } else throw new Error(data.message); })
@@ -1234,13 +1270,17 @@
                 
                 const linkObj = { realms: convertDriveLink(document.getElementById("e-link-realms").value.trim()), bds: convertDriveLink(document.getElementById("e-link-bds").value.trim()) };
 
+                const packedAdded = document.getElementById("e-added-en").value.trim() + "|||" + document.getElementById("e-added-id").value.trim();
+                const packedFixed = document.getElementById("e-fixed-en").value.trim() + "|||" + document.getElementById("e-fixed-id").value.trim();
+                const packedRemoved = document.getElementById("e-removed-en").value.trim() + "|||" + document.getElementById("e-removed-id").value.trim();
+
                 fetch(GOOGLE_SCRIPT_URL, { 
                     method: "POST", 
                     body: JSON.stringify({
                         action: "admin_edit_release", adminPassword: session.adminPassword, logId: document.getElementById("e-logid").value,
                         versionName: document.getElementById("e-version").value.trim(), mcVersion: document.getElementById("e-mcversion").value.trim(),
                         date: document.getElementById("e-date").value, link: JSON.stringify(linkObj),
-                        added: document.getElementById("e-added").value.trim(), fixed: document.getElementById("e-fixed").value.trim(), removed: document.getElementById("e-removed").value.trim()
+                        added: packedAdded, fixed: packedFixed, removed: packedRemoved
                     })
                 })
                 .then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); closeEditReleaseModal(); showToast(t('Release updated successfully!', 'Riwayat rilis berhasil diubah!')); } else throw new Error(data.message); })
@@ -1291,6 +1331,32 @@
         }
 
         // --- DASHBOARD RENDERERS ---
+        function renderUserHistoryTable(history) {
+            const tbody = document.querySelector("#user-history-table tbody"); 
+            if (!history || history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>${t("No releases available yet.", "Belum ada rilis sistem yang tersedia.")}</span></td></tr>`;
+                return;
+            }
+            tbody.innerHTML = "";
+            history.forEach((h, index) => {
+                const addedText = parseLangDB(h.added) || parseLangDB(h.fixed) || parseLangDB(h.removed);
+                const noteStr = addedText ? addedText.split('\n')[0].substring(0, 50) + "..." : t("System patch.", "Patch Sistem.");
+                const mcBadge = h.mcVersion ? `<span style="font-size: 0.6rem; color: var(--accent-secondary); background: rgba(59, 130, 246, 0.1); padding: 0.1rem 0.3rem; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.2); margin-left: 0.3rem;">MC ${h.mcVersion}</span>` : '';
+                let linkData = { realms: '#', bds: '#' }; try { linkData = JSON.parse(h.link); } catch(e) { linkData = { realms: h.link, bds: h.link }; }
+                
+                tbody.innerHTML += `<tr>
+                    <td><span class="version-badge">${h.versionName}</span> ${mcBadge} ${index === 0 ? `<span style="color:var(--accent-success); font-size:0.65rem; margin-left:0.3rem; font-weight:700;">${t('LATEST', 'TERBARU')}</span>` : ''}</td>
+                    <td>${new Date(h.date).toLocaleDateString(t('en-US', 'id-ID'), {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.8rem;"><span style="opacity:0.8">${noteStr}</span></td>
+                    <td style="text-align:right;">
+                        <div style="display: flex; gap: 0.4rem; justify-content: flex-end; align-items: center; height: 100%;">
+                            <button onclick="triggerDownload('${linkData.realms}', '${h.versionName}')" class="btn btn-sm btn-outline" title="${t('Download Realms', 'Unduh Realms')}" style="padding: 0 0.5rem;"><i class="fa-solid fa-cube"></i></button>
+                            <button onclick="triggerDownload('${linkData.bds}', '${h.versionName}')" class="btn btn-sm btn-outline" style="color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);" title="${t('Download BDS', 'Unduh Server BDS')}" style="padding: 0 0.5rem;"><i class="fa-solid fa-server"></i></button>
+                        </div>
+                    </td>
+                </tr>`;
+            });
+        }
+
         function showUserDashboard(data) {
             document.getElementById("main-navbar").style.display = "none"; document.getElementById("auth-section").style.display = "none"; document.getElementById("user-dashboard").classList.add("active");
             const cleanGamertag = data.gamertag ? data.gamertag.trim() : "Player";
@@ -1302,27 +1368,11 @@
             if (data.addonLicense) { keyEl.innerText = data.addonLicense; keyEl.classList.remove("empty"); } 
             else { keyEl.innerText = t("License pending generation...", "Lisensi sedang menunggu dibuat..."); keyEl.classList.add("empty"); }
             
-            const history = data.addonHistory || [];
-            if(history.length > 0) {
-                document.getElementById("latest-ver-text").innerText = history[0].versionName; document.getElementById("addon-badge-version").innerText = history[0].versionName;
-                const tbody = document.querySelector("#user-history-table tbody"); tbody.innerHTML = "";
-                history.forEach((h, index) => {
-                    const noteStr = h.added ? h.added.split('\n')[0].substring(0, 50) + "..." : t("System patch.", "Patch Sistem.");
-                    const mcBadge = h.mcVersion ? `<span style="font-size: 0.6rem; color: var(--accent-secondary); background: rgba(59, 130, 246, 0.1); padding: 0.1rem 0.3rem; border-radius: 4px; border: 1px solid rgba(59, 130, 246, 0.2); margin-left: 0.3rem;">MC ${h.mcVersion}</span>` : '';
-                    let linkData = { realms: '#', bds: '#' }; try { linkData = JSON.parse(h.link); } catch(e) { linkData = { realms: h.link, bds: h.link }; }
-                    
-                    tbody.innerHTML += `<tr>
-                        <td><span class="version-badge">${h.versionName}</span> ${mcBadge} ${index === 0 ? `<span style="color:var(--accent-success); font-size:0.65rem; margin-left:0.3rem; font-weight:700;">${t('LATEST', 'TERBARU')}</span>` : ''}</td>
-                        <td>${new Date(h.date).toLocaleDateString(t('en-US', 'id-ID'), {year: 'numeric', month: 'short', day: 'numeric'})}</td><td style="font-size: 0.8rem;"><span style="opacity:0.8">${noteStr}</span></td>
-                        <td style="text-align:right;">
-                            <div style="display: flex; gap: 0.4rem; justify-content: flex-end; align-items: center; height: 100%;">
-                                <button onclick="triggerDownload('${linkData.realms}', '${h.versionName}')" class="btn btn-sm btn-outline" title="${t('Download Realms', 'Unduh Realms')}" style="padding: 0 0.5rem;"><i class="fa-solid fa-cube"></i></button>
-                                <button onclick="triggerDownload('${linkData.bds}', '${h.versionName}')" class="btn btn-sm btn-outline" style="color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);" title="${t('Download BDS', 'Unduh Server BDS')}" style="padding: 0 0.5rem;"><i class="fa-solid fa-server"></i></button>
-                            </div>
-                        </td>
-                    </tr>`;
-                });
-            } else { document.querySelector("#user-history-table tbody").innerHTML = `<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>${t("No releases available yet.", "Belum ada rilis sistem yang tersedia.")}</span></td></tr>`; }
+            if(data.addonHistory && data.addonHistory.length > 0) {
+                document.getElementById("latest-ver-text").innerText = data.addonHistory[0].versionName; 
+                document.getElementById("addon-badge-version").innerText = data.addonHistory[0].versionName;
+            }
+            renderUserHistoryTable(data.addonHistory || []);
         }
 
         function showAdminDashboard(data) {
@@ -1509,7 +1559,21 @@
             document.getElementById("e-mcversion").value = release.mcVersion || ""; document.getElementById("e-date").value = release.date;
             let linkData = { realms: '', bds: '' }; try { linkData = JSON.parse(release.link); } catch(e) { linkData = { realms: release.link, bds: release.link }; }
             document.getElementById("e-link-realms").value = linkData.realms || ""; document.getElementById("e-link-bds").value = linkData.bds || "";
-            document.getElementById("e-added").value = release.added || ""; document.getElementById("e-fixed").value = release.fixed || ""; document.getElementById("e-removed").value = release.removed || "";
+            
+            const splitText = (text) => { if(!text) return ["", ""]; let p = text.split("|||"); return [p[0]||"", p[1]||""]; };
+            
+            const [addEn, addId] = splitText(release.added);
+            document.getElementById("e-added-en").value = addEn.trim();
+            document.getElementById("e-added-id").value = addId.trim();
+            
+            const [fixEn, fixId] = splitText(release.fixed);
+            document.getElementById("e-fixed-en").value = fixEn.trim();
+            document.getElementById("e-fixed-id").value = fixId.trim();
+            
+            const [rmEn, rmId] = splitText(release.removed);
+            document.getElementById("e-removed-en").value = rmEn.trim();
+            document.getElementById("e-removed-id").value = rmId.trim();
+            
             document.getElementById("edit-release-modal").classList.add("show");
         }
         window.closeEditReleaseModal = function() { document.getElementById("edit-release-modal").classList.remove("show"); }

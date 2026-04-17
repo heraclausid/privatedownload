@@ -20,6 +20,8 @@
         }
         
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        
+        /* Anti-Copy Protection */
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; }
         
@@ -105,6 +107,7 @@
 </head>
 <body class="lang-en">
     <div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
+    
     <header class="app-bar">
         <div class="container flex justify-between items-center w-full">
             <a href="index.html" class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none;">
@@ -138,6 +141,7 @@
             <p class="font-outfit" style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary);" id="empty-title">No history found</p>
             <p style="color: var(--text-muted); margin-top: 0.25rem; font-size: 0.8rem;" id="empty-msg"></p>
         </div>
+        
         <div id="changelog-container"></div>
     </main>
 
@@ -164,8 +168,24 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
         let allLogs = [];
 
-        // Language Helper
+        // Language Helper function for UI strings
         function t(en, id) { return document.body.classList.contains('lang-en') ? en : id; }
+
+        // --- NEW: Database Parsing Helper for Bilingual content ---
+        // Fungsi ini yang bertugas menerjemahkan isi database yang digabung dengan '|||'
+        function parseLangDB(text) {
+            if (!text) return "";
+            let parts = text.split("|||");
+            let isEn = document.body.classList.contains('lang-en');
+            
+            if (isEn) {
+                return parts[0] ? parts[0].trim() : "";
+            } else {
+                // Jika bahasa Indonesia ditekan tapi di database hanya ada 1 bahasa (data lama), 
+                // tampilkan bahasa aslinya (Inggris) agar tidak kosong.
+                return (parts.length > 1 && parts[1].trim() !== "") ? parts[1].trim() : parts[0].trim();
+            }
+        }
 
         function updateDynamicTexts() {
             document.title = t("Heraclaus | System Changelog", "Heraclaus | Riwayat Sistem");
@@ -181,7 +201,7 @@
             const emptyTitle = document.getElementById('empty-title');
             if (emptyTitle) emptyTitle.innerText = t("No history found", "Riwayat tidak ditemukan");
             
-            // Re-render to update dynamic strings inside the list (like "New Features", "Latest", Dates)
+            // Render ulang isi daftar riwayat agar diterjemahkan secara real-time
             if(allLogs.length > 0) render();
         }
 
@@ -228,6 +248,8 @@
 
         function render() {
             const container = document.getElementById('changelog-container'), search = document.getElementById('search-input').value.toLowerCase();
+            
+            // Filter berdasarkan input teks (bahasa apapun yang muncul di db)
             let filtered = search ? allLogs.filter(log => log.versionName.toLowerCase().includes(search) || (log.added||'').toLowerCase().includes(search) || (log.fixed||'').toLowerCase().includes(search) || (log.removed||'').toLowerCase().includes(search)) : allLogs;
 
             if (filtered.length === 0) {
@@ -236,21 +258,28 @@
                 container.innerHTML = ''; return;
             }
             
-            document.getElementById('empty-state').classList.add('hidden'); container.innerHTML = '';
+            document.getElementById('empty-state').classList.add('hidden'); 
+            container.innerHTML = '';
+            
             filtered.forEach((log, index) => {
                 const isActive = index === 0 && !search ? 'active' : '';
                 
-                // Format tanggal menyesuaikan bahasa yang dipilih
+                // Format tanggal otomatis (English atau Indonesia)
                 const langCode = t('en-US', 'id-ID');
                 const dateStr = new Date(log.date).toLocaleDateString(langCode, { year: 'numeric', month: 'short', day: 'numeric' });
                 
-                const addedHtml = renderList(log.added, 'fa-rocket', t('New Features', 'Fitur Tambahan'), 'badge-emerald', 'dot-emerald');
-                const fixedHtml = renderList(log.fixed, 'fa-bug', t('Bug Fixes', 'Perbaikan Bug'), 'badge-blue', 'dot-blue');
-                const removedHtml = renderList(log.removed, 'fa-trash-can', t('Removed', 'Dihapus'), 'badge-rose', 'dot-rose');
+                // PROSES TRANSLASI DATABASE (Memotong string "Inggris|||Indonesia")
+                const addedText = parseLangDB(log.added);
+                const fixedText = parseLangDB(log.fixed);
+                const removedText = parseLangDB(log.removed);
+
+                const addedHtml = renderList(addedText, 'fa-rocket', t('New Features', 'Fitur Tambahan'), 'badge-emerald', 'dot-emerald');
+                const fixedHtml = renderList(fixedText, 'fa-bug', t('Bug Fixes', 'Perbaikan Bug'), 'badge-blue', 'dot-blue');
+                const removedHtml = renderList(removedText, 'fa-trash-can', t('Removed', 'Dihapus'), 'badge-rose', 'dot-rose');
                 
                 const content = (addedHtml || fixedHtml || removedHtml) ? (addedHtml + fixedHtml + removedHtml) : `<p style='color: var(--text-muted); margin-top: 0.5rem; font-style: italic; font-size: 0.8rem;'>${t('No specific notes provided for this release.', 'Tidak ada catatan pembaruan khusus untuk rilis ini.')}</p>`;
+                
                 const animDelay = (index * 0.05) > 0.5 ? 0 : (index * 0.05);
-
                 const mcBadge = log.mcVersion ? `<span class="badge badge-blue" style="margin: 0 0.3rem; font-size: 0.6rem;"><i class="fa-solid fa-gamepad" style="margin-right:3px;"></i> MC ${log.mcVersion}</span>` : '';
                 const latestBadge = index === 0 && !search ? `<span class="badge badge-primary" style="margin: 0 0.3rem;"><i class="fa-solid fa-star" style="margin-right:3px;"></i> ${t('Latest', 'Terbaru')}</span>` : '';
 
