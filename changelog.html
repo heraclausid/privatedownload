@@ -22,6 +22,10 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
         
+        /* --- MULTILANGUAGE CSS --- */
+        body.lang-en .lang-id { display: none !important; }
+        body.lang-id .lang-en { display: none !important; }
+
         .container { max-width: 48rem; margin: 0 auto; padding: 0 1.25rem; width: 100%; }
         .hidden { display: none !important; }
         .flex { display: flex; } .items-center { align-items: center; } .justify-between { justify-content: space-between; }
@@ -37,6 +41,10 @@
 
         .app-bar { background-color: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); position: fixed; top: 0; width: 100%; height: 3.5rem; z-index: 50; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; }
         .main-content { padding-top: 5.5rem; padding-bottom: 2.5rem; flex-grow: 1; }
+
+        /* Language Toggle Style */
+        .lang-toggle { background: rgba(255,255,255,0.04); color: var(--text-secondary); padding: 0.35rem 0.75rem; border-radius: 6px; border: 1px solid var(--border-light); cursor: pointer; transition: all 0.2s; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .lang-toggle:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); border-color: var(--border-highlight); }
 
         /* Compact Search */
         .search-wrapper { position: relative; margin-bottom: 1.5rem; max-width: 32rem; margin-left: auto; margin-right: auto; }
@@ -94,30 +102,39 @@
         .animate-fade { animation: fadeInUp 0.3s ease forwards; }
     </style>
 </head>
-<body>
+<body class="lang-en">
     <div class="ambient-bg"><div class="blob blob-1"></div><div class="blob blob-2"></div></div>
     <header class="app-bar">
         <div class="container flex justify-between items-center w-full">
             <a href="index.html" class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none;">
-                <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus <span style="color: var(--text-muted); font-weight: 500; font-size: 0.85rem; font-family: 'Inter';" class="desktop-only">| Global Changelog</span>
+                <i class="fa-solid fa-code text-gradient mr-1"></i> Heraclaus 
+                <span style="color: var(--text-muted); font-weight: 500; font-size: 0.85rem; font-family: 'Inter';" class="desktop-only">
+                    | <span class="lang-en">Global Changelog</span><span class="lang-id">Riwayat Pembaruan</span>
+                </span>
             </a>
+
+            <button onclick="toggleLang()" class="lang-toggle" title="Change Language">
+                <i class="fa-solid fa-globe"></i>
+                <span class="lang-en">ID</span>
+                <span class="lang-id">EN</span>
+            </button>
         </div>
     </header>
 
     <main class="container main-content">
         <div class="search-wrapper">
             <i class="fa-solid fa-magnifying-glass search-icon"></i>
-            <input type="text" id="search-input" oninput="render()" placeholder="Search versions, features, or fixes..." class="search-input">
+            <input type="text" id="search-input" oninput="render()" class="search-input" placeholder="Search versions, features, or fixes...">
         </div>
         
         <div id="loading-state" class="state-container">
             <span class="loader"></span>
-            <p style="color: var(--text-secondary); margin-top: 0.75rem; font-weight: 500; font-size: 0.8rem;">Connecting to database...</p>
+            <p style="color: var(--text-secondary); margin-top: 0.75rem; font-weight: 500; font-size: 0.8rem;" id="loading-text">Connecting to database...</p>
         </div>
 
         <div id="empty-state" class="hidden state-container">
             <div class="state-icon"><i class="fa-regular fa-folder-open"></i></div>
-            <p class="font-outfit" style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary);">No history found</p>
+            <p class="font-outfit" style="font-size: 1.1rem; font-weight: 600; color: var(--text-primary);" id="empty-title">No history found</p>
             <p style="color: var(--text-muted); margin-top: 0.25rem; font-size: 0.8rem;" id="empty-msg"></p>
         </div>
         <div id="changelog-container"></div>
@@ -129,7 +146,10 @@
                 <a href="https://www.youtube.com/@heraclaus" target="_blank"><i class="fa-brands fa-youtube"></i></a>
                 <a href="https://discord.gg/xQStZUvukS" target="_blank"><i class="fa-brands fa-discord"></i></a>
             </div>
-            <p>© 2026 Heraclaus. Not associated with Mojang or Microsoft.</p>
+            <p>© 2026 Heraclaus. 
+                <span class="lang-en">Not associated with Mojang or Microsoft.</span>
+                <span class="lang-id">Tidak berafiliasi dengan Mojang atau Microsoft.</span>
+            </p>
         </div>
     </footer>
 
@@ -137,10 +157,55 @@
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
         let allLogs = [];
 
+        // Language Helper
+        function t(en, id) { return document.body.classList.contains('lang-en') ? en : id; }
+
+        function updateDynamicTexts() {
+            document.title = t("Heraclaus | System Changelog", "Heraclaus | Riwayat Sistem");
+            
+            const searchInput = document.getElementById('search-input');
+            if(searchInput) searchInput.placeholder = t("Search versions, features, or fixes...", "Cari versi, fitur, atau perbaikan...");
+            
+            const loadingText = document.getElementById('loading-text');
+            if (loadingText && loadingText.innerText !== t('Failed to load database.', 'Gagal memuat database.')) {
+                loadingText.innerText = t("Connecting to database...", "Menghubungkan ke database...");
+            }
+
+            const emptyTitle = document.getElementById('empty-title');
+            if (emptyTitle) emptyTitle.innerText = t("No history found", "Riwayat tidak ditemukan");
+            
+            // Re-render to update dynamic strings inside the list (like "New Features", "Latest", Dates)
+            if(allLogs.length > 0) render();
+        }
+
+        function toggleLang() {
+            const body = document.body;
+            if (body.classList.contains('lang-id')) {
+                body.classList.remove('lang-id');
+                body.classList.add('lang-en');
+                localStorage.setItem('heraclaus_lang', 'en');
+            } else {
+                body.classList.remove('lang-en');
+                body.classList.add('lang-id');
+                localStorage.setItem('heraclaus_lang', 'id');
+            }
+            updateDynamicTexts();
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
+            const savedLang = localStorage.getItem('heraclaus_lang') || 'en';
+            document.body.className = `lang-${savedLang}`;
+            updateDynamicTexts();
+
             fetch(GOOGLE_SCRIPT_URL + "?action=get_changelog").then(res => res.json())
-            .then(data => { document.getElementById('loading-state').style.display = 'none'; if (data.status === "success") { allLogs = data.changelogs || []; render(); } })
-            .catch(err => { document.getElementById('loading-state').innerHTML = "<div class='state-icon' style='color: var(--accent-danger);'><i class='fa-solid fa-triangle-exclamation'></i></div><p style='color: var(--text-secondary); font-size: 0.85rem;'>Failed to load database.</p>"; });
+            .then(data => { 
+                document.getElementById('loading-state').style.display = 'none'; 
+                if (data.status === "success") { allLogs = data.changelogs || []; render(); } 
+            })
+            .catch(err => { 
+                const ls = document.getElementById('loading-state');
+                if(ls) ls.innerHTML = `<div class='state-icon' style='color: var(--accent-danger);'><i class='fa-solid fa-triangle-exclamation'></i></div><p style='color: var(--text-secondary); font-size: 0.85rem;' id='loading-text'>${t('Failed to load database.', 'Gagal memuat database.')}</p>`; 
+            });
         });
 
         function toggleAccordion(id) {
@@ -160,21 +225,27 @@
 
             if (filtered.length === 0) {
                 document.getElementById('empty-state').classList.remove('hidden');
-                document.getElementById('empty-msg').innerText = (!search && allLogs.length === 0) ? "System database is currently empty." : `No results matching "${search}".`;
+                document.getElementById('empty-msg').innerText = (!search && allLogs.length === 0) ? t("System database is currently empty.", "Database sistem saat ini kosong.") : t(`No results matching "${search}".`, `Tidak ada hasil pencarian untuk "${search}".`);
                 container.innerHTML = ''; return;
             }
             
             document.getElementById('empty-state').classList.add('hidden'); container.innerHTML = '';
             filtered.forEach((log, index) => {
-                const isActive = index === 0 && !search ? 'active' : '', dateStr = new Date(log.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                const addedHtml = renderList(log.added, 'fa-rocket', 'New Features', 'badge-emerald', 'dot-emerald');
-                const fixedHtml = renderList(log.fixed, 'fa-bug', 'Bug Fixes', 'badge-blue', 'dot-blue');
-                const removedHtml = renderList(log.removed, 'fa-trash-can', 'Removed', 'badge-rose', 'dot-rose');
-                const content = (addedHtml || fixedHtml || removedHtml) ? (addedHtml + fixedHtml + removedHtml) : "<p style='color: var(--text-muted); margin-top: 0.5rem; font-style: italic; font-size: 0.8rem;'>No specific notes provided for this release.</p>";
+                const isActive = index === 0 && !search ? 'active' : '';
+                
+                // Format tanggal menyesuaikan bahasa yang dipilih
+                const langCode = t('en-US', 'id-ID');
+                const dateStr = new Date(log.date).toLocaleDateString(langCode, { year: 'numeric', month: 'short', day: 'numeric' });
+                
+                const addedHtml = renderList(log.added, 'fa-rocket', t('New Features', 'Fitur Tambahan'), 'badge-emerald', 'dot-emerald');
+                const fixedHtml = renderList(log.fixed, 'fa-bug', t('Bug Fixes', 'Perbaikan Bug'), 'badge-blue', 'dot-blue');
+                const removedHtml = renderList(log.removed, 'fa-trash-can', t('Removed', 'Dihapus'), 'badge-rose', 'dot-rose');
+                
+                const content = (addedHtml || fixedHtml || removedHtml) ? (addedHtml + fixedHtml + removedHtml) : `<p style='color: var(--text-muted); margin-top: 0.5rem; font-style: italic; font-size: 0.8rem;'>${t('No specific notes provided for this release.', 'Tidak ada catatan pembaruan khusus untuk rilis ini.')}</p>`;
                 const animDelay = (index * 0.05) > 0.5 ? 0 : (index * 0.05);
 
-                // UPDATED: MC Version badge di Changelog
                 const mcBadge = log.mcVersion ? `<span class="badge badge-blue" style="margin: 0 0.3rem; font-size: 0.6rem;"><i class="fa-solid fa-gamepad" style="margin-right:3px;"></i> MC ${log.mcVersion}</span>` : '';
+                const latestBadge = index === 0 && !search ? `<span class="badge badge-primary" style="margin: 0 0.3rem;"><i class="fa-solid fa-star" style="margin-right:3px;"></i> ${t('Latest', 'Terbaru')}</span>` : '';
 
                 container.innerHTML += `
                     <div class="list-card animate-fade ${isActive}" id="card-${log.id}" style="animation-delay: ${animDelay}s;">
@@ -182,7 +253,7 @@
                             <div class="header-info">
                                 <span class="font-outfit" style="font-size: 1.05rem; font-weight: 700;">${log.versionName}</span>
                                 ${mcBadge}
-                                ${index === 0 && !search ? '<span class="badge badge-primary" style="margin: 0 0.3rem;"><i class="fa-solid fa-star" style="margin-right:3px;"></i> Latest</span>' : ''}
+                                ${latestBadge}
                                 <span style="color: var(--text-muted); font-size: 0.75rem; font-weight: 500;"><i class="fa-regular fa-calendar" style="margin-right: 0.2rem;"></i> ${dateStr}</span>
                             </div>
                             <div class="expand-icon"><i class="fa-solid fa-chevron-down"></i></div>
