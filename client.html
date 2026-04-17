@@ -177,15 +177,15 @@
         .guide-content p { color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0; line-height: 1.5; }
 
         .chat-box-wrapper { display: flex; flex-direction: column; height: 500px; border: 1px solid var(--border-light); border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; background: var(--bg-card); max-width: 100%; }
-        .chat-header { padding: 1.25rem; background: rgba(0,0,0,0.5); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+        .chat-header { padding: 1.25rem; background: var(--bg-input); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
         .chat-header-info { display: flex; align-items: center; gap: 0.75rem; }
         .chat-header-icon { width: 2.5rem; height: 2.5rem; border-radius: 50%; background: var(--gradient-admin); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; }
         .chat-container { flex-grow: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; background: var(--bg-base); }
         .chat-bubble { max-width: 80%; padding: 0.8rem 1.2rem; font-size: 0.85rem; line-height: 1.5; position: relative; word-wrap: break-word; }
-        .chat-them { background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); color: var(--text-primary); align-self: flex-start; border-radius: 14px 14px 14px 4px; }
+        .chat-them { background: var(--bg-input); border: 1px solid var(--border-light); color: var(--text-primary); align-self: flex-start; border-radius: 14px 14px 14px 4px; }
         .chat-me { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.3); color: #fff; align-self: flex-end; border-radius: 14px 14px 4px 14px; }
         .chat-time { display: block; font-size: 0.7rem; margin-top: 0.4rem; color: var(--text-muted); }
-        .chat-input-area { display: flex; gap: 0.75rem; padding: 1.25rem; background: rgba(0,0,0,0.5); border-top: 1px solid var(--border-light); flex-shrink: 0; align-items: center; }
+        .chat-input-area { display: flex; gap: 0.75rem; padding: 1.25rem; background: var(--bg-input); border-top: 1px solid var(--border-light); flex-shrink: 0; align-items: center; }
         .chat-input-area input { flex-grow: 1; border-radius: 9999px; padding: 0.8rem 1.25rem; border: 1px solid var(--border-highlight); background: rgba(0,0,0,0.5); }
         .chat-input-area button { background: var(--accent-primary); color: #fff; border: none; width: 3rem; height: 3rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 1.1rem; flex-shrink: 0; }
         .chat-input-area button:hover { transform: scale(1.05); }
@@ -255,18 +255,39 @@
                 <form id="edit-release-form">
                     <input type="hidden" id="e-logid">
                     <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                        <div><label><span class="lang-en">Version Name</span><span class="lang-id">Nama Versi</span></label><input type="text" id="e-version" required></div>
-                        <div><label><span class="lang-en">MC Version</span><span class="lang-id">Versi MC</span></label><input type="text" id="e-mcversion" required></div>
-                        <div><label><span class="lang-en">Release Date</span><span class="lang-id">Tgl Rilis</span></label><input type="date" id="e-date" required></div>
+                        <div>
+                            <label><span class="lang-en">Version Name</span><span class="lang-id">Nama Versi</span></label>
+                            <input type="text" id="e-version" required>
+                        </div>
+                        <div>
+                            <label><span class="lang-en">MC Version</span><span class="lang-id">Versi MC</span></label>
+                            <input type="text" id="e-mcversion" required>
+                        </div>
+                        <div>
+                            <label><span class="lang-en">Release Date</span><span class="lang-id">Tgl Rilis</span></label>
+                            <input type="date" id="e-date" required>
+                        </div>
                     </div>
                     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                         <div class="form-group" style="margin-bottom: 0;"><label>Realms Link</label><input type="url" id="e-link-realms" required></div>
                         <div class="form-group" style="margin-bottom: 0;"><label>BDS Link</label><input type="url" id="e-link-bds" required></div>
                     </div>
-                    <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Baru</span></label><textarea id="e-added"></textarea></div>
-                    <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label><textarea id="e-fixed"></textarea></div>
-                    <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Dihapus</span></label><textarea id="e-removed"></textarea></div>
-                    <button type="submit" class="btn btn-master w-full" id="btn-save-edit" style="margin-top: 0.5rem;"><i class="fa-solid fa-floppy-disk"></i> <span class="lang-en">Save Changes</span><span class="lang-id">Simpan Perubahan</span></button>
+                    <div class="form-group">
+                        <label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Baru</span></label>
+                        <textarea id="e-added"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label>
+                        <textarea id="e-fixed"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Dihapus</span></label>
+                        <textarea id="e-removed"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-master w-full" id="btn-save-edit" style="margin-top: 0.5rem;">
+                        <i class="fa-solid fa-floppy-disk"></i> 
+                        <span class="lang-en">Save Changes</span><span class="lang-id">Simpan Perubahan</span>
+                    </button>
                     <div id="edit-msg" class="msg-box"></div>
                 </form>
             </div>
@@ -306,7 +327,7 @@
             <form id="login-form" style="display: flex; flex-direction: column; align-items: stretch; width: 100%;">
                 <div class="form-group">
                     <label><span class="lang-en">Email Address</span><span class="lang-id">Alamat Email</span></label>
-                    <input type="email" id="login-email" required placeholder="name@domain.com">
+                    <input type="email" id="login-email" required placeholder="Registered email">
                 </div>
                 <div class="form-group">
                     <label><span class="lang-en">Password (Portal Key)</span><span class="lang-id">Kata Sandi (Kunci Portal)</span></label>
@@ -323,7 +344,10 @@
                 <div id="login-msg" class="msg-box msg-error"></div>
             </form>
             <div style="text-align: center; margin-top: 1rem;">
-                <span class="admin-link" onclick="toggleAuthMode('admin')"><i class="fa-solid fa-shield-halved"></i> <span class="lang-en">Admin Console</span><span class="lang-id">Konsol Admin</span></span>
+                <span class="admin-link" onclick="toggleAuthMode('admin')">
+                    <i class="fa-solid fa-shield-halved"></i> 
+                    <span class="lang-en">Admin Console</span><span class="lang-id">Konsol Admin</span>
+                </span>
             </div>
         </div>
 
@@ -338,7 +362,7 @@
                 <div class="form-group">
                     <label><span class="lang-en">Master Password</span><span class="lang-id">Kata Sandi Master</span></label>
                     <div class="pwd-wrapper">
-                        <input type="password" id="admin-key" required placeholder="***">
+                        <input type="password" id="admin-key" required placeholder="Enter admin password">
                         <i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('admin-key', this)"></i>
                     </div>
                 </div>
@@ -350,14 +374,17 @@
                 <div id="admin-login-msg" class="msg-box msg-error"></div>
             </form>
             <div style="text-align: center; margin-top: 1rem;">
-                <span class="admin-link" onclick="toggleAuthMode('user')"><i class="fa-solid fa-arrow-left"></i> <span class="lang-en">Back to Client Portal</span><span class="lang-id">Kembali ke Portal Klien</span></span>
+                <span class="admin-link" onclick="toggleAuthMode('user')">
+                    <i class="fa-solid fa-arrow-left"></i> 
+                    <span class="lang-en">Back to Client Portal</span><span class="lang-id">Kembali ke Portal Klien</span>
+                </span>
             </div>
         </div>
         
         <div class="login-footer"><p>© 2026 Heraclaus. Secure Access.</p></div>
     </main>
 
-    <!-- USER DASHBOARD -->
+    <!-- DASHBOARD SIDEBAR -->
     <div class="dashboard-wrapper" id="user-dashboard">
         <div class="sidebar-overlay" onclick="toggleSidebar('user-sidebar')"></div>
         <aside class="sidebar" id="user-sidebar">
@@ -371,7 +398,7 @@
                 </p>
                 <a class="nav-item active" onclick="switchTab('user', 'overview', this)"><i class="fa-solid fa-chart-pie"></i> <span class="lang-en">Overview</span><span class="lang-id">Ringkasan</span></a>
                 <a class="nav-item" onclick="switchTab('user', 'addons', this)"><i class="fa-solid fa-box-open"></i> <span class="lang-en">My Add-ons</span><span class="lang-id">Add-on Saya</span></a>
-                <a class="nav-item" onclick="switchTab('user', 'licenses', this)"><i class="fa-solid fa-key"></i> <span class="lang-en">Licenses</span><span class="lang-id">Lisensi Info</span></a>
+                <a class="nav-item" onclick="switchTab('user', 'licenses', this)"><i class="fa-solid fa-key"></i> <span class="lang-en">Licenses</span><span class="lang-id">Info Lisensi</span></a>
                 
                 <p style="font-size: 0.65rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin: 1rem 0 0.2rem 0.5rem; letter-spacing: 0.05em;">
                     <span class="lang-en">Community</span><span class="lang-id">Komunitas</span>
@@ -410,7 +437,7 @@
                 <!-- USER OVERVIEW TAB -->
                 <div id="tab-user-overview" class="tab-content active">
                     <h2 class="section-title font-outfit">
-                        <span class="lang-en">Welcome back,</span><span class="lang-id">Selamat datang,</span> 
+                        <span class="lang-en">Welcome back,</span><span class="lang-id">Selamat datang kembali,</span> 
                         <span id="welcome-name" class="text-gradient" style="margin-left: 0.3rem;">Player</span>!
                     </h2>
                     <div class="grid-cards">
@@ -457,7 +484,9 @@
                             <div class="addon-banner"><i class="fa-solid fa-server"></i></div>
                             <div class="addon-info">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                                    <span class="badge success"><i class="fa-solid fa-check" style="margin-right: 0.2rem;"></i> <span class="lang-en">OWNED • PRO</span><span class="lang-id">DIMILIKI • PRO</span></span>
+                                    <span class="badge success"><i class="fa-solid fa-check" style="margin-right: 0.2rem;"></i> 
+                                        <span class="lang-en">OWNED • PRO</span><span class="lang-id">DIMILIKI • PRO</span>
+                                    </span>
                                     <span class="badge" id="addon-badge-version" style="background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2);">v?.?</span>
                                 </div>
                                 <h3 style="font-size: 1.15rem; color: #fff; margin-bottom: 0.4rem; font-family: 'Outfit'; letter-spacing: -0.01em;">Admin Suite Pro</h3>
@@ -469,7 +498,6 @@
                                 <div style="display: flex; gap: 0.5rem; width: 100%;">
                                     <button id="btn-download-realms" class="btn btn-gradient" style="flex: 1; padding: 0 0.5rem;"><i class="fa-solid fa-cube"></i> Realms</button>
                                     <button id="btn-download-bds" class="btn btn-outline" style="flex: 1; border-color: rgba(16, 185, 129, 0.3); color: #10b981; padding: 0 0.5rem;"><i class="fa-solid fa-server"></i> BDS</button>
-                                    <a href="changelog.html" target="_blank" class="btn btn-outline" style="flex: 1; padding: 0 0.5rem; text-decoration: none;"><i class="fa-solid fa-clock-rotate-left"></i> <span class="lang-en">Logs</span><span class="lang-id">Log</span></a>
                                 </div>
                             </div>
                         </div>
@@ -483,7 +511,7 @@
                                 <thead><tr>
                                     <th style="width: 25%;"><span class="lang-en">Version</span><span class="lang-id">Versi Rilis</span></th>
                                     <th style="width: 25%;"><span class="lang-en">Release Date</span><span class="lang-id">Tanggal Rilis</span></th>
-                                    <th><span class="lang-en">Update Notes</span><span class="lang-id">Catatan Fitur</span></th>
+                                    <th><span class="lang-en">Update Notes</span><span class="lang-id">Catatan Pembaruan</span></th>
                                     <th style="text-align: right; width: 15%;"><span class="lang-en">Download</span><span class="lang-id">Unduh</span></th>
                                 </tr></thead>
                                 <tbody></tbody>
@@ -517,23 +545,23 @@
                     <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 1rem;">
                         <i class="fa-solid fa-circle-info" style="margin-right: 0.3rem;"></i> 
                         <span class="lang-en">Enter this unique 16-digit code in-game to activate your Add-on features.</span>
-                        <span class="lang-id">PENTING: Masukkan 16-digit kode unik ini di dalam game untuk mengaktifkan seluruh fitur Pro Add-on Anda.</span>
+                        <span class="lang-id">Masukkan 16 digit kode unik ini di dalam game untuk mengaktifkan fitur Add-on.</span>
                     </p>
                 </div>
 
                 <!-- USER GUIDE TAB -->
                 <div id="tab-user-guide" class="tab-content">
                     <h2 class="section-title font-outfit">
-                        <span class="lang-en">Installation Guide</span><span class="lang-id">Panduan Pemasangan Lengkap</span>
+                        <span class="lang-en">Installation Guide</span><span class="lang-id">Panduan Pemasangan</span>
                     </h2>
                     <div class="profile-field" style="max-width: 48rem;">
                         <div class="guide-step">
                             <div class="guide-number">1</div>
                             <div class="guide-content">
-                                <h4><span class="lang-en">Download File</span><span class="lang-id">Unduh File Add-on</span></h4>
+                                <h4><span class="lang-en">Download File</span><span class="lang-id">Unduh File</span></h4>
                                 <p>
                                     <span class="lang-en">Open the <b>My Add-ons</b> tab and click the <b>Download</b> button. Wait for the file to finish downloading to your device.</span>
-                                    <span class="lang-id">Buka menu <b>Add-on Saya</b> lalu klik tombol <b>Unduh</b> yang tersedia. Tunggu hingga file terunduh sepenuhnya ke dalam penyimpanan perangkat Anda.</span>
+                                    <span class="lang-id">Buka tab <b>Add-on Saya</b> dan klik tombol <b>Unduh</b>. Tunggu hingga file selesai diunduh ke perangkat Anda.</span>
                                 </p>
                             </div>
                         </div>
@@ -543,7 +571,7 @@
                                 <h4><span class="lang-en">Install to Minecraft</span><span class="lang-id">Pasang ke Minecraft</span></h4>
                                 <p>
                                     <span class="lang-en">If you downloaded the <b>Realms</b> version, simply double-click it. If you downloaded the <b>BDS</b> version for servers, extract it into your `behavior_packs` and `resource_packs` folders respectively.</span>
-                                    <span class="lang-id">Jika Anda menggunakan versi <b>Realms (Singleplayer)</b>, cukup ketuk/klik file tersebut. Jika Anda menggunakan versi <b>BDS (Server Hosting)</b>, ekstrak file zip ke dalam folder `behavior_packs` dan `resource_packs` milik server Anda.</span>
+                                    <span class="lang-id">Jika Anda mengunduh versi <b>Realms</b>, cukup klik ganda file tersebut. Jika versi <b>BDS</b> untuk server, ekstrak ke dalam folder `behavior_packs` dan `resource_packs`.</span>
                                 </p>
                             </div>
                         </div>
@@ -553,17 +581,17 @@
                                 <h4><span class="lang-en">Apply to World</span><span class="lang-id">Terapkan ke Dunia</span></h4>
                                 <p>
                                     <span class="lang-en">Go to your World Edit menu. Make sure to apply both the <b>Behavior Pack</b> and <b>Resource Pack</b> of Admin Suite. Also enable the <b>Beta APIs</b> toggle in the Experiments section.</span>
-                                    <span class="lang-id">Masuk ke menu Edit Dunia. Pastikan Anda memasang **Behavior Pack** dan **Resource Pack** Admin Suite. Jangan lupa untuk menyalakan tombol opsi <b>Beta APIs</b> pada bagian Eksperimen.</span>
+                                    <span class="lang-id">Masuk ke menu Edit Dunia. Pastikan memasang <b>Behavior Pack</b> dan <b>Resource Pack</b> dari Admin Suite. Aktifkan juga opsi <b>Beta APIs</b> di bagian Eksperimen.</span>
                                 </p>
                             </div>
                         </div>
                         <div class="guide-step" style="margin-bottom: 0;">
                             <div class="guide-number" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-success); border-color: rgba(16, 185, 129, 0.3);">4</div>
                             <div class="guide-content">
-                                <h4><span class="lang-en">In-Game Verification</span><span class="lang-id">Aktivasi di Dalam Game</span></h4>
+                                <h4><span class="lang-en">In-Game Verification</span><span class="lang-id">Verifikasi Dalam Game</span></h4>
                                 <p>
                                     <span class="lang-en">Enter your world. Use the Admin item or type the <code>/as:info</code> command. The system will prompt you to enter your <b>16-Digit License Key</b> found in the Licenses tab. You're done!</span>
-                                    <span class="lang-id">Masuk ke dalam dunia Anda. Gunakan item Admin atau ketik perintah <code>/as:info</code>. Sistem akan meminta Anda memasukkan <b>16 Digit Kunci Lisensi</b> yang ada di menu Lisensi. Selesai!</span>
+                                    <span class="lang-id">Masuk ke dunia Anda. Gunakan item Admin atau ketik perintah <code>/as:info</code>. Sistem akan meminta Anda memasukkan <b>16 Digit Kunci Lisensi</b> yang ada di menu Lisensi. Selesai!</span>
                                 </p>
                             </div>
                         </div>
@@ -573,19 +601,22 @@
                 <!-- USER PROMOTE SERVER TAB -->
                 <div id="tab-user-server" class="tab-content">
                     <h2 class="section-title font-outfit">
-                        <span class="lang-en">Promote Server</span><span class="lang-id">Promosikan Server Anda</span>
+                        <span class="lang-en">Promote Server</span><span class="lang-id">Promosikan Server</span>
                     </h2>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
                         <span class="lang-en">Register your Minecraft Bedrock server to be displayed publicly on the Heraclaus homepage!</span>
-                        <span class="lang-id">Daftarkan server Minecraft Bedrock Anda secara gratis agar tampil di halaman utama Heraclaus!</span>
+                        <span class="lang-id">Daftarkan server Minecraft Bedrock Anda agar tampil di halaman publik Heraclaus!</span>
                     </p>
                     
                     <div class="profile-field" style="max-width: 48rem; margin-bottom: 2rem;">
                         <form id="add-server-form">
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-                                <div class="form-group"><label><span class="lang-en">Server Name</span><span class="lang-id">Nama Server</span></label><input type="text" id="srv-name" required placeholder="e.g., Heraclaus SMP"></div>
                                 <div class="form-group">
-                                    <label><span class="lang-en">Link Type</span><span class="lang-id">Jenis Tautan Komunitas</span></label>
+                                    <label><span class="lang-en">Server Name</span><span class="lang-id">Nama Server</span></label>
+                                    <input type="text" id="srv-name" required placeholder="e.g., Heraclaus SMP">
+                                </div>
+                                <div class="form-group">
+                                    <label><span class="lang-en">Link Type</span><span class="lang-id">Jenis Tautan</span></label>
                                     <select id="srv-link-type" required style="width: 100%; padding: 0.6rem 1rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-primary); font-size: 0.85rem; outline: none;">
                                         <option value="discord" style="color:#000;">Discord Server</option>
                                         <option value="whatsapp" style="color:#000;">WhatsApp Group</option>
@@ -593,28 +624,43 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group" style="margin-bottom: 1rem;"><label><span class="lang-en">Target Link</span><span class="lang-id">Tautan (Link) Tujuan</span></label><input type="url" id="srv-link" required placeholder="https://..."></div>
+                            <div class="form-group" style="margin-bottom: 1rem;">
+                                <label><span class="lang-en">Target Link</span><span class="lang-id">Tautan Tujuan</span></label>
+                                <input type="url" id="srv-link" required placeholder="https://...">
+                            </div>
                             <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 0.5rem;">
-                                <div class="form-group"><label><span class="lang-en">Server IP</span><span class="lang-id">IP Server MC</span></label><input type="text" id="srv-ip" required placeholder="play.your-server.com"></div>
-                                <div class="form-group"><label><span class="lang-en">Port</span><span class="lang-id">Port Server</span></label><input type="text" id="srv-port" required placeholder="19132"></div>
+                                <div class="form-group">
+                                    <label><span class="lang-en">Server IP</span><span class="lang-id">IP Server</span></label>
+                                    <input type="text" id="srv-ip" required placeholder="play.your-server.com">
+                                </div>
+                                <div class="form-group">
+                                    <label><span class="lang-en">Port</span><span class="lang-id">Port</span></label>
+                                    <input type="text" id="srv-port" required placeholder="19132">
+                                </div>
                             </div>
                             <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem;">
                                 <input type="checkbox" id="srv-port-public" checked style="width: 1.1rem; height: 1.1rem; cursor: pointer;">
                                 <label for="srv-port-public" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.8rem; color: var(--text-secondary); cursor: pointer;">
                                     <span class="lang-en">Show Port Publicly (Uncheck to hide)</span>
-                                    <span class="lang-id">Tampilkan Port ke Publik (Hapus centang untuk sembunyikan)</span>
+                                    <span class="lang-id">Tampilkan Port ke Publik (Hapus centang untuk menyembunyikan)</span>
                                 </label>
                             </div>
-                            <div class="form-group"><label><span class="lang-en">Short Description</span><span class="lang-id">Deskripsi Singkat Server</span></label><textarea id="srv-desc" required placeholder="Describe the gameplay or features of your server..."></textarea></div>
-                            <button type="submit" class="btn btn-gradient w-full" id="btn-add-server" style="margin-top: 0.5rem;"><i class="fa-solid fa-paper-plane"></i> <span class="lang-en">Register Server</span><span class="lang-id">Kirim & Daftarkan Server</span></button>
+                            <div class="form-group">
+                                <label><span class="lang-en">Short Description</span><span class="lang-id">Deskripsi Singkat</span></label>
+                                <textarea id="srv-desc" required placeholder="Describe the gameplay or features of your server..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-gradient w-full" id="btn-add-server" style="margin-top: 0.5rem;">
+                                <i class="fa-solid fa-paper-plane"></i> 
+                                <span class="lang-en">Register Server</span><span class="lang-id">Daftarkan Server</span>
+                            </button>
                         </form>
                     </div>
                     
                     <h3 class="font-outfit" style="color: #fff; margin-bottom: 1rem; font-size: 1.2rem;">
-                        <span class="lang-en">My Servers</span><span class="lang-id">Daftar Server Milik Saya</span>
+                        <span class="lang-en">My Servers</span><span class="lang-id">Server Saya</span>
                     </h3>
                     <div class="list-box" id="user-server-list">
-                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> <span class="lang-en">Loading your server data...</span><span class="lang-id">Memuat data server Anda...</span></div>
+                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading your server data...</div>
                     </div>
                 </div>
 
@@ -624,8 +670,8 @@
                         <span class="lang-en">Global Community Chat</span><span class="lang-id">Obrolan Komunitas Global</span>
                     </h2>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
-                        <span class="lang-en">Connect with other Pro users worldwide. You can delete your own messages.</span>
-                        <span class="lang-id">Terhubung dan bertukar info dengan pengguna Pro lainnya. Anda dapat menghapus pesan Anda sendiri.</span>
+                        <span class="lang-en">Connect with other users. You can delete your own messages.</span>
+                        <span class="lang-id">Terhubung dengan pengguna lain. Anda dapat menghapus pesan Anda sendiri.</span>
                     </p>
                     
                     <div class="chat-box-wrapper">
@@ -637,42 +683,53 @@
                                         <span class="lang-en">Global Channel</span><span class="lang-id">Saluran Global</span>
                                     </h3>
                                     <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.1rem;">
-                                        <span class="lang-en">Public to all members</span><span class="lang-id">Terbuka untuk semua Anggota</span>
+                                        <span class="lang-en">Public to all members</span><span class="lang-id">Terbuka untuk semua anggota</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="chat-container" id="user-chat-box">
-                            <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> <span class="lang-en">Loading chat...</span><span class="lang-id">Memuat pesan...</span></div>
+                            <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading chat...</div>
                         </div>
                         
+                        <!-- FIX: Single input with dynamic placeholder -->
                         <form class="chat-input-area" id="user-chat-form">
-                            <input type="text" id="user-chat-input" class="lang-en" required placeholder="Type a message to everyone..." autocomplete="off">
-                            <input type="text" id="user-chat-input-id" class="lang-id" placeholder="Tulis pesan ke semua orang..." autocomplete="off">
+                            <input type="text" id="user-chat-input" required placeholder="Type a message to everyone..." autocomplete="off">
                             <button type="submit" id="btn-user-chat"><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </div>
                 </div>
 
-                <!-- USER PROFILE TAB -->
                 <div id="tab-user-profile" class="tab-content">
                     <h2 class="section-title font-outfit">
-                        <span class="lang-en">Profile Settings</span><span class="lang-id">Pengaturan Profil & Akun</span>
+                        <span class="lang-en">Profile Settings</span><span class="lang-id">Pengaturan Profil</span>
                     </h2>
                     <div class="profile-grid">
                         <div class="profile-field"><label>Gamertag (Xbox/Minecraft)</label><div class="value" id="profile-gamertag">Loading...</div></div>
-                        <div class="profile-field"><label><span class="lang-en">Account Email</span><span class="lang-id">Email Akun Pribadi</span></label><div class="value" id="profile-email" style="font-family: monospace;">Loading...</div></div>
-                        <div class="profile-field"><label><span class="lang-en">Account Status</span><span class="lang-id">Status Kepemilikan Lisensi</span></label><div class="value" style="color: var(--accent-success); display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-circle-check"></i> <span class="lang-en">Verified Pro Member</span><span class="lang-id">Anggota Pro Terverifikasi</span></div></div>
+                        <div class="profile-field">
+                            <label><span class="lang-en">Account Email</span><span class="lang-id">Email Akun</span></label>
+                            <div class="value" id="profile-email" style="font-family: monospace;">Loading...</div>
+                        </div>
+                        <div class="profile-field">
+                            <label><span class="lang-en">Account Status</span><span class="lang-id">Status Akun</span></label>
+                            <div class="value" style="color: var(--accent-success); display: flex; align-items: center; gap: 0.5rem;"><i class="fa-solid fa-circle-check"></i> <span class="lang-en">Verified Pro Member</span><span class="lang-id">Anggota Pro Terverifikasi</span></div>
+                        </div>
                     </div>
                     
                     <h3 class="font-outfit" style="margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.25rem; color: #fff; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem; max-width: 36rem; letter-spacing: -0.01em;">
-                        <span class="lang-en">Security</span><span class="lang-id">Keamanan Sandi</span>
+                        <span class="lang-en">Security</span><span class="lang-id">Keamanan</span>
                     </h3>
                     <div class="profile-field" style="max-width: 36rem;">
                         <form id="change-pwd-form" style="display: flex; flex-direction: column; align-items: stretch; width: 100%;">
-                            <div class="form-group"><label><span class="lang-en">Current Portal Password</span><span class="lang-id">Sandi Portal Saat Ini</span></label><div class="pwd-wrapper"><input type="password" id="cp-old" required placeholder="HRC-XXXXX"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-old', this)"></i></div></div>
-                            <div class="form-group"><label><span class="lang-en">New Portal Password</span><span class="lang-id">Sandi Portal Yang Baru</span></label><div class="pwd-wrapper"><input type="password" id="cp-new" required placeholder="***" minlength="5"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-new', this)"></i></div></div>
+                            <div class="form-group">
+                                <label><span class="lang-en">Current Portal Password</span><span class="lang-id">Sandi Portal Saat Ini</span></label>
+                                <div class="pwd-wrapper"><input type="password" id="cp-old" required placeholder="HRC-XXXXX"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-old', this)"></i></div>
+                            </div>
+                            <div class="form-group">
+                                <label><span class="lang-en">New Portal Password</span><span class="lang-id">Sandi Portal Baru</span></label>
+                                <div class="pwd-wrapper"><input type="password" id="cp-new" required placeholder="Enter new password" minlength="5"><i class="fa-solid fa-eye pwd-toggle" onclick="togglePassword('cp-new', this)"></i></div>
+                            </div>
                             <button type="submit" class="btn btn-outline w-full" id="btn-change-pwd" style="margin-top: 0.5rem;">
                                 <span class="lang-en">Update Password</span><span class="lang-id">Perbarui Kata Sandi</span>
                             </button>
@@ -724,11 +781,13 @@
 
             <div class="content-body">
                 <div id="tab-admin-publish" class="tab-content active">
-                    <h2 class="section-title font-outfit"><span class="lang-en">Publish Global Release</span><span class="lang-id">Terbitkan Update Global</span></h2>
+                    <h2 class="section-title font-outfit">
+                        <span class="lang-en">Publish Global Release</span><span class="lang-id">Terbitkan Pembaruan Global</span>
+                    </h2>
                     <div class="profile-field" style="max-width: 48rem;">
                         <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
                             <span class="lang-en">Fill the details below to push an update to all members and the public changelog.</span>
-                            <span class="lang-id">Isi detail di bawah untuk membagikan pembaruan sistem secara langsung ke seluruh anggota Pro.</span>
+                            <span class="lang-id">Isi detail di bawah ini untuk membagikan pembaruan ke semua klien.</span>
                         </p>
                         <form id="admin-publish-form">
                             <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
@@ -739,44 +798,49 @@
                             
                             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
                                 <div class="form-group" style="margin-bottom: 0;">
-                                    <label>Realms Link</label>
+                                    <label><span class="lang-en">Realms Link</span><span class="lang-id">Link Realms</span></label>
                                     <input type="url" id="p-link-realms" required placeholder="Direct Link (Discord CDN)">
                                 </div>
                                 <div class="form-group" style="margin-bottom: 0;">
-                                    <label>BDS Link</label>
+                                    <label><span class="lang-en">BDS Link</span><span class="lang-id">Link BDS</span></label>
                                     <input type="url" id="p-link-bds" required placeholder="Direct Link (Discord CDN)">
                                 </div>
                             </div>
 
-                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Tambahan</span></label><textarea id="p-added" class="focus-emerald" placeholder="..."></textarea></div>
-                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label><textarea id="p-fixed" class="focus-blue" placeholder="..."></textarea></div>
-                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Fitur Dihapus</span></label><textarea id="p-removed" class="focus-rose" placeholder="..."></textarea></div>
+                            <div class="form-group"><label style="color: #10b981;"><i class="fa-solid fa-rocket" style="margin-right: 0.3rem;"></i> <span class="lang-en">New Features</span><span class="lang-id">Fitur Baru</span></label><textarea id="p-added" class="focus-emerald" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group"><label style="color: #3b82f6;"><i class="fa-solid fa-bug" style="margin-right: 0.3rem;"></i> <span class="lang-en">Bug Fixes</span><span class="lang-id">Perbaikan Bug</span></label><textarea id="p-fixed" class="focus-blue" placeholder="Separate points by pressing enter..."></textarea></div>
+                            <div class="form-group"><label style="color: #f43f5e;"><i class="fa-solid fa-trash-can" style="margin-right: 0.3rem;"></i> <span class="lang-en">Removed</span><span class="lang-id">Dihapus</span></label><textarea id="p-removed" class="focus-rose" placeholder="Separate points by pressing enter..."></textarea></div>
                             
                             <div class="form-group" style="display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; margin-bottom: 1.5rem; background: rgba(139, 92, 246, 0.1); padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.2);">
                                 <input type="checkbox" id="p-send-email" style="width: 1.2rem; height: 1.2rem; cursor: pointer;">
                                 <label for="p-send-email" style="margin: 0; text-transform: none; letter-spacing: normal; font-size: 0.85rem; color: #fff; cursor: pointer;">
                                     <span class="lang-en">Send email notification to all Pro members</span>
-                                    <span class="lang-id">Kirimkan notifikasi Email massal ke semua anggota Pro</span>
+                                    <span class="lang-id">Kirim notifikasi email ke semua klien</span>
                                 </label>
                             </div>
 
-                            <button type="submit" class="btn btn-master w-full" id="btn-publish-release" style="margin-top: 0.5rem;"><i class="fa-solid fa-cloud-arrow-up"></i> <span class="lang-en">Publish & Update All</span><span class="lang-id">Terbitkan & Perbarui Semua</span></button>
+                            <button type="submit" class="btn btn-master w-full" id="btn-publish-release" style="margin-top: 0.5rem;">
+                                <i class="fa-solid fa-cloud-arrow-up"></i> 
+                                <span class="lang-en">Publish & Update All</span><span class="lang-id">Terbitkan & Perbarui Semua</span>
+                            </button>
                             <div id="publish-msg" class="msg-box"></div>
                         </form>
                     </div>
                 </div>
 
                 <div id="tab-admin-database" class="tab-content">
-                    <h2 class="section-title font-outfit"><span class="lang-en">Release Management</span><span class="lang-id">Manajemen Riwayat Database</span></h2>
+                    <h2 class="section-title font-outfit">
+                        <span class="lang-en">Release Management</span><span class="lang-id">Manajemen Rilis</span>
+                    </h2>
                     <div class="list-box">
                         <div style="overflow-x: auto;">
                             <table class="history-table" id="admin-history-table">
                                 <thead><tr>
                                     <th style="width: 15%;"><span class="lang-en">Version</span><span class="lang-id">Versi</span></th>
                                     <th style="width: 20%;"><span class="lang-en">Date</span><span class="lang-id">Tanggal</span></th>
-                                    <th><span class="lang-en">Link Data</span><span class="lang-id">Data File (Link)</span></th>
-                                    <th style="text-align: center; width: 10%;">DLs</th>
-                                    <th style="text-align: right; width: 10%;">Action</th>
+                                    <th><span class="lang-en">Link Data</span><span class="lang-id">Data Link</span></th>
+                                    <th style="text-align: center; width: 10%;"><span class="lang-en">DLs</span><span class="lang-id">Unduhan</span></th>
+                                    <th style="text-align: right; width: 10%;"><span class="lang-en">Action</span><span class="lang-id">Aksi</span></th>
                                 </tr></thead>
                                 <tbody></tbody>
                             </table>
@@ -785,16 +849,18 @@
                 </div>
 
                 <div id="tab-admin-members" class="tab-content">
-                    <h2 class="section-title font-outfit"><span class="lang-en">Member Management</span><span class="lang-id">Manajemen Klien & Anggota</span></h2>
+                    <h2 class="section-title font-outfit">
+                        <span class="lang-en">Member Management</span><span class="lang-id">Manajemen Anggota</span>
+                    </h2>
                     <div class="list-box">
                         <div style="overflow-x: auto;">
                             <table class="history-table" id="admin-members-table">
                                 <thead>
                                     <tr>
-                                        <th><span class="lang-en">User Info</span><span class="lang-id">Data Pengguna</span></th>
-                                        <th><span class="lang-en">License & Status</span><span class="lang-id">Status Lisensi</span></th>
-                                        <th><span class="lang-en">Activity & Stats</span><span class="lang-id">Aktivitas Akun</span></th>
-                                        <th style="text-align: right; width: 15%;">Action</th>
+                                        <th><span class="lang-en">User Info</span><span class="lang-id">Info Pengguna</span></th>
+                                        <th><span class="lang-en">License & Status</span><span class="lang-id">Lisensi & Status</span></th>
+                                        <th><span class="lang-en">Activity & Stats</span><span class="lang-id">Aktivitas</span></th>
+                                        <th style="text-align: right; width: 15%;"><span class="lang-en">Actions</span><span class="lang-id">Aksi</span></th>
                                     </tr>
                                 </thead>
                                 <tbody></tbody>
@@ -805,18 +871,22 @@
 
                 <!-- ADMIN SERVER MANAGEMENT TAB -->
                 <div id="tab-admin-servers" class="tab-content">
-                    <h2 class="section-title font-outfit"><span class="lang-en">Manage Community Servers</span><span class="lang-id">Moderasi Papan Server</span></h2>
+                    <h2 class="section-title font-outfit">
+                        <span class="lang-en">Manage Community Servers</span><span class="lang-id">Moderasi Server Komunitas</span>
+                    </h2>
                     <div class="list-box" id="admin-server-list">
-                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> <span class="lang-en">Loading server data...</span><span class="lang-id">Memuat data papan server...</span></div>
+                        <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.85rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading server data...</div>
                     </div>
                 </div>
 
                 <!-- ADMIN SOCIAL MODERATION -->
                 <div id="tab-admin-social" class="tab-content">
-                    <h2 class="section-title font-outfit"><span class="lang-en">Global Chat Moderation</span><span class="lang-id">Moderasi Obrolan Komunitas</span></h2>
+                    <h2 class="section-title font-outfit">
+                        <span class="lang-en">Global Chat Moderation</span><span class="lang-id">Moderasi Obrolan Global</span>
+                    </h2>
                     <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.5rem;">
                         <span class="lang-en">As an admin, you can delete any inappropriate messages from the global chat.</span>
-                        <span class="lang-id">Sebagai Admin, Anda dapat menghapus paksa pesan tidak pantas milik siapa pun yang ada di obrolan.</span>
+                        <span class="lang-id">Sebagai admin, Anda dapat menghapus pesan yang tidak pantas.</span>
                     </p>
                     
                     <div class="chat-box-wrapper">
@@ -824,19 +894,23 @@
                             <div class="chat-header-info">
                                 <div class="chat-header-icon" style="background: var(--gradient-master);"><i class="fa-solid fa-shield-halved"></i></div>
                                 <div>
-                                    <h3 style="color: #fff; font-size: 0.95rem; font-family: 'Outfit'; font-weight: 700; margin: 0;"><span class="lang-en">Global Channel (Admin View)</span><span class="lang-id">Saluran Global (Mode Admin)</span></h3>
-                                    <div style="font-size: 0.7rem; color: var(--accent-admin); margin-top: 0.1rem; font-weight: 600;"><span class="lang-en">Full Moderation Access</span><span class="lang-id">Akses Penghapusan Penuh</span></div>
+                                    <h3 style="color: #fff; font-size: 0.95rem; font-family: 'Outfit'; font-weight: 700; margin: 0;">
+                                        <span class="lang-en">Global Channel (Admin View)</span><span class="lang-id">Saluran Global (Mode Admin)</span>
+                                    </h3>
+                                    <div style="font-size: 0.7rem; color: var(--accent-admin); margin-top: 0.1rem; font-weight: 600;">
+                                        <span class="lang-en">Full Moderation Access</span><span class="lang-id">Akses Moderasi Penuh</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
                         <div class="chat-container" id="admin-chat-box">
-                            <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> <span class="lang-en">Loading chat...</span><span class="lang-id">Memuat pesan...</span></div>
+                            <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading chat...</div>
                         </div>
                         
+                        <!-- FIX: Single input with dynamic placeholder -->
                         <form class="chat-input-area" id="admin-chat-form">
-                            <input type="text" id="admin-chat-input" class="lang-en" required placeholder="Send message as Admin..." autocomplete="off">
-                            <input type="text" id="admin-chat-input-id" class="lang-id" placeholder="Kirim pesan peringatan sebagai Admin..." autocomplete="off">
+                            <input type="text" id="admin-chat-input" required placeholder="Send message as Admin..." autocomplete="off">
                             <button type="submit" id="btn-admin-chat" style="background: var(--gradient-master);"><i class="fa-solid fa-paper-plane"></i></button>
                         </form>
                     </div>
@@ -886,7 +960,12 @@
         let pollingInterval = null;
         window.adminMembersData = []; 
 
-        // Multi-language Toggle Logic & String Helper
+        // Language Helper function for JavaScript strings
+        function t(en, id) {
+            return document.body.classList.contains('lang-en') ? en : id;
+        }
+
+        // Multi-language Toggle Logic
         function toggleLang() {
             const body = document.body;
             if (body.classList.contains('lang-id')) {
@@ -898,7 +977,8 @@
                 body.classList.add('lang-id');
                 localStorage.setItem('heraclaus_lang', 'id');
             }
-            
+            updateDynamicTexts();
+
             // Re-render elements that depend on dynamic JS text
             const session = sessionStorage.getItem("heraclaus_session");
             if (session) {
@@ -906,16 +986,15 @@
                 if (data.role === "user") {
                     fetchMemberServers();
                     fetchGlobalChat();
-                    // Refetch addon history to update table strings if needed
-                    const hEl = document.getElementById("display-key");
-                    if(hEl.innerText.includes("pending") || hEl.innerText.includes("menunggu")) {
-                        hEl.innerText = t("License pending generation...", "Lisensi sedang menunggu dibuat...");
+                    
+                    const keyEl = document.getElementById("display-key");
+                    if (keyEl && keyEl.classList.contains("empty")) {
+                        keyEl.innerText = t("License pending generation...", "Lisensi sedang menunggu dibuat...");
                     }
-                    if(data.addonHistory) {
-                        const tbody = document.querySelector("#user-history-table tbody");
-                        if(tbody && tbody.innerHTML.includes("folder-open")) {
-                            tbody.innerHTML = `<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>${t("No releases available yet.", "Belum ada rilis sistem yang tersedia.")}</span></td></tr>`;
-                        }
+                    
+                    const historyTbody = document.querySelector("#user-history-table tbody");
+                    if(historyTbody && historyTbody.innerHTML.includes("folder-open")) {
+                        historyTbody.innerHTML = `<tr><td colspan='4' style='text-align:center; padding: 2rem;'><i class='fa-regular fa-folder-open' style='font-size: 2rem; color: var(--border-light); display:block; margin-bottom: 0.5rem;'></i><span style='color: var(--text-muted); font-size: 0.85rem;'>${t("No releases available yet.", "Belum ada rilis sistem yang tersedia.")}</span></td></tr>`;
                     }
                 } else if (data.role === "admin") {
                     fetchAdminDatabase();
@@ -926,9 +1005,36 @@
             }
         }
 
-        // Helper for Dynamic Texts
-        function t(en, id) {
-            return document.body.classList.contains('lang-en') ? en : id;
+        // Update Placeholder text when language changes
+        function updateDynamicTexts() {
+            const setPh = (id, en, idLang) => { const el = document.getElementById(id); if(el) el.placeholder = t(en, idLang); };
+            
+            setPh('login-email', 'Registered email', 'Email terdaftar');
+            setPh('login-key', 'HRC-XXXXX', 'HRC-XXXXX');
+            setPh('admin-key', 'Enter admin password', 'Masukkan kata sandi admin');
+            
+            setPh('srv-name', 'e.g., Heraclaus SMP', 'contoh: Heraclaus SMP');
+            setPh('srv-link', 'https://...', 'https://...');
+            setPh('srv-ip', 'play.your-server.com', 'play.server-anda.com');
+            setPh('srv-port', '19132', '19132');
+            setPh('srv-desc', 'Describe the gameplay or features of your server...', 'Jelaskan gameplay atau fitur dari server Anda...');
+            
+            setPh('user-chat-input', 'Type a message to everyone...', 'Ketik pesan untuk semua orang...');
+            setPh('admin-chat-input', 'Send message as Admin...', 'Kirim pesan peringatan sebagai Admin...');
+            
+            setPh('cp-old', 'HRC-XXXXX', 'HRC-XXXXX');
+            setPh('cp-new', 'Enter new password', 'Masukkan kata sandi baru');
+            
+            setPh('p-version', 'e.g. v6.2.0', 'contoh: v6.2.0');
+            setPh('p-mcversion', 'e.g. 1.20.70+', 'contoh: 1.20.70+');
+            setPh('p-link-realms', 'Direct Link (Discord CDN)', 'Tautan Langsung (Discord CDN)');
+            setPh('p-link-bds', 'Direct Link (Discord CDN)', 'Tautan Langsung (Discord CDN)');
+            setPh('p-added', 'Separate points by pressing enter...', 'Pisahkan poin dengan menekan tombol enter...');
+            setPh('p-fixed', 'Separate points by pressing enter...', 'Pisahkan poin dengan menekan tombol enter...');
+            setPh('p-removed', 'Separate points by pressing enter...', 'Pisahkan poin dengan menekan tombol enter...');
+            
+            setPh('e-version', 'e.g. v6.2.0', 'contoh: v6.2.0');
+            setPh('e-mcversion', 'e.g. 1.20.70+', 'contoh: 1.20.70+');
         }
 
         function safelyAttachListener(elementId, eventType, callback) {
@@ -952,9 +1058,9 @@
         }
 
         document.addEventListener("DOMContentLoaded", () => {
-            // Apply saved language on load
             const savedLang = localStorage.getItem('heraclaus_lang') || 'en';
             document.body.className = `lang-${savedLang}`;
+            updateDynamicTexts();
 
             const session = sessionStorage.getItem("heraclaus_session");
             if (session) {
@@ -1030,36 +1136,34 @@
                 }).finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('Register Server', 'Kirim & Daftarkan Server'); });
             });
 
-            // Social Chat Form (User)
+            // Social Chat Form (User) - FIX: Use Single Input
             safelyAttachListener("user-chat-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-                const inputEn = document.getElementById('user-chat-input');
-                const inputId = document.getElementById('user-chat-input-id');
-                const text = inputEn.value.trim() || inputId.value.trim();
+                const input = document.getElementById('user-chat-input');
+                const text = input.value.trim();
                 const btn = document.getElementById('btn-user-chat');
                 
                 if(!text) return;
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; 
-                inputEn.value = ""; inputId.value = "";
+                input.value = "";
                 
                 fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "send_global_chat", email: session.email, gamertag: session.gamertag, role: "user", msg: text }) })
                 .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('user-chat-box', data.chat, session); })
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
             });
 
-            // Social Chat Form (Admin)
+            // Social Chat Form (Admin) - FIX: Use Single Input
             safelyAttachListener("admin-chat-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-                const inputEn = document.getElementById('admin-chat-input');
-                const inputId = document.getElementById('admin-chat-input-id');
-                const text = inputEn.value.trim() || inputId.value.trim();
+                const input = document.getElementById('admin-chat-input');
+                const text = input.value.trim();
                 const btn = document.getElementById('btn-admin-chat');
                 
                 if(!text) return;
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; 
-                inputEn.value = ""; inputId.value = "";
+                input.value = "";
                 
                 fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "send_global_chat", adminPassword: session.adminPassword, role: "admin", msg: text }) })
                 .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('admin-chat-box', data.chat, session); })
