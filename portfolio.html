@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
-        /* --- CORE STYLES --- */
         :root {
             --bg-base: #050505; --bg-surface: #0a0a0a; --bg-card: rgba(255, 255, 255, 0.03); --bg-card-hover: rgba(255, 255, 255, 0.05);
             --border-light: rgba(255, 255, 255, 0.08); --border-highlight: rgba(255, 255, 255, 0.15);
@@ -24,11 +23,9 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         html { scroll-behavior: smooth; scroll-padding-top: 4.5rem; }
         
-        /* Keamanan Anti-Copy */
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); line-height: 1.5; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; }
         
-        /* --- MULTILANGUAGE CSS --- */
         body.lang-en .lang-id { display: none !important; }
         body.lang-id .lang-en { display: none !important; }
 
@@ -52,7 +49,6 @@
         .blob-1 { top: -20%; left: -10%; width: 50vw; height: 50vw; background: rgba(139, 92, 246, 0.15); }
         .blob-2 { bottom: -20%; right: -10%; width: 40vw; height: 40vw; background: rgba(59, 130, 246, 0.15); }
 
-        /* Navbar */
         .navbar { position: fixed; top: 0; width: 100%; height: 4rem; z-index: 100; background: rgba(5, 5, 5, 0.75); backdrop-filter: blur(24px); border-bottom: 1px solid var(--border-light); display: flex; align-items: center; transition: all 0.3s ease; }
         
         .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
@@ -64,13 +60,11 @@
 
         .badge-hero { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.8rem; background: rgba(139, 92, 246, 0.15); color: #c4b5fd; border-radius: 999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1rem; border: 1px solid rgba(139, 92, 246, 0.3); letter-spacing: 1px; }
 
-        /* Filters */
         .filter-container { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; margin-top: 3rem; margin-bottom: 2.5rem; }
         .filter-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); color: var(--text-secondary); padding: 0.5rem 1.25rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; font-family: 'Inter', sans-serif; }
         .filter-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-primary); }
         .filter-btn.active { background: var(--gradient-admin); color: #fff; border-color: transparent; box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3); }
 
-        /* Portfolio Grid */
         .portfolio-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
         @media (min-width: 640px) { .portfolio-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (min-width: 1024px) { .portfolio-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -131,7 +125,6 @@
 
         .msg-box { margin-top: 1rem; padding: 0.75rem; border-radius: 8px; font-size: 0.8rem; font-weight: 500; text-align: center; display: none; background: rgba(244, 63, 94, 0.1); color: var(--accent-danger); border: 1px solid rgba(244, 63, 94, 0.3); }
 
-        /* Admin Layout Grid */
         .admin-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
         @media (min-width: 768px) { .admin-grid { grid-template-columns: 1.2fr 1fr; } }
         
@@ -140,7 +133,6 @@
         .admin-table td { padding: 0.85rem; border-bottom: 1px solid var(--border-light); color: var(--text-secondary); font-size: 0.85rem; vertical-align: middle; }
         .admin-table tr:last-child td { border-bottom: none; }
 
-        /* Toast */
         #toast-container { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 10000; display: flex; flex-direction: column; gap: 0.5rem; }
         .toast { background: rgba(16, 185, 129, 0.95); color: #fff; padding: 0.75rem 1rem; border-radius: 8px; font-size: 0.85rem; font-weight: 500; box-shadow: 0 4px 15px rgba(0,0,0,0.2); backdrop-filter: blur(10px); transform: translateY(50px); opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 0.6rem; border: 1px solid rgba(255,255,255,0.2); }
         .toast.error { background: rgba(244, 63, 94, 0.95); }
@@ -159,7 +151,6 @@
             </a>
             
             <div class="nav-actions">
-                <!-- Tombol Admin Login di Header -->
                 <button id="open-admin-btn" class="nav-btn" title="Admin Login" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05);">
                     <i class="fa-solid fa-shield-halved"></i>
                     <span class="desktop-only" style="font-size: 0.75rem;">Admin</span>
@@ -199,7 +190,6 @@
                 </p>
             </div>
 
-            <!-- Bagian Filter -->
             <div class="filter-container" id="filter-buttons">
                 <button class="filter-btn active" data-filter="all">
                     <span class="lang-en">All Projects</span><span class="lang-id">Semua Proyek</span>
@@ -209,7 +199,6 @@
                 <button class="filter-btn" data-filter="custom">Enterprise / Custom</button>
             </div>
 
-            <!-- Wadah Grid Portofolio -->
             <div class="portfolio-grid" id="portfolio-grid">
                 <div class="empty-state">
                     <i class="fa-solid fa-circle-notch fa-spin"></i>
@@ -230,7 +219,6 @@
         </div>
     </footer>
 
-    <!-- ADMIN LOGIN MODAL -->
     <div class="modal-overlay" id="login-modal">
         <div class="modal-card">
             <div class="modal-header">
@@ -263,7 +251,6 @@
         </div>
     </div>
 
-    <!-- ADMIN DASHBOARD MODAL -->
     <div class="modal-overlay" id="dashboard-modal">
         <div class="modal-card large">
             <div class="modal-header">
@@ -278,7 +265,6 @@
             </div>
             <div class="modal-body">
                 <div class="admin-grid">
-                    <!-- Kolom Kiri: Form Tambah -->
                     <div style="background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--border-light);">
                         <h3 class="font-outfit" style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem;">
                             <i class="fa-solid fa-plus text-gradient" style="margin-right: 0.4rem;"></i> 
@@ -339,7 +325,6 @@
                         </form>
                     </div>
 
-                    <!-- Kolom Kanan: Tabel Data -->
                     <div style="background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: 12px; border: 1px solid var(--border-light); display: flex; flex-direction: column;">
                         <h3 class="font-outfit" style="font-size: 1.1rem; color: #fff; margin-bottom: 1rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem;">
                             <i class="fa-solid fa-list-check text-gradient" style="margin-right: 0.4rem;"></i> 
@@ -355,7 +340,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Diisi oleh JS -->
                                 </tbody>
                             </table>
                         </div>
@@ -365,23 +349,88 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="edit-project-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 class="font-outfit" style="margin: 0; font-size: 1.1rem; color: #fff;">
+                    <i class="fa-solid fa-pen-to-square text-gradient" style="margin-right: 0.4rem;"></i> 
+                    <span class="lang-en">Edit Project</span><span class="lang-id">Edit Proyek</span>
+                </h2>
+                <button class="btn-icon danger" onclick="closeModal('edit-project-modal')" style="border: none;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-project-form">
+                    <input type="hidden" id="ep-id">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div class="form-group">
+                            <label><span class="lang-en">Category</span><span class="lang-id">Kategori</span></label>
+                            <select id="ep-category" required>
+                                <option value="landingpage" style="color:#000;">Landing Page</option>
+                                <option value="webapp" style="color:#000;">Web App</option>
+                                <option value="custom" style="color:#000;">Enterprise / Custom</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="lang-en">Target Link</span><span class="lang-id">Tautan Web</span></label>
+                            <input type="url" id="ep-link" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><span class="lang-en">Image URL (Cover)</span><span class="lang-id">URL Gambar (Cover)</span></label>
+                        <input type="url" id="ep-image" required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div class="form-group">
+                            <label><span class="lang-en">Title (English)</span><span class="lang-id">Judul (Inggris)</span></label>
+                            <input type="text" id="ep-title-en" required>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="lang-en">Title (Indonesia)</span><span class="lang-id">Judul (Indo)</span></label>
+                            <input type="text" id="ep-title-id" required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                        <div class="form-group">
+                            <label><span class="lang-en">Desc (English)</span><span class="lang-id">Deskripsi (Inggris)</span></label>
+                            <textarea id="ep-desc-en" required rows="2"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label><span class="lang-en">Desc (Indonesia)</span><span class="lang-id">Deskripsi (Indo)</span></label>
+                            <textarea id="ep-desc-id" required rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label><span class="lang-en">Tags (Comma Separated)</span><span class="lang-id">Tags (Pisahkan Koma)</span></label>
+                        <input type="text" id="ep-tags" required>
+                    </div>
+
+                    <button type="submit" class="btn-admin" id="btn-save-edit-project" style="margin-top: 0.5rem;">
+                        <i class="fa-solid fa-floppy-disk"></i> 
+                        <span class="lang-en">Save Changes</span><span class="lang-id">Simpan Perubahan</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Security & Clean URL Logic
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'c' || e.key.toLowerCase() === 'x')) e.preventDefault(); });
-        if (window.location.pathname.endsWith('.html')) window.history.replaceState(null, '', window.location.pathname.replace(/index\.html$/, '').replace(/\.html$/, '') + window.location.search + window.location.hash);
-        document.querySelectorAll('a').forEach(a => { let h = a.getAttribute('href'); if(h && h.includes('.html')) a.setAttribute('href', h.replace('index.html', '/').replace(/\.html$/, '')); });
+        if (window.location.protocol.startsWith('http')) {
+            if (window.location.pathname.endsWith('.html')) window.history.replaceState(null, '', window.location.pathname.replace(/index\.html$/, '').replace(/\.html$/, '') + window.location.search + window.location.hash);
+            document.querySelectorAll('a').forEach(a => { let h = a.getAttribute('href'); if(h && h.includes('.html') && !h.startsWith('http')) a.setAttribute('href', h.replace('index.html', '/').replace(/\.html$/, '')); });
+        }
 
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzOAHFZyhAd4h8lpWi1lCB4j94iio5Yu-_qf5XYHUP2dxDBlMfr0_h-wBCdsE4p56yL/exec";
 
-        // Language Helper function
         function t(en, id) {
             return document.body.classList.contains('lang-en') ? en : id;
         }
 
-        // ==========================================
-        // DATA FALLBACK (DUMMY DATA JIKA DATABASE KOSONG / OFFLINE)
-        // ==========================================
         const fallbackData = [
             {
                 id: "dummy-1", category: 'webapp',
@@ -409,7 +458,6 @@
             'custom': 'Enterprise'
         };
 
-        // --- TOAST HELPER ---
         function showToast(message, isError = false) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -420,10 +468,11 @@
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { container.removeChild(toast); }, 300); }, 3000);
         }
 
-        // --- FETCH DATA DARI GOOGLE SCRIPT ---
         function fetchPortfolioData() {
-            // Gunakan metode GET untuk data publik agar terhindar dari pemblokiran CORS oleh Google Apps Script
-            fetch(GOOGLE_SCRIPT_URL + "?action=get_portfolio")
+            fetch(GOOGLE_SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({ action: "get_portfolio" })
+            })
             .then(res => {
                 if (!res.ok) throw new Error("Network response was not ok");
                 return res.json();
@@ -438,7 +487,6 @@
                 renderAdminTable();
             })
             .catch(err => {
-                // Jangan dihapus, sistem otomatis menampilkan Fallback jika dibuka secara lokal/offline
                 console.log("Sistem: Database belum siap atau berjalan secara lokal. Menampilkan data cadangan (fallback)...");
                 portfolioData = fallbackData;
                 renderPortfolio('all');
@@ -446,7 +494,6 @@
             });
         }
 
-        // --- RENDER GRID PORTOFOLIO (PUBLIC) ---
         function renderPortfolio(filter = 'all') {
             const grid = document.getElementById('portfolio-grid');
             grid.innerHTML = ''; 
@@ -505,7 +552,6 @@
             });
         });
 
-        // --- MULTILANGUAGE LOGIC ---
         function toggleLang() {
             const body = document.body;
             if (body.classList.contains('lang-id')) {
@@ -523,7 +569,6 @@
             renderAdminTable();
         }
 
-        // --- ADMIN PANEL LOGIC ---
         function openModal(id) { document.getElementById(id).classList.add('show'); }
         function closeModal(id) { document.getElementById(id).classList.remove('show'); }
         function togglePassword(inputId, icon) { const input = document.getElementById(inputId); if(input.type === 'password') { input.type = 'text'; icon.classList.replace('fa-eye', 'fa-eye-slash'); } else { input.type = 'password'; icon.classList.replace('fa-eye-slash', 'fa-eye'); } }
@@ -541,7 +586,6 @@
             showToast(t("Logged out securely.", "Berhasil keluar dari sesi admin."));
         }
 
-        // Admin Login
         document.getElementById('admin-login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const pwd = document.getElementById('admin-key').value;
@@ -574,7 +618,6 @@
             });
         });
 
-        // Render Tabel Admin
         function renderAdminTable() {
             const tbody = document.querySelector("#admin-portfolio-table tbody");
             if (!tbody) return;
@@ -595,7 +638,8 @@
                             <div style="font-size: 0.7rem; margin-top: 0.2rem;"><a href="${item.link}" target="_blank" style="color: var(--accent-primary); text-decoration: none;">Lihat Link <i class="fa-solid fa-arrow-up-right-from-square"></i></a></div>
                         </td>
                         <td><span class="tag">${catText}</span></td>
-                        <td style="text-align: right;">
+                        <td style="text-align: right; display: flex; gap: 0.4rem; justify-content: flex-end;">
+                            <button onclick="openEditProjectModal('${item.id}')" class="btn-icon" title="Edit" style="color: var(--accent-primary); border-color: rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.05);"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="adminDeleteProject('${item.id}')" class="btn-icon danger" title="Hapus"><i class="fa-solid fa-trash-can"></i></button>
                         </td>
                     </tr>
@@ -603,7 +647,6 @@
             });
         }
 
-        // Tambah Project Baru (POST ke Backend)
         document.getElementById('add-project-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const pwd = sessionStorage.getItem('port_admin');
@@ -643,7 +686,6 @@
             .finally(() => { btn.disabled = false; btn.innerHTML = originalBtnHtml; });
         });
 
-        // Hapus Project
         window.adminDeleteProject = function(id) {
             if(!confirm(t("Are you sure you want to permanently delete this project?", "Yakin ingin menghapus proyek ini secara permanen dari portofolio?"))) return;
             const pwd = sessionStorage.getItem('port_admin');
@@ -663,11 +705,67 @@
             });
         }
 
-        // Init
+        window.openEditProjectModal = function(id) {
+            const project = portfolioData.find(p => p.id === id);
+            if(!project) return;
+            
+            document.getElementById('ep-id').value = project.id;
+            document.getElementById('ep-category').value = project.category;
+            document.getElementById('ep-link').value = project.link;
+            document.getElementById('ep-image').value = project.image;
+            document.getElementById('ep-title-en').value = project.titleEn || "";
+            document.getElementById('ep-title-id').value = project.titleId || "";
+            document.getElementById('ep-desc-en').value = project.descEn || "";
+            document.getElementById('ep-desc-id').value = project.descId || "";
+            document.getElementById('ep-tags').value = project.tags || "";
+            
+            openModal('edit-project-modal');
+        }
+
+        document.getElementById('edit-project-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const pwd = sessionStorage.getItem('port_admin');
+            if(!pwd) { alert("Sesi admin telah habis!"); return closeModal('edit-project-modal'); }
+
+            const btn = document.getElementById('btn-save-edit-project');
+            const originalBtnHtml = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Saving...';
+
+            const payload = {
+                action: "admin_edit_portfolio",
+                adminPassword: pwd,
+                projectId: document.getElementById('ep-id').value,
+                project: {
+                    category: document.getElementById('ep-category').value,
+                    image: document.getElementById('ep-image').value.trim(),
+                    link: document.getElementById('ep-link').value.trim(),
+                    titleEn: document.getElementById('ep-title-en').value.trim(),
+                    titleId: document.getElementById('ep-title-id').value.trim(),
+                    descEn: document.getElementById('ep-desc-en').value.trim(),
+                    descId: document.getElementById('ep-desc-id').value.trim(),
+                    tags: document.getElementById('ep-tags').value.trim()
+                }
+            };
+
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success") {
+                    showToast(t("Project successfully updated!", "Proyek berhasil diperbarui!"));
+                    closeModal('edit-project-modal');
+                    fetchPortfolioData();
+                } else {
+                    showToast(data.message, true);
+                }
+            })
+            .catch(err => { showToast(err.message, true); })
+            .finally(() => { btn.disabled = false; btn.innerHTML = originalBtnHtml; });
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             const savedLang = localStorage.getItem('heraclaus_lang') || 'en';
             document.body.className = `lang-${savedLang}`;
-            fetchPortfolioData(); // Ambil data dari server
+            fetchPortfolioData(); 
             
             window.addEventListener('scroll', () => {
                 const nav = document.getElementById('navbar');
