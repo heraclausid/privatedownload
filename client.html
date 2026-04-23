@@ -27,7 +27,6 @@
         body { font-family: 'Inter', sans-serif; background-color: var(--bg-base); color: var(--text-primary); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; line-height: 1.5; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
         input, textarea, select { -webkit-user-select: auto; -moz-user-select: auto; -ms-user-select: auto; user-select: auto; }
         
-        /* --- MULTILANGUAGE CSS --- */
         body.lang-en .lang-id { display: none !important; }
         body.lang-id .lang-en { display: none !important; }
 
@@ -56,7 +55,6 @@
         .btn-icon.danger { border-color: rgba(244,63,94,0.3); color: var(--accent-danger); background: transparent; }
         .btn-icon.danger:hover { background: rgba(244,63,94,0.1); border-color: rgba(244,63,94,0.5); }
         
-        /* Navbar Actions & Language Toggle */
         .nav-actions { display: flex; align-items: center; gap: 0.5rem; }
         .nav-btn { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.2s; background: rgba(255,255,255,0.05); padding: 0.4rem 0.85rem; border-radius: 8px; border: 1px solid var(--border-light); cursor: pointer; }
         .nav-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.1); border-color: var(--border-highlight); }
@@ -207,7 +205,6 @@
             .chat-bubble { max-width: 90%; }
         }
 
-        /* --- EYE ICON MASKING STYLE --- */
         .mask-toggle { cursor: pointer; opacity: 0.5; transition: opacity 0.2s ease, transform 0.2s; padding: 0.2rem; }
         .mask-toggle:hover { opacity: 1; transform: scale(1.1); color: var(--text-primary); }
     </style>
@@ -229,7 +226,6 @@
         </div>
     </div>
 
-    <!-- INVOICE MODAL -->
     <div class="modal-overlay" id="invoice-modal">
         <div class="modal-card">
             <div class="modal-header">
@@ -244,7 +240,6 @@
         </div>
     </div>
 
-    <!-- EDIT RELEASE MODAL -->
     <div class="modal-overlay" id="edit-release-modal">
         <div class="modal-card" style="max-width: 48rem;">
             <div class="modal-header">
@@ -307,7 +302,6 @@
         </div>
     </div>
 
-    <!-- NAVBAR LOGIN SCREEN -->
     <nav class="navbar" id="main-navbar">
         <div class="nav-container">
             <a href="index.html" class="font-outfit" style="font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none; letter-spacing: -0.02em;">
@@ -331,9 +325,7 @@
         </div>
     </nav>
 
-    <!-- AUTHENTICATION SCREEN -->
     <main class="auth-wrapper" id="auth-section">
-        <!-- USER LOGIN -->
         <div class="auth-container active" id="user-login-box">
             <h1 class="font-outfit"><span class="lang-en">Client Portal</span><span class="lang-id">Portal Klien</span></h1>
             <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">
@@ -367,7 +359,6 @@
             </div>
         </div>
 
-        <!-- ADMIN LOGIN -->
         <div class="auth-container" id="admin-login-box" style="border-top: 3px solid var(--accent-admin);">
             <h1 class="font-outfit text-admin"><span class="lang-en">Master Panel</span><span class="lang-id">Panel Master</span></h1>
             <p style="text-align:center; color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.85rem;">
@@ -400,7 +391,6 @@
         <div class="login-footer"><p>© 2026 Heraclaus. Secure Access.</p></div>
     </main>
 
-    <!-- DASHBOARD SIDEBAR -->
     <div class="dashboard-wrapper" id="user-dashboard">
         <div class="sidebar-overlay" onclick="toggleSidebar('user-sidebar')"></div>
         <aside class="sidebar" id="user-sidebar">
@@ -450,7 +440,6 @@
             </header>
 
             <div class="content-body">
-                <!-- USER OVERVIEW TAB -->
                 <div id="tab-user-overview" class="tab-content active">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">Welcome back,</span><span class="lang-id">Selamat datang kembali,</span> 
@@ -490,7 +479,6 @@
                     </div>
                 </div>
 
-                <!-- USER ADDONS TAB -->
                 <div id="tab-user-addons" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">My Add-ons</span><span class="lang-id">Add-on Saya</span>
@@ -536,7 +524,6 @@
                     </div>
                 </div>
 
-                <!-- USER LICENSES TAB -->
                 <div id="tab-user-licenses" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">My Licenses</span><span class="lang-id">Informasi Lisensi</span>
@@ -565,7 +552,6 @@
                     </p>
                 </div>
 
-                <!-- USER GUIDE TAB -->
                 <div id="tab-user-guide" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">Installation Guide</span><span class="lang-id">Panduan Pemasangan</span>
@@ -614,7 +600,6 @@
                     </div>
                 </div>
 
-                <!-- USER PROMOTE SERVER TAB -->
                 <div id="tab-user-server" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">Promote Server</span><span class="lang-id">Promosikan Server</span>
@@ -680,7 +665,6 @@
                     </div>
                 </div>
 
-                <!-- USER SOCIAL TAB -->
                 <div id="tab-user-social" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">Global Community Chat</span><span class="lang-id">Obrolan Komunitas Global</span>
@@ -709,7 +693,6 @@
                             <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading chat...</div>
                         </div>
                         
-                        <!-- FIX: Single input with dynamic placeholder -->
                         <form class="chat-input-area" id="user-chat-form">
                             <input type="text" id="user-chat-input" required placeholder="Type a message to everyone..." autocomplete="off">
                             <button type="submit" id="btn-user-chat"><i class="fa-solid fa-paper-plane"></i></button>
@@ -757,7 +740,6 @@
         </main>
     </div>
 
-    <!-- ADMIN DASHBOARD -->
     <div class="dashboard-wrapper" id="admin-dashboard">
         <div class="sidebar-overlay" onclick="toggleSidebar('admin-sidebar')"></div>
         <aside class="sidebar" id="admin-sidebar" style="border-right-color: rgba(245, 158, 11, 0.2);">
@@ -903,7 +885,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN SERVER MANAGEMENT TAB -->
                 <div id="tab-admin-servers" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">Manage Community Servers</span><span class="lang-id">Moderasi Server Komunitas</span>
@@ -913,7 +894,6 @@
                     </div>
                 </div>
 
-                <!-- ADMIN SOCIAL MODERATION -->
                 <div id="tab-admin-social" class="tab-content">
                     <h2 class="section-title font-outfit">
                         <span class="lang-en">Global Chat Moderation</span><span class="lang-id">Moderasi Obrolan Global</span>
@@ -942,7 +922,6 @@
                             <div style="text-align:center; padding: 2rem; color: var(--text-muted); font-size: 0.8rem;"><i class="fa-solid fa-circle-notch fa-spin"></i> Loading chat...</div>
                         </div>
                         
-                        <!-- FIX: Single input with dynamic placeholder -->
                         <form class="chat-input-area" id="admin-chat-form">
                             <input type="text" id="admin-chat-input" required placeholder="Send message as Admin..." autocomplete="off">
                             <button type="submit" id="btn-admin-chat" style="background: var(--gradient-master);"><i class="fa-solid fa-paper-plane"></i></button>
@@ -953,7 +932,6 @@
         </main>
     </div>
     
-    <!-- HIDDEN TEMPLATE UNTUK EXPORT INVOICE IMAGE -->
     <div style="position: absolute; left: -9999px; top: 0; z-index: -100;">
         <div id="export-template" style="width: 480px; background: #050505; padding: 40px; font-family: 'Inter', sans-serif; color: #fff; box-sizing: border-box; position: relative;">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);"></div>
@@ -989,7 +967,6 @@
     </div>
 
     <script>
-        // Security & Clean URL Logic
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && (e.key.toLowerCase() === 'c' || e.key.toLowerCase() === 'x')) e.preventDefault(); });
         if (window.location.pathname.endsWith('.html')) window.history.replaceState(null, '', window.location.pathname.replace(/index\.html$/, '').replace(/\.html$/, '') + window.location.search + window.location.hash);
@@ -1000,12 +977,10 @@
         let pollingInterval = null;
         window.adminMembersData = []; 
 
-        // Language Helper function for JavaScript strings
         function t(en, id) {
             return document.body.classList.contains('lang-en') ? en : id;
         }
         
-        // Database Parsing Helper for Bilingual content
         function parseLangDB(text) {
             if (!text) return "";
             let parts = text.split("|||");
@@ -1014,7 +989,6 @@
             return (parts.length > 1 && parts[1].trim() !== "") ? parts[1].trim() : parts[0].trim();
         }
 
-        // Multi-language Toggle Logic
         function toggleLang() {
             const body = document.body;
             if (body.classList.contains('lang-id')) {
@@ -1028,7 +1002,6 @@
             }
             updateDynamicTexts();
 
-            // Re-render elements that depend on dynamic JS text
             const session = sessionStorage.getItem("heraclaus_session");
             if (session) {
                 const data = JSON.parse(session);
@@ -1041,7 +1014,6 @@
                         keyEl.innerText = t("License pending generation...", "Lisensi sedang menunggu dibuat...");
                     }
                     
-                    // RE-RENDER HISTORY TABLE
                     if(data.addonHistory) renderUserHistoryTable(data.addonHistory);
                     
                 } else if (data.role === "admin") {
@@ -1053,7 +1025,6 @@
             }
         }
 
-        // Update Placeholder text when language changes
         function updateDynamicTexts() {
             const setPh = (id, en, idLang) => { const el = document.getElementById(id); if(el) el.placeholder = t(en, idLang); };
             
@@ -1116,14 +1087,13 @@
             const pDate = document.getElementById('p-date');
             if(pDate) pDate.valueAsDate = new Date();
 
-            // Form Login
             safelyAttachListener("login-form", "submit", function(e) {
                 e.preventDefault();
                 const btn = document.getElementById("btn-login"), msgBox = document.getElementById("login-msg");
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> ' + t('Checking...', 'Memeriksa...');
                 msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
 
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "login", email: document.getElementById("login-email").value.trim(), licenseKey: document.getElementById("login-key").value.trim() }) })
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "login", email: document.getElementById("login-email").value.trim(), licenseKey: document.getElementById("login-key").value.trim() }) })
                 .then(res => res.json()).then(data => {
                     if(data.status === "success") {
                         data.role = "user"; sessionStorage.setItem("heraclaus_session", JSON.stringify(data)); showUserDashboard(data); 
@@ -1133,14 +1103,13 @@
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> ' + t('Login to Dashboard', 'Masuk ke Dasbor'); });
             });
 
-            // Form Login Admin
             safelyAttachListener("admin-login-form", "submit", function(e) {
                 e.preventDefault();
                 const btn = document.getElementById("btn-admin-login"), msgBox = document.getElementById("admin-login-msg");
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> ' + t('Verifying...', 'Memverifikasi...');
                 msgBox.style.display = "none"; msgBox.className = "msg-box msg-error";
 
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_login", adminPassword: document.getElementById("admin-key").value.trim() }) })
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "admin_login", adminPassword: document.getElementById("admin-key").value.trim() }) })
                 .then(res => res.json()).then(data => {
                     if(data.status === "success") {
                         data.role = "admin"; data.adminPassword = document.getElementById("admin-key").value.trim();
@@ -1151,7 +1120,6 @@
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-unlock-keyhole"></i> ' + t('Authenticate', 'Otentikasi Sistem'); });
             });
 
-            // --- USER ADD SERVER FORM ---
             safelyAttachListener("add-server-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1171,7 +1139,7 @@
                     link: document.getElementById("srv-link").value.trim()
                 };
                 
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify(payload) })
                 .then(res => res.json()).then(data => {
                     if(data.status === "success") {
                         document.getElementById("add-server-form").reset();
@@ -1181,7 +1149,6 @@
                 }).finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> ' + t('Register Server', 'Kirim & Daftarkan Server'); });
             });
 
-            // Social Chat Form (User) - FIX: Use Single Input
             safelyAttachListener("user-chat-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1193,12 +1160,11 @@
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; 
                 input.value = "";
                 
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "send_global_chat", email: session.email, gamertag: session.gamertag, role: "user", msg: text }) })
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "send_global_chat", email: session.email, gamertag: session.gamertag, role: "user", msg: text }) })
                 .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('user-chat-box', data.chat, session); })
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
             });
 
-            // Social Chat Form (Admin) - FIX: Use Single Input
             safelyAttachListener("admin-chat-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1210,12 +1176,11 @@
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>'; 
                 input.value = "";
                 
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "send_global_chat", adminPassword: session.adminPassword, role: "admin", msg: text }) })
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "send_global_chat", adminPassword: session.adminPassword, role: "admin", msg: text }) })
                 .then(res => res.json()).then(data => { if(data.status === "success") renderChatBox('admin-chat-box', data.chat, session); })
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>'; });
             });
 
-            // Tombol Download
             safelyAttachListener("btn-download-realms", "click", function() { 
                 const s = JSON.parse(sessionStorage.getItem("heraclaus_session")); 
                 if(!s || !s.addonHistory || s.addonHistory.length === 0) return; 
@@ -1231,7 +1196,6 @@
                 triggerDownload(l, s.addonHistory[0].versionName); 
             });
 
-            // Form Publish Release - Menggabungkan String Bilingual
             safelyAttachListener("admin-publish-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1247,6 +1211,8 @@
 
                 fetch(GOOGLE_SCRIPT_URL, { 
                     method: "POST", 
+                    headers: {"Content-Type": "text/plain;charset=utf-8"}, 
+                    redirect: "follow", 
                     body: JSON.stringify({ 
                         action: "admin_publish_release", adminPassword: session.adminPassword, 
                         versionName: document.getElementById("p-version").value.trim(), mcVersion: document.getElementById("p-mcversion").value.trim(),
@@ -1260,7 +1226,6 @@
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-cloud-arrow-up"></i> ' + t('Publish & Update All', 'Terbitkan & Perbarui Semua'); });
             });
 
-            // Form Edit Release
             safelyAttachListener("edit-release-form", "submit", function(e) {
                 e.preventDefault();
                 const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1276,6 +1241,8 @@
 
                 fetch(GOOGLE_SCRIPT_URL, { 
                     method: "POST", 
+                    headers: {"Content-Type": "text/plain;charset=utf-8"}, 
+                    redirect: "follow", 
                     body: JSON.stringify({
                         action: "admin_edit_release", adminPassword: session.adminPassword, logId: document.getElementById("e-logid").value,
                         versionName: document.getElementById("e-version").value.trim(), mcVersion: document.getElementById("e-mcversion").value.trim(),
@@ -1288,19 +1255,17 @@
                 .finally(() => { btn.disabled = false; btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> ' + t('Save Changes', 'Simpan Perubahan'); });
             });
 
-            // Form Ganti Password
             safelyAttachListener("change-pwd-form", "submit", function(e) {
                 e.preventDefault(); const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); if(!session) return logout();
                 const btn = document.getElementById("btn-change-pwd"), msgBox = document.getElementById("cp-msg");
                 btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> ' + t('Processing...', 'Memproses...'); msgBox.style.display = "none";
-                fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "change_password", email: session.email, oldKey: document.getElementById("cp-old").value.trim(), newKey: document.getElementById("cp-new").value.trim() }) })
+                fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "change_password", email: session.email, oldKey: document.getElementById("cp-old").value.trim(), newKey: document.getElementById("cp-new").value.trim() }) })
                 .then(res => res.json()).then(data => { if(data.status === "success") { session.licenseKey = document.getElementById("cp-new").value.trim(); sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); document.getElementById("change-pwd-form").reset(); showToast(t('Security updated!', 'Sandi Portal berhasil diperbarui!')); } else throw new Error(data.message); })
                 .catch(err => { msgBox.className = "msg-box msg-error"; msgBox.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> ' + err.message; msgBox.style.display = "block"; })
                 .finally(() => { btn.disabled = false; btn.innerHTML = t('Update Password', 'Perbarui Kata Sandi'); });
             });
         });
 
-        // ======================= FUNGSI GLOBAL =======================
         function showToast(message, isError = false) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1330,7 +1295,6 @@
             document.getElementById('admin-login-box').classList.toggle('active', mode === 'admin');
         }
 
-        // --- DASHBOARD RENDERERS ---
         function renderUserHistoryTable(history) {
             const tbody = document.querySelector("#user-history-table tbody"); 
             if (!history || history.length === 0) {
@@ -1381,9 +1345,8 @@
             fetchAdminDatabase(); 
         }
 
-        // --- MEMBER SERVERS LOGIC ---
         function fetchMemberServers() {
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "get_servers" }) })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "get_servers" }) })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
                     const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1440,7 +1403,7 @@
             if (session.role === 'user') payload.email = session.email;
             if (session.role === 'admin') payload.adminPassword = session.adminPassword;
             
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify(payload) })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
                     showToast(t("Server deleted successfully.", "Server berhasil dihapus dari sistem."));
@@ -1450,10 +1413,8 @@
             });
         }
 
-
-        // --- GLOBAL CHAT SYSTEM LOGIC ---
         function fetchGlobalChat() {
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "get_global_chat" }) })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "get_global_chat" }) })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
                     const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1509,7 +1470,7 @@
             if (session.role === 'user') payload.email = session.email;
             if (session.role === 'admin') payload.adminPassword = session.adminPassword;
             
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify(payload) })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
                     if(session.role === 'user') renderChatBox('user-chat-box', data.chat, session);
@@ -1518,9 +1479,8 @@
             });
         }
 
-        // --- DASHBOARD DATA FETCHERS ---
         function fetchAdminDatabase() {
-            fetch(GOOGLE_SCRIPT_URL + "?action=get_changelog")
+            fetch(GOOGLE_SCRIPT_URL + "?action=get_changelog", { redirect: "follow" })
             .then(res => res.json()).then(data => {
                 if(data.status === "success") {
                     const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
@@ -1580,7 +1540,7 @@
 
         function fetchAdminMembers() {
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session"));
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_get_members", adminPassword: session.adminPassword }) })
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "admin_get_members", adminPassword: session.adminPassword }) })
             .then(res => res.json()).then(data => { if(data.status === "success") { window.adminMembersData = data.members; renderAdminMembers(data.members); } });
         }
 
@@ -1722,8 +1682,8 @@
         }
 
         window.closeInvoiceModal = function() { document.getElementById('invoice-modal').classList.remove('show'); }
-        window.adminToggleMemberStatus = function(row, currentStatus) { const newStatus = currentStatus === 'APPROVED' ? 'SUSPENDED' : 'APPROVED'; if(!confirm(`Change member status to ${newStatus}?`)) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_toggle_member", adminPassword: session.adminPassword, targetRow: row, newStatus: newStatus }) }).then(res => res.json()).then(data => { if(data.status === "success") { showToast(`Member updated to ${newStatus}`); fetchAdminMembers(); } }); }
-        window.adminDeleteMember = function(row) { if(!confirm("Warning: This will permanently delete this member's account and license! Proceed?")) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_member", adminPassword: session.adminPassword, targetRow: row }) }).then(res => res.json()).then(data => { if(data.status === "success") { showToast('Member deleted.'); fetchAdminMembers(); } }); }
+        window.adminToggleMemberStatus = function(row, currentStatus) { const newStatus = currentStatus === 'APPROVED' ? 'SUSPENDED' : 'APPROVED'; if(!confirm(`Change member status to ${newStatus}?`)) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "admin_toggle_member", adminPassword: session.adminPassword, targetRow: row, newStatus: newStatus }) }).then(res => res.json()).then(data => { if(data.status === "success") { showToast(`Member updated to ${newStatus}`); fetchAdminMembers(); } }); }
+        window.adminDeleteMember = function(row) { if(!confirm("Warning: This will permanently delete this member's account and license! Proceed?")) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "admin_delete_member", adminPassword: session.adminPassword, targetRow: row }) }).then(res => res.json()).then(data => { if(data.status === "success") { showToast('Member deleted.'); fetchAdminMembers(); } }); }
 
         function switchTab(role, tabId, element) {
             const dash = document.getElementById(`${role}-dashboard`);
@@ -1738,7 +1698,6 @@
             if(role === 'user' && tabId === 'social') { fetchGlobalChat(); pollingInterval = setInterval(fetchGlobalChat, 5000); }
             if(role === 'admin' && tabId === 'social') { fetchGlobalChat(); pollingInterval = setInterval(fetchGlobalChat, 5000); }
             
-            // Server tabs
             if(role === 'user' && tabId === 'server') fetchMemberServers();
             if(role === 'admin' && tabId === 'servers') fetchMemberServers();
 
@@ -1746,7 +1705,6 @@
             if(role === 'admin' && tabId === 'database') { fetchAdminDatabase(); pollingInterval = setInterval(fetchAdminDatabase, 10000); }
         }
 
-        // --- PEMBARUAN PENCATATAN DOWNLOAD (TRIGGER) ---
         function triggerDownload(url, versionName) { 
             const overlay = document.getElementById('download-overlay'); 
             const statusText = document.getElementById('dl-status-text');
@@ -1766,12 +1724,12 @@
         function recordDownloadStat(versionName) { 
             const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); 
             if (!session || !versionName) return; 
-            fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "record_download", email: session.email, versionName: versionName }) }); 
+            fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "record_download", email: session.email, versionName: versionName }) }); 
         }
         
         function convertDriveLink(url) { const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/); return (match && match[1]) ? `https://drive.google.com/uc?export=download&confirm=t&id=${match[1]}` : url; }
         
-        window.deleteRelease = function(id) { if(!confirm(t("Delete this release permanently?", "Hapus rilis pembaruan ini selamanya?"))) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) }).then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast(t('Release deleted.', 'File rilis berhasil dihapus dari database.')); } else alert(data.message); }); }
+        window.deleteRelease = function(id) { if(!confirm(t("Delete this release permanently?", "Hapus rilis pembaruan ini selamanya?"))) return; const session = JSON.parse(sessionStorage.getItem("heraclaus_session")); fetch(GOOGLE_SCRIPT_URL, { method: "POST", headers: {"Content-Type": "text/plain;charset=utf-8"}, redirect: "follow", body: JSON.stringify({ action: "admin_delete_release", adminPassword: session.adminPassword, logId: id }) }).then(res => res.json()).then(data => { if(data.status === "success") { session.history = data.history; sessionStorage.setItem("heraclaus_session", JSON.stringify(session)); renderAdminDatabase(data.history); showToast(t('Release deleted.', 'File rilis berhasil dihapus dari database.')); } else alert(data.message); }); }
         window.toggleSidebar = function(sidebarId) { const sidebar = document.getElementById(sidebarId), overlay = sidebar.previousElementSibling; sidebar.classList.toggle('show'); overlay.classList.toggle('show'); }
         window.logout = function() { sessionStorage.removeItem("heraclaus_session"); location.reload(); }
         window.switchTab = switchTab;
